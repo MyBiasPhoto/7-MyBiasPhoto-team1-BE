@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
+import authRouter from './src/modules/auth/routes.js';
 
 dotenv.config();
 const app = express();
@@ -20,6 +21,8 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('서버 실행 중');
 });
+
+app.use('/auth', authRouter);
 
 app.use((err, req, res, next) => {
   if (process.env.NODE_ENV === 'development') {
