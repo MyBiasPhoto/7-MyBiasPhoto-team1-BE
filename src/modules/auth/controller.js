@@ -40,6 +40,24 @@ class AuthController {
       next(error);
     }
   };
+
+  logout = async (req, res, next) => {
+    res.clearCookie('accessToken', {
+      path: '/',
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
+
+    res.clearCookie('refreshToken', {
+      path: '/auth/refresh',
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+    });
+
+    return res.status(200).json({ message: '로그아웃 완료' });
+  };
 }
 
 export default AuthController;
