@@ -1,0 +1,164 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              Int              @id @default(autoincrement())
+  email           String           @unique
+  nickname        String
+  password        String?
+  provider        AuthProvider     @default(LOCAL)
+  providerId      String?
+  points          Int              @default(0)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  photoCards      PhotoCard[]      @relation("OwnerCards")
+  ownedCards      UserCard[]       @relation("UserOwnedCards")
+  sales           Sale[]           @relation("SellerSales")
+  purchases       Purchase[]       @relation("BuyerPurchases")
+  proposals       ExchangeProposal[] @relation("ProposingUser")
+  notifications   Notification[]
+  pointLogs PointLog[]
+  cardCreationLimits CardCreationLimit[]
+}
+
+enum AuthProvider {
+  LOCAL
+  GOOGLE
+}
+
+model PhotoCard {
+  id             Int             @id @default(autoincrement())
+  name           String
+  description    String?
+  imageUrl       String
+  grade          CardGrade
+  genre          CardGenre
+  initialPrice   Int              
+  totalQuantity  Int             
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  createdById    Int
+  createdBy      User            @relation("OwnerCards", fields: [createdById], references: [id])
+  userCards      UserCard[]
+}
+
+model UserCard {
+  id         Int       @id @default(autoincrement())
+  isOnSale   Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  userId     Int
+  user       User      @relation("UserOwnedCards", fields: [userId], references: [id])
+  photoCardId Int
+  photoCard  PhotoCard @relation(fields: [photoCardId], references: [id])
+  sales Sale[] 
+  exchangeProposals ExchangeProposal[]
+}
+
+model Sale {
+  id             Int       @id @default(autoincrement())
+  sellerId       Int
+  seller         User      @relation("SellerSales", fields: [sellerId], references: [id])
+  userCardId      Int
+  userCard        UserCard @relation(fields: [userCardId], references: [id])
+  price          Int  
+  status         SaleStatus     @default(ON_SALE)
+  desiredGrade   CardGrade?
+  desiredGenre   CardGenre?
+  desiredDesc    String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  proposals      ExchangeProposal[]
+  purchases      Purchase[]
+}
+
+model Purchase {
+  id         Int       @id @default(autoincrement())
+  buyer      User      @relation("BuyerPurchases", fields: [buyerId], references: [id])
+  buyerId    Int
+  sale       Sale      @relation(fields: [saleId], references: [id])
+  saleId     Int
+  createdAt  DateTime  @default(now())
+}
+
+model ExchangeProposal {
+  id           Int       @id @default(autoincrement())
+  saleId       Int
+  sale         Sale      @relation(fields: [saleId], references: [id])
+  proposedCardId Int  
+  proposedCard UserCard  @relation(fields: [proposedCardId], references: [id])
+  proposerId   Int
+  proposer     User      @relation("ProposingUser", fields: [proposerId], references: [id])
+  status       ProposalStatus @default(PENDING)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Notification {
+  id        Int       @id @default(autoincrement())
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int
+  content   String
+  type      NotificationType
+  createdAt DateTime  @default(now())
+  read      Boolean   @default(false)
+}
+
+model PointLog {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  amount    Int
+  reason    String
+  createdAt DateTime @default(now())
+}
+
+model CardCreationLimit {
+  id        Int      @id @default(autoincrement())
+  userId    Int      
+  user User @relation(fields: [userId], references: [id])
+  month     Int
+  year      Int
+  created   Int      @default(0) 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@unique([userId, month, year])
+}
+
+enum CardGrade {
+  NORMAL
+  RARE
+  LEGENDARY
+}
+
+enum CardGenre {
+  IDOL
+  SPORTS
+  ART
+  OTHER
+}
+
+enum SaleStatus {
+  ON_SALE
+  SOLD_OUT
+}
+
+enum ProposalStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum NotificationType {
+  EXCHANGE_PROPOSAL_RECEIVED
+  EXCHANGE_PROPOSAL_DECIDED
+  CARD_PURCHASED
+  CARD_SOLD_OUT
+  RANDOM_BOX
+}
