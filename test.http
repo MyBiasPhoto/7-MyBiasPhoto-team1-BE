@@ -1,0 +1,10 @@
+### 회원가입
+POST http://localhost:4000/auth/signup
+Content-Type: application/json 
+
+{
+    "email": "test33@example.com",
+    "password": "Test123@#",
+    "confirmPassword": "Test123@#",
+    "nickname" : "test12"
+}
