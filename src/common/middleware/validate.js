@@ -10,15 +10,14 @@ export const validate =
   (schema, type = 'body') =>
   (req, res, next) => {
     try {
-      let dataToValidate;
-      if (type === 'params') {
-        dataToValidate = req.params;
-      } else if (type === 'query') {
-        dataToValidate = req.query;
-      } else {
-        dataToValidate = req.body;
-      }
-      schema.parse(dataToValidate);
+      const parsed = schema.parse(
+        type === 'params' ? req.params : type === 'query' ? req.query : req.body
+      );
+
+      if (type === 'params') req.params = parsed;
+      else if (type === 'query') req.query = parsed;
+      else req.body = parsed;
+
       next();
     } catch (error) {
       if (error instanceof z.ZodError) {
