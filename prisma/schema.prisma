@@ -43,8 +43,8 @@ model PhotoCard {
   totalQuantity Int
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
-  createdById   Int
-  createdBy     User       @relation("OwnerCards", fields: [createdById], references: [id])
+  creatorId     Int
+  creator       User       @relation("OwnerCards", fields: [creatorId], references: [id])
   userCards     UserCard[]
   sales         Sale[]     @relation("PhotoCardToSale")
 }
@@ -53,8 +53,8 @@ model UserCard {
   id                Int                @id @default(autoincrement())
   isOnSale          Boolean            @default(false)
   createdAt         DateTime           @default(now())
-  userId            Int
-  user              User               @relation("UserOwnedCards", fields: [userId], references: [id])
+  ownerId           Int
+  owner             User               @relation("UserOwnedCards", fields: [ownerId], references: [id])
   photoCardId       Int
   photoCard         PhotoCard          @relation(fields: [photoCardId], references: [id])
   sales             Sale[]
@@ -78,6 +78,30 @@ model Sale {
   updatedAt    DateTime           @updatedAt
   proposals    ExchangeProposal[]
   purchases    Purchase[]
+}
+
+// ⚠️ Prisma에서는 View를 테이블처럼 인식하지 않기 때문에 주의가 필요함
+// 1. `@@ignore`를 추가한 상태에서 `prisma migrate`를 실행해야 migration 충돌이 없음
+// 2. 이후 `@@ignore`를 제거하고 `npx prisma generate`를 실행해야 client에서 view에 접근 가능함
+//
+// - migration = @@ignore O
+// - generate  = @@ignore X
+model SaleMarketSummary {
+  photoCardId     Int
+  price           Int
+  sellerId        Int
+  nickname        String
+  totalRegistered Int
+  totalOnSale     Int
+  createdAt       DateTime
+  name            String
+  imageUrl        String
+  grade           CardGrade
+  genre           CardGenre
+  creatorId       Int
+
+  @@id([photoCardId, sellerId])
+  @@map("sale_market_summary") // 실제 뷰 이름
 }
 
 model Purchase {
@@ -135,16 +159,30 @@ model CardCreationLimit {
 }
 
 enum CardGrade {
-  NORMAL
+  COMMON
   RARE
+  SUPER_RARE @map("SUPER_RARE")
   LEGENDARY
 }
 
+// NOTE: 현재 CardGenre ENUM은 제공되는 시딩데이터 장르 기준으로 정의
+// 서비스 요구사항에 따라 장르 항목을 변경하거나 추가할 경우,
+// 아래 두 항목을 반드시 함께 수정해야 합니다:
+// - Prisma 스키마 파일 (schema.prisma)
+// - Zod 스키마 정의 (예: getSaleListSchema 등)
+//
+// 이 두 정의가 불일치할 경우, 데이터 검증 오류 또는 런타임 에러가 발생할 수 있습니다.
 enum CardGenre {
-  IDOL
-  SPORTS
-  ART
-  OTHER
+  ALBUM
+  SPECIAL
+  FANSIGN
+  SEASON_GREETING
+  FANMEETING
+  CONCERT
+  MD
+  COLLAB
+  FANCLUB
+  ETC
 }
 
 enum SaleStatus {
