@@ -3,10 +3,10 @@ POST http://localhost:3000/auth/signup
 Content-Type: application/json 
 
 {
-    "email": "test33@example.com",
-    "password": "Test123@#",
-    "confirmPassword": "Test123@#",
-    "nickname" : "test12"
+    "email": "nijuuy1102@naver.com",
+    "password": "test1234@",
+    "confirmPassword": "test1234@",
+    "nickname" : "test1234@"
 }
 
 ### 로그인
@@ -14,16 +14,25 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json 
 
 {
-    "email": "test33@example.com",
-    "password": "Test123@#"
+    "email": "nijuuy1102@naver.com",
+    "password": "test1234@"
+}
+
+### 시딩데이터 로그인
+POST http://localhost:3000/auth/login
+Content-Type: application/json 
+
+{
+    "email": "user1@example.com",
+    "password": "password1@"
 }
 
 ### 로그아웃
 POST http://localhost:3000/auth/logout
-Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwibmlja25hbWUiOiJ0ZXN0MTIiLCJpYXQiOjE3NTM5NzA4MDksImV4cCI6MTc1Mzk3NDQwOX0.VRZv7G_hZdScTZCI7daQ1ozpaCeaYQZrmDvc26yPiY8; refreshToken=refreshToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiaWF0IjoxNzUzOTcwODA5LCJleHAiOjE3NTQ1NzU2MDl9.ej15xR70duk8fWgBEFfT3gPFMf01oM0T4qCH1M7nkxk;
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsIm5pY2tuYW1lIjoidGVzdDEyMzRAIiwiaWF0IjoxNzU0MjM4NzA2LCJleHAiOjE3NTQyNDIzMDZ9.y7Y4AbuhLlL-yzk8q0rbYZdvjFlTSu-NNHpv1m8HwMQ;
 
 Content-Type: application/json
 
 ### 판매 목록 조회
-GET http://localhost:3000/sales
+GET http://localhost:3000/sales?
 Content-Type: application/json

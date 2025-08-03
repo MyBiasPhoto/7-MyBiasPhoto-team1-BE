@@ -1,6 +1,5 @@
 export const photoCardData = [
   {
-    id: 1,
     creatorId: 2,
     name: '빌리 문수아 콘서트',
     description: '빌리 문수아 콘서트 포카입니다.',
@@ -11,7 +10,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=10',
   },
   {
-    id: 2,
     creatorId: 11,
     name: 'NCT 유우시 특전',
     description: 'NCT 유우시 특전 포카입니다.',
@@ -22,7 +20,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=11',
   },
   {
-    id: 3,
     creatorId: 14,
     name: 'NCT 시온 앨범',
     description: 'NCT 시온 앨범 포카입니다.',
@@ -33,7 +30,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=13',
   },
   {
-    id: 4,
     creatorId: 4,
     name: '소녀시대 유리 콜라보',
     description: '소녀시대 유리 콜라보 포카입니다.',
@@ -44,7 +40,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=15',
   },
   {
-    id: 5,
     creatorId: 20,
     name: 'IVE 레이 콜라보',
     description: 'IVE 레이 콜라보 포카입니다.',
@@ -55,7 +50,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=8',
   },
   {
-    id: 6,
     creatorId: 7,
     name: '소녀시대 태연 MD',
     description: '소녀시대 태연 MD 포카입니다.',
@@ -66,7 +60,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=14',
   },
   {
-    id: 7,
     creatorId: 15,
     name: 'DKZ 재찬 팬싸',
     description: 'DKZ 재찬 팬싸 포카입니다.',
@@ -77,7 +70,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=5',
   },
   {
-    id: 8,
     creatorId: 20,
     name: 'DAY6 도운 콘서트',
     description: 'DAY6 도운 콘서트 포카입니다.',
@@ -88,7 +80,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=1',
   },
   {
-    id: 9,
     creatorId: 13,
     name: '트와이스 채영 팬싸',
     description: '트와이스 채영 팬싸 포카입니다.',
@@ -99,7 +90,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=18',
   },
   {
-    id: 10,
     creatorId: 14,
     name: '이달의 소녀 현진 기타',
     description: '이달의 소녀 현진 기타 포카입니다.',
@@ -110,7 +100,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=2',
   },
   {
-    id: 11,
     creatorId: 10,
     name: '우주소녀 은서 콘서트',
     description: '우주소녀 은서 콘서트 포카입니다.',
@@ -121,7 +110,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=14',
   },
   {
-    id: 12,
     creatorId: 2,
     name: '세븐틴 준 팬싸',
     description: '세븐틴 준 팬싸 포카입니다.',
@@ -132,7 +120,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=16',
   },
   {
-    id: 13,
     creatorId: 13,
     name: 'DKZ 재찬 앨범',
     description: 'DKZ 재찬 앨범 포카입니다.',
@@ -143,7 +130,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=7',
   },
   {
-    id: 14,
     creatorId: 3,
     name: '베리베리 호영 콘서트',
     description: '베리베리 호영 콘서트 포카입니다.',
@@ -154,7 +140,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=13',
   },
   {
-    id: 15,
     creatorId: 9,
     name: '세븐틴 조슈아 콘서트',
     description: '세븐틴 조슈아 콘서트 포카입니다.',
@@ -165,7 +150,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=2',
   },
   {
-    id: 16,
     creatorId: 3,
     name: '여자아이들 민니 팬싸',
     description: '여자아이들 민니 팬싸 포카입니다.',
@@ -176,7 +160,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=8',
   },
   {
-    id: 17,
     creatorId: 10,
     name: 'TXT 휴닝카이 특전',
     description: 'TXT 휴닝카이 특전 포카입니다.',
@@ -187,7 +170,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=19',
   },
   {
-    id: 18,
     creatorId: 1,
     name: '여자아이들 우기 콘서트',
     description: '여자아이들 우기 콘서트 포카입니다.',
@@ -198,7 +180,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=3',
   },
   {
-    id: 19,
     creatorId: 5,
     name: '세븐틴 민규 팬싸',
     description: '세븐틴 민규 팬싸 포카입니다.',
@@ -209,7 +190,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=6',
   },
   {
-    id: 20,
     creatorId: 10,
     name: 'NCT 정우 팬미팅',
     description: 'NCT 정우 팬미팅 포카입니다.',
@@ -220,7 +200,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=5',
   },
   {
-    id: 21,
     creatorId: 3,
     name: '스테이씨 수민 특전',
     description: '스테이씨 수민 특전 포카입니다.',
@@ -231,7 +210,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=6',
   },
   {
-    id: 22,
     creatorId: 12,
     name: 'CIX BX MD',
     description: 'CIX BX MD 포카입니다.',
@@ -242,7 +220,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=11',
   },
   {
-    id: 23,
     creatorId: 15,
     name: 'NCT 쟈니 시즌그리팅',
     description: 'NCT 쟈니 시즌그리팅 포카입니다.',
@@ -253,7 +230,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=7',
   },
   {
-    id: 24,
     creatorId: 13,
     name: 'IVE 가을 앨범',
     description: 'IVE 가을 앨범 포카입니다.',
@@ -264,7 +240,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=1',
   },
   {
-    id: 25,
     creatorId: 3,
     name: 'EVNNE 박지후 MD',
     description: 'EVNNE 박지후 MD 포카입니다.',
@@ -275,7 +250,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=3',
   },
   {
-    id: 26,
     creatorId: 11,
     name: '세븐틴 민규 특전',
     description: '세븐틴 민규 특전 포카입니다.',
@@ -286,7 +260,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=11',
   },
   {
-    id: 27,
     creatorId: 14,
     name: '소녀시대 써니 MD',
     description: '소녀시대 써니 MD 포카입니다.',
@@ -297,7 +270,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=18',
   },
   {
-    id: 28,
     creatorId: 7,
     name: 'EXO 시우민 콜라보',
     description: 'EXO 시우민 콜라보 포카입니다.',
@@ -308,7 +280,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=0',
   },
   {
-    id: 29,
     creatorId: 2,
     name: 'NCT 쟈니 팬미팅',
     description: 'NCT 쟈니 팬미팅 포카입니다.',
@@ -319,7 +290,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=15',
   },
   {
-    id: 30,
     creatorId: 18,
     name: '에이티즈 산 앨범',
     description: '에이티즈 산 앨범 포카입니다.',
@@ -330,7 +300,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=9',
   },
   {
-    id: 31,
     creatorId: 17,
     name: '펜타곤 우석 콘서트',
     description: '펜타곤 우석 콘서트 포카입니다.',
@@ -341,7 +310,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=5',
   },
   {
-    id: 32,
     creatorId: 3,
     name: '에스파 지젤 MD',
     description: '에스파 지젤 MD 포카입니다.',
@@ -352,7 +320,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=10',
   },
   {
-    id: 33,
     creatorId: 13,
     name: '세븐틴 에스쿱스 특전',
     description: '세븐틴 에스쿱스 특전 포카입니다.',
@@ -363,7 +330,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=9',
   },
   {
-    id: 34,
     creatorId: 1,
     name: 'CLASS:y 박보은 MD',
     description: 'CLASS:y 박보은 MD 포카입니다.',
@@ -374,7 +340,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=18',
   },
   {
-    id: 35,
     creatorId: 11,
     name: 'SF9 로운 팬싸',
     description: 'SF9 로운 팬싸 포카입니다.',
@@ -385,7 +350,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=13',
   },
   {
-    id: 36,
     creatorId: 19,
     name: '이달의 소녀 진솔 팬싸',
     description: '이달의 소녀 진솔 팬싸 포카입니다.',
@@ -396,7 +360,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=15',
   },
   {
-    id: 37,
     creatorId: 6,
     name: '르세라핌 허윤진 앨범',
     description: '르세라핌 허윤진 앨범 포카입니다.',
@@ -407,7 +370,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=8',
   },
   {
-    id: 38,
     creatorId: 1,
     name: '크래비티 태영 MD',
     description: '크래비티 태영 MD 포카입니다.',
@@ -418,7 +380,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=8',
   },
   {
-    id: 39,
     creatorId: 20,
     name: 'EXO 첸 앨범',
     description: 'EXO 첸 앨범 포카입니다.',
@@ -429,7 +390,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=5',
   },
   {
-    id: 40,
     creatorId: 7,
     name: 'CLASS:y 박보은 팬미팅',
     description: 'CLASS:y 박보은 팬미팅 포카입니다.',
@@ -440,7 +400,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=16',
   },
   {
-    id: 41,
     creatorId: 12,
     name: '에이티즈 우영 팬클럽',
     description: '에이티즈 우영 팬클럽 포카입니다.',
@@ -451,7 +410,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=8',
   },
   {
-    id: 42,
     creatorId: 15,
     name: 'NCT 시온 팬클럽',
     description: 'NCT 시온 팬클럽 포카입니다.',
@@ -462,7 +420,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=7',
   },
   {
-    id: 43,
     creatorId: 13,
     name: 'NCT 리쿠 MD',
     description: 'NCT 리쿠 MD 포카입니다.',
@@ -473,7 +430,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=1',
   },
   {
-    id: 44,
     creatorId: 2,
     name: 'NMIXX 규진 콘서트',
     description: 'NMIXX 규진 콘서트 포카입니다.',
@@ -484,7 +440,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=9',
   },
   {
-    id: 45,
     creatorId: 13,
     name: '블랙핑크 지수 기타',
     description: '블랙핑크 지수 기타 포카입니다.',
@@ -495,7 +450,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=5',
   },
   {
-    id: 46,
     creatorId: 6,
     name: 'ZEROBASEONE 박건욱 MD',
     description: 'ZEROBASEONE 박건욱 MD 포카입니다.',
@@ -506,7 +460,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=7',
   },
   {
-    id: 47,
     creatorId: 18,
     name: '세븐틴 민규 MD',
     description: '세븐틴 민규 MD 포카입니다.',
@@ -517,7 +470,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=7',
   },
   {
-    id: 48,
     creatorId: 5,
     name: '이달의 소녀 최리 팬클럽',
     description: '이달의 소녀 최리 팬클럽 포카입니다.',
@@ -528,7 +480,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=16',
   },
   {
-    id: 49,
     creatorId: 9,
     name: '이달의 소녀 이브 앨범',
     description: '이달의 소녀 이브 앨범 포카입니다.',
@@ -539,7 +490,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=15',
   },
   {
-    id: 50,
     creatorId: 17,
     name: '엔하이픈 정원 MD',
     description: '엔하이픈 정원 MD 포카입니다.',
@@ -550,7 +500,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=2',
   },
   {
-    id: 51,
     creatorId: 10,
     name: '에스파 카리나 특전',
     description: '에스파 카리나 특전 포카입니다.',
@@ -561,7 +510,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=9',
   },
   {
-    id: 52,
     creatorId: 9,
     name: '오마이걸 승희 앨범',
     description: '오마이걸 승희 앨범 포카입니다.',
@@ -572,7 +520,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=13',
   },
   {
-    id: 53,
     creatorId: 8,
     name: 'NCT 유타 시즌그리팅',
     description: 'NCT 유타 시즌그리팅 포카입니다.',
@@ -583,7 +530,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=18',
   },
   {
-    id: 54,
     creatorId: 15,
     name: '온앤오프 효진 콘서트',
     description: '온앤오프 효진 콘서트 포카입니다.',
@@ -594,7 +540,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=3',
   },
   {
-    id: 55,
     creatorId: 17,
     name: 'NCT 샤오쥔 앨범',
     description: 'NCT 샤오쥔 앨범 포카입니다.',
@@ -605,7 +550,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=19',
   },
   {
-    id: 56,
     creatorId: 16,
     name: 'NMIXX 지우 앨범',
     description: 'NMIXX 지우 앨범 포카입니다.',
@@ -616,7 +560,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=0',
   },
   {
-    id: 57,
     creatorId: 8,
     name: '더보이즈 주연 팬클럽',
     description: '더보이즈 주연 팬클럽 포카입니다.',
@@ -627,7 +570,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=1',
   },
   {
-    id: 58,
     creatorId: 2,
     name: '트와이스 모모 팬미팅',
     description: '트와이스 모모 팬미팅 포카입니다.',
@@ -638,7 +580,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=13',
   },
   {
-    id: 59,
     creatorId: 20,
     name: '아스트로 진진 특전',
     description: '아스트로 진진 특전 포카입니다.',
@@ -649,7 +590,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=3',
   },
   {
-    id: 60,
     creatorId: 8,
     name: '트레저 마시호 앨범',
     description: '트레저 마시호 앨범 포카입니다.',
@@ -660,7 +600,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=0',
   },
   {
-    id: 61,
     creatorId: 15,
     name: '블랙핑크 리사 팬클럽',
     description: '블랙핑크 리사 팬클럽 포카입니다.',
@@ -671,7 +610,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=9',
   },
   {
-    id: 62,
     creatorId: 2,
     name: 'EVNNE 유승언 팬싸',
     description: 'EVNNE 유승언 팬싸 포카입니다.',
@@ -682,7 +620,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=11',
   },
   {
-    id: 63,
     creatorId: 6,
     name: '아스트로 문빈 기타',
     description: '아스트로 문빈 기타 포카입니다.',
@@ -693,7 +630,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=19',
   },
   {
-    id: 64,
     creatorId: 1,
     name: '세븐틴 우지 앨범',
     description: '세븐틴 우지 앨범 포카입니다.',
@@ -704,7 +640,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=12',
   },
   {
-    id: 65,
     creatorId: 7,
     name: '트레저 지훈 팬싸',
     description: '트레저 지훈 팬싸 포카입니다.',
@@ -715,7 +650,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=18',
   },
   {
-    id: 66,
     creatorId: 15,
     name: 'NCT 유타 콜라보',
     description: 'NCT 유타 콜라보 포카입니다.',
@@ -726,7 +660,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=2',
   },
   {
-    id: 67,
     creatorId: 7,
     name: '베리베리 연호 MD',
     description: '베리베리 연호 MD 포카입니다.',
@@ -737,7 +670,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=2',
   },
   {
-    id: 68,
     creatorId: 4,
     name: 'EVNNE 케이타 콘서트',
     description: 'EVNNE 케이타 콘서트 포카입니다.',
@@ -748,7 +680,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=7',
   },
   {
-    id: 69,
     creatorId: 11,
     name: 'EVNNE 이정현 특전',
     description: 'EVNNE 이정현 특전 포카입니다.',
@@ -759,7 +690,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=9',
   },
   {
-    id: 70,
     creatorId: 7,
     name: 'CLASS:y 명형서 팬싸',
     description: 'CLASS:y 명형서 팬싸 포카입니다.',
@@ -770,7 +700,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=17',
   },
   {
-    id: 71,
     creatorId: 9,
     name: '슈퍼엠 텐 기타',
     description: '슈퍼엠 텐 기타 포카입니다.',
@@ -781,7 +710,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=13',
   },
   {
-    id: 72,
     creatorId: 7,
     name: '빌리 츠키 팬미팅',
     description: '빌리 츠키 팬미팅 포카입니다.',
@@ -792,7 +720,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=11',
   },
   {
-    id: 73,
     creatorId: 5,
     name: '세븐틴 조슈아 앨범',
     description: '세븐틴 조슈아 앨범 포카입니다.',
@@ -803,7 +730,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=19',
   },
   {
-    id: 74,
     creatorId: 9,
     name: '르세라핌 카즈하 콜라보',
     description: '르세라핌 카즈하 콜라보 포카입니다.',
@@ -814,7 +740,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=14',
   },
   {
-    id: 75,
     creatorId: 16,
     name: 'TXT 범규 팬미팅',
     description: 'TXT 범규 팬미팅 포카입니다.',
@@ -825,7 +750,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=4',
   },
   {
-    id: 76,
     creatorId: 16,
     name: '르세라핌 사쿠라 앨범',
     description: '르세라핌 사쿠라 앨범 포카입니다.',
@@ -836,7 +760,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=11',
   },
   {
-    id: 77,
     creatorId: 4,
     name: 'SF9 휘영 특전',
     description: 'SF9 휘영 특전 포카입니다.',
@@ -847,7 +770,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=14',
   },
   {
-    id: 78,
     creatorId: 13,
     name: 'ITZY 유나 기타',
     description: 'ITZY 유나 기타 포카입니다.',
@@ -858,7 +780,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=6',
   },
   {
-    id: 79,
     creatorId: 5,
     name: '아스트로 차은우 팬싸',
     description: '아스트로 차은우 팬싸 포카입니다.',
@@ -869,7 +790,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=1',
   },
   {
-    id: 80,
     creatorId: 13,
     name: 'NCT 도영 팬싸',
     description: 'NCT 도영 팬싸 포카입니다.',
@@ -880,7 +800,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=4',
   },
   {
-    id: 81,
     creatorId: 18,
     name: '펜타곤 우석 콘서트',
     description: '펜타곤 우석 콘서트 포카입니다.',
@@ -891,7 +810,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=10',
   },
   {
-    id: 82,
     creatorId: 2,
     name: 'NCT 헨드리 특전',
     description: 'NCT 헨드리 특전 포카입니다.',
@@ -902,7 +820,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=12',
   },
   {
-    id: 83,
     creatorId: 8,
     name: 'SF9 영빈 특전',
     description: 'SF9 영빈 특전 포카입니다.',
@@ -913,7 +830,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=13',
   },
   {
-    id: 84,
     creatorId: 6,
     name: '케플러 최유진 기타',
     description: '케플러 최유진 기타 포카입니다.',
@@ -924,7 +840,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=2',
   },
   {
-    id: 85,
     creatorId: 2,
     name: '에이티즈 홍중 팬미팅',
     description: '에이티즈 홍중 팬미팅 포카입니다.',
@@ -935,7 +850,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=3',
   },
   {
-    id: 86,
     creatorId: 4,
     name: 'SF9 영빈 콜라보',
     description: 'SF9 영빈 콜라보 포카입니다.',
@@ -946,7 +860,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=5',
   },
   {
-    id: 87,
     creatorId: 9,
     name: '아스트로 윤산하 팬미팅',
     description: '아스트로 윤산하 팬미팅 포카입니다.',
@@ -957,7 +870,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=8',
   },
   {
-    id: 88,
     creatorId: 17,
     name: 'NCT 해찬 팬싸',
     description: 'NCT 해찬 팬싸 포카입니다.',
@@ -968,7 +880,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=0',
   },
   {
-    id: 89,
     creatorId: 20,
     name: 'CIX 용희 시즌그리팅',
     description: 'CIX 용희 시즌그리팅 포카입니다.',
@@ -979,7 +890,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=8',
   },
   {
-    id: 90,
     creatorId: 20,
     name: '소녀시대 효연 기타',
     description: '소녀시대 효연 기타 포카입니다.',
@@ -990,7 +900,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=18',
   },
   {
-    id: 91,
     creatorId: 4,
     name: '스테이씨 세은 콜라보',
     description: '스테이씨 세은 콜라보 포카입니다.',
@@ -1001,7 +910,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=14',
   },
   {
-    id: 92,
     creatorId: 15,
     name: '펜타곤 신원 콘서트',
     description: '펜타곤 신원 콘서트 포카입니다.',
@@ -1012,7 +920,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=9',
   },
   {
-    id: 93,
     creatorId: 8,
     name: '세븐틴 승관 앨범',
     description: '세븐틴 승관 앨범 포카입니다.',
@@ -1023,7 +930,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=8',
   },
   {
-    id: 94,
     creatorId: 18,
     name: 'EXO 카이 MD',
     description: 'EXO 카이 MD 포카입니다.',
@@ -1034,7 +940,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=3',
   },
   {
-    id: 95,
     creatorId: 9,
     name: '베리베리 호영 팬싸',
     description: '베리베리 호영 팬싸 포카입니다.',
@@ -1045,7 +950,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=17',
   },
   {
-    id: 96,
     creatorId: 10,
     name: 'NMIXX 지우 콜라보',
     description: 'NMIXX 지우 콜라보 포카입니다.',
@@ -1056,7 +960,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=16',
   },
   {
-    id: 97,
     creatorId: 12,
     name: '펜타곤 키노 콘서트',
     description: '펜타곤 키노 콘서트 포카입니다.',
@@ -1067,7 +970,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=16',
   },
   {
-    id: 98,
     creatorId: 15,
     name: '에이티즈 성화 팬미팅',
     description: '에이티즈 성화 팬미팅 포카입니다.',
@@ -1078,7 +980,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=11',
   },
   {
-    id: 99,
     creatorId: 7,
     name: '이달의 소녀 현진 시즌그리팅',
     description: '이달의 소녀 현진 시즌그리팅 포카입니다.',
@@ -1089,7 +990,6 @@ export const photoCardData = [
     imageUrl: 'https://picsum.photos/360/270?random=14',
   },
   {
-    id: 100,
     creatorId: 14,
     name: 'NCT 사쿠야 기타',
     description: 'NCT 사쿠야 기타 포카입니다.',
