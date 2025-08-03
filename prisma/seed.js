@@ -1,30 +1,21 @@
-import { prisma } from '../src/common/utils/prisma.js';
-import { userData } from './data/user.js';
-import { photoCardData } from './data/photoCard.js';
+import seedUser from './seeds/see-user.js';
+import seedPhotoCard from './seeds/seed-photoCard.js';
+import seedUserCard from './seeds/seed-userCard.js';
+import seedSale from './seeds/seed-sale.js';
 
 async function main() {
-  await prisma.user.createMany({ data: userData });
-  await prisma.photoCard.createMany({ data: photoCardData });
-
-  // UserCard 생성: totalQuantity만큼 생성 + createdAt에 시간차 반영
-  for (const card of photoCardData) {
-    for (let i = 0; i < card.totalQuantity; i++) {
-      await prisma.userCard.create({
-        data: {
-          ownerId: card.creatorId,
-          photoCardId: card.id,
-          createdAt: new Date(Date.now() - i * 1000 * 60),
-        },
-      });
-    }
-  }
+  const userIdMap = await seedUser();
+  const photoCardIdMap = await seedPhotoCard(userIdMap);
+  const userCardIdMap = await seedUserCard(userIdMap, photoCardIdMap);
+  await seedSale(userIdMap, photoCardIdMap, userCardIdMap);
 }
 
 main()
   .catch((e) => {
-    console.error(e);
-    process.exit(1); // 오류 시 프로세스 종료
+    console.error('❌ Seed failed:', e);
+    process.exit(1);
   })
   .finally(async () => {
+    const { prisma } = await import('../src/common/utils/prisma.js');
     await prisma.$disconnect();
   });
