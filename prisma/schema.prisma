@@ -8,23 +8,23 @@ datasource db {
 }
 
 model User {
-  id                 Int                 @id @default(autoincrement())
-  email              String              @unique
-  nickname           String
-  password           String?
-  provider           AuthProvider        @default(LOCAL)
-  providerId         String?
-  points             Int                 @default(0)
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime            @updatedAt
-  photoCards         PhotoCard[]         @relation("OwnerCards")
-  ownedCards         UserCard[]          @relation("UserOwnedCards")
-  sales              Sale[]              @relation("SellerSales")
-  purchases          Purchase[]          @relation("BuyerPurchases")
-  proposals          ExchangeProposal[]  @relation("ProposingUser")
-  notifications      Notification[]
-  pointLogs          PointLog[]
-  cardCreationLimits CardCreationLimit[]
+  id                  Int                 @id @default(autoincrement())
+  email               String              @unique
+  nickname            String
+  password            String?
+  provider            AuthProvider        @default(LOCAL)
+  providerId          String?
+  points              Int                 @default(0)
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  photoCards          PhotoCard[]         @relation("OwnerCards")
+  userCards           UserCard[]          @relation("UserOwnedCards")
+  sales               Sale[]              @relation("SalesBySeller")
+  purchases           Purchase[]          @relation("BuyerPurchases")
+  proposedExchanges   ExchangeProposal[]  @relation("ProposingUser")
+  notifications       Notification[] 
+  pointLogs           PointLog[] 
+  cardCreationLimits  CardCreationLimit[]
 }
 
 enum AuthProvider {
@@ -33,116 +33,112 @@ enum AuthProvider {
 }
 
 model PhotoCard {
-  id            Int        @id @default(autoincrement())
-  name          String
-  description   String?
-  imageUrl      String
-  grade         CardGrade
-  genre         CardGenre
-  initialPrice  Int
-  totalQuantity Int
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  creatorId     Int
-  creator       User       @relation("OwnerCards", fields: [creatorId], references: [id])
-  userCards     UserCard[]
-  sales         Sale[]     @relation("PhotoCardToSale")
-}
-
-model UserCard {
-  id                Int                @id @default(autoincrement())
-  isOnSale          Boolean            @default(false)
-  createdAt         DateTime           @default(now())
-  ownerId           Int
-  owner             User               @relation("UserOwnedCards", fields: [ownerId], references: [id])
-  photoCardId       Int
-  photoCard         PhotoCard          @relation(fields: [photoCardId], references: [id])
-  sales             Sale[]
-  exchangeProposals ExchangeProposal[]
-}
-
-model Sale {
-  id           Int                @id @default(autoincrement())
-  sellerId     Int
-  seller       User               @relation("SellerSales", fields: [sellerId], references: [id])
-  userCardId   Int
-  userCard     UserCard           @relation(fields: [userCardId], references: [id])
-  photoCardId  Int
-  photoCard    PhotoCard          @relation("PhotoCardToSale", fields: [photoCardId], references: [id])
-  price        Int
-  status       SaleStatus         @default(ON_SALE)
-  desiredGrade CardGrade?
-  desiredGenre CardGenre?
-  desiredDesc  String?
-  createdAt    DateTime           @default(now())
-  updatedAt    DateTime           @updatedAt
-  proposals    ExchangeProposal[]
-  purchases    Purchase[]
-}
-
-// ⚠️ Prisma에서는 View를 테이블처럼 인식하지 않기 때문에 주의가 필요함
-// 1. `@@ignore`를 추가한 상태에서 `prisma migrate`를 실행해야 migration 충돌이 없음
-// 2. 이후 `@@ignore`를 제거하고 `npx prisma generate`를 실행해야 client에서 view에 접근 가능함
-//
-// - migration = @@ignore O
-// - generate  = @@ignore X
-model SaleMarketSummary {
-  photoCardId     Int
-  price           Int
-  sellerId        Int
-  nickname        String
-  totalRegistered Int
-  totalOnSale     Int
-  createdAt       DateTime
+  id              Int        @id @default(autoincrement())
   name            String
+  description     String
   imageUrl        String
   grade           CardGrade
   genre           CardGenre
+  initialPrice    Int
+  // 유저가 포토카드 생성 시 설정한 총 발행량 (변경되지 않음)
+  totalQuantity   Int
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
   creatorId       Int
-
-  @@id([photoCardId, sellerId])
-  @@map("sale_market_summary") // 실제 뷰 이름
+  creator         User       @relation("OwnerCards", fields: [creatorId], references: [id])
+  userCards       UserCard[]
+  sales           Sale[]     @relation("SalesForPhotoCard")
 }
 
+model UserCard {
+  id                Int               @id @default(autoincrement())
+  // 개별 카드의 거래 상태를 나타내기 위한 데이터
+  status            UserCardStatus    @default(IDLE) 
+  createdAt         DateTime          @default(now())
+  ownerId           Int
+  owner             User              @relation("UserOwnedCards", fields: [ownerId], references: [id])
+  photoCardId       Int
+  photoCard         PhotoCard         @relation(fields: [photoCardId], references: [id])
+  purchases         Purchase[] 
+  exchangeProposals ExchangeProposal[]
+}
+
+enum UserCardStatus {
+  IDLE         
+  ON_SALE      
+  PROPOSED     
+}
+
+model Sale {
+  id               Int               @id @default(autoincrement())
+  sellerId         Int
+  seller           User              @relation("SalesBySeller", fields: [sellerId], references: [id])
+  photoCardId      Int
+  photoCard        PhotoCard         @relation("SalesForPhotoCard", fields: [photoCardId], references: [id])
+  price            Int
+  // 판매 등록 시 올린 카드 수량입니다 (ex. 5장 중 3장 판매 등록 → 3)
+  initialQuantity  Int 
+   // 거래가 발생할 때마다 감소하며, 남은 수량을 나타냅니다.
+  quantity         Int             
+  desiredGrade     CardGrade?
+  desiredGenre     CardGenre?
+  desiredDesc      String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  proposals        ExchangeProposal[]
+  purchases        Purchase[]
+}
+
+// 포인트 구매 또는 카드 교환 거래의 이력을 저장하는 테이블입니다.
+// 거래를 통해 userCard의 소유권이 변경된 내역을 기록합니다.
 model Purchase {
-  id        Int      @id @default(autoincrement())
-  buyer     User     @relation("BuyerPurchases", fields: [buyerId], references: [id])
-  buyerId   Int
-  sale      Sale     @relation(fields: [saleId], references: [id])
-  saleId    Int
-  createdAt DateTime @default(now())
+  id         Int           @id @default(autoincrement())
+  buyer      User          @relation("BuyerPurchases", fields: [buyerId], references: [id])
+  buyerId    Int
+  sale       Sale          @relation(fields: [saleId], references: [id])
+  saleId     Int
+  userCard   UserCard      @relation(fields: [userCardId], references: [id])
+  userCardId Int
+  type       PurchaseType  
+  createdAt  DateTime      @default(now())
+}
+
+enum PurchaseType {
+  POINT
+  EXCHANGE
 }
 
 model ExchangeProposal {
-  id             Int            @id @default(autoincrement())
-  saleId         Int
-  sale           Sale           @relation(fields: [saleId], references: [id])
-  proposedCardId Int
-  proposedCard   UserCard       @relation(fields: [proposedCardId], references: [id])
-  proposerId     Int
-  proposer       User           @relation("ProposingUser", fields: [proposerId], references: [id])
-  status         ProposalStatus @default(PENDING)
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  id              Int             @id @default(autoincrement())
+  saleId          Int
+  sale            Sale            @relation(fields: [saleId], references: [id])
+  proposedCardId  Int
+  proposedCard    UserCard        @relation(fields: [proposedCardId], references: [id])
+  proposerId      Int
+  proposer        User            @relation("ProposingUser", fields: [proposerId], references: [id])
+  message         String
+  status          ProposalStatus  @default(PENDING)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 }
 
 model Notification {
-  id        Int              @id @default(autoincrement())
-  user      User             @relation(fields: [userId], references: [id])
-  userId    Int
-  content   String
-  type      NotificationType
-  createdAt DateTime         @default(now())
-  read      Boolean          @default(false)
+  id          Int               @id @default(autoincrement())
+  user        User              @relation(fields: [userId], references: [id])
+  userId      Int
+  content     String
+  type        NotificationType
+  createdAt   DateTime          @default(now())
+  read        Boolean           @default(false)
 }
 
 model PointLog {
-  id        Int      @id @default(autoincrement())
-  user      User     @relation(fields: [userId], references: [id])
-  userId    Int
-  amount    Int
-  reason    String
-  createdAt DateTime @default(now())
+  id          Int               @id @default(autoincrement())
+  user        User              @relation(fields: [userId], references: [id])
+  userId      Int
+  amount      Int
+  reason      String
+  createdAt   DateTime          @default(now())
 }
 
 model CardCreationLimit {
@@ -165,13 +161,6 @@ enum CardGrade {
   LEGENDARY
 }
 
-// NOTE: 현재 CardGenre ENUM은 제공되는 시딩데이터 장르 기준으로 정의
-// 서비스 요구사항에 따라 장르 항목을 변경하거나 추가할 경우,
-// 아래 두 항목을 반드시 함께 수정해야 합니다:
-// - Prisma 스키마 파일 (schema.prisma)
-// - Zod 스키마 정의 (예: getSaleListSchema 등)
-//
-// 이 두 정의가 불일치할 경우, 데이터 검증 오류 또는 런타임 에러가 발생할 수 있습니다.
 enum CardGenre {
   ALBUM
   SPECIAL
@@ -183,11 +172,6 @@ enum CardGenre {
   COLLAB
   FANCLUB
   ETC
-}
-
-enum SaleStatus {
-  ON_SALE
-  SOLD_OUT
 }
 
 enum ProposalStatus {
