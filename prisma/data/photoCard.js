@@ -7,7 +7,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 8000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=10',
+    imageUrl:
+      'https://images.unsplash.com/photo-1730396384575-6cefbf4380f9?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 11,
@@ -17,7 +18,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 22000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=11',
+    imageUrl:
+      'https://images.unsplash.com/photo-1753925364019-0fa40a7eac5a?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 14,
@@ -27,7 +29,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 12000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=13',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750779941284-09ee2d6a619c?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 4,
@@ -37,7 +40,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 10000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=15',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750848299202-a95856df3be7?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 20,
@@ -47,7 +51,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 26000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=8',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750779941037-b3cbfde22acb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 7,
@@ -57,7 +62,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 27000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=14',
+    imageUrl:
+      'https://images.unsplash.com/photo-1741282198587-65bf77e6075d?q=80&w=1091&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 15,
@@ -67,7 +73,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 12000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=5',
+    imageUrl:
+      'https://images.unsplash.com/photo-1747926836633-e45cc5193310?q=80&w=1147&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 20,
@@ -77,7 +84,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 17000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=1',
+    imageUrl:
+      'https://images.unsplash.com/photo-1738316849598-8cbe1e5ca3f6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDU0NHxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 13,
@@ -87,7 +95,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 8000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=18',
+    imageUrl:
+      'https://images.unsplash.com/photo-1746990263194-0e2826fed608?q=80&w=1172&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 14,
@@ -97,7 +106,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 21000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=2',
+    imageUrl:
+      'https://images.unsplash.com/photo-1742403949587-42a767b9ea5b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 10,
@@ -107,7 +117,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 29000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=14',
+    imageUrl:
+      'https://images.unsplash.com/photo-1741282198587-65bf77e6075d?q=80&w=1091&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 2,
@@ -117,7 +128,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 17000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=16',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750779941284-09ee2d6a619c?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 13,
@@ -127,7 +139,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 8000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=7',
+    imageUrl:
+      'https://images.unsplash.com/photo-1744274800188-4f3159c408cf?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 3,
@@ -137,7 +150,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 9000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=13',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750848299202-a95856df3be7?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 9,
@@ -147,7 +161,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 21000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=2',
+    imageUrl:
+      'https://images.unsplash.com/photo-1742403949587-42a767b9ea5b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 3,
@@ -157,7 +172,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 28000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=8',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750779941037-b3cbfde22acb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 10,
@@ -167,7 +183,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 25000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=19',
+    imageUrl:
+      'https://images.unsplash.com/photo-1734688246098-141f0cae5cbf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ2M3xibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 1,
@@ -177,7 +194,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 18000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=3',
+    imageUrl:
+      'https://images.unsplash.com/photo-1739536176048-caa7190dba66?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ0MHxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 5,
@@ -187,7 +205,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 19000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=6',
+    imageUrl:
+      'https://images.unsplash.com/photo-1738193026612-4a953a4f4e96?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDUzMnxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 10,
@@ -197,7 +216,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 8000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=5',
+    imageUrl:
+      'https://images.unsplash.com/photo-1747926836633-e45cc5193310?q=80&w=1147&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 3,
@@ -207,7 +227,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 24000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=6',
+    imageUrl:
+      'https://images.unsplash.com/photo-1738193026612-4a953a4f4e96?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDUzMnxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 12,
@@ -217,7 +238,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 18000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=11',
+    imageUrl:
+      'https://images.unsplash.com/photo-1753925364019-0fa40a7eac5a?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 15,
@@ -227,7 +249,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 20000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=7',
+    imageUrl:
+      'https://images.unsplash.com/photo-1744274800188-4f3159c408cf?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 13,
@@ -237,7 +260,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 21000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=1',
+    imageUrl:
+      'https://images.unsplash.com/photo-1738316849598-8cbe1e5ca3f6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDU0NHxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 3,
@@ -247,7 +271,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 11000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=3',
+    imageUrl:
+      'https://images.unsplash.com/photo-1739536176048-caa7190dba66?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ0MHxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 11,
@@ -257,7 +282,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 20000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=11',
+    imageUrl:
+      'https://images.unsplash.com/photo-1753925364019-0fa40a7eac5a?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 14,
@@ -267,7 +293,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 20000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=18',
+    imageUrl:
+      'https://images.unsplash.com/photo-1746990263194-0e2826fed608?q=80&w=1172&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 7,
@@ -277,7 +304,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 20000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=0',
+    imageUrl:
+      'https://images.unsplash.com/photo-1626208655973-78ae68dbbc30?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 2,
@@ -287,7 +315,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 28000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=15',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750848299202-a95856df3be7?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 18,
@@ -297,7 +326,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 15000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=9',
+    imageUrl:
+      'https://images.unsplash.com/photo-1743527173859-2cf44e80cef8?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 17,
@@ -307,7 +337,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 12000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=5',
+    imageUrl:
+      'https://images.unsplash.com/photo-1747926836633-e45cc5193310?q=80&w=1147&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 3,
@@ -317,7 +348,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 11000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=10',
+    imageUrl:
+      'https://images.unsplash.com/photo-1730396384575-6cefbf4380f9?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 13,
@@ -327,7 +359,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 27000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=9',
+    imageUrl:
+      'https://images.unsplash.com/photo-1743527173859-2cf44e80cef8?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 1,
@@ -337,7 +370,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 26000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=18',
+    imageUrl:
+      'https://images.unsplash.com/photo-1746990263194-0e2826fed608?q=80&w=1172&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 11,
@@ -347,7 +381,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 12000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=13',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750848299202-a95856df3be7?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 19,
@@ -357,7 +392,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 18000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=15',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750848299202-a95856df3be7?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 6,
@@ -367,7 +403,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 22000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=8',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750779941037-b3cbfde22acb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 1,
@@ -377,7 +414,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 7000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=8',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750779941037-b3cbfde22acb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 20,
@@ -387,7 +425,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 9000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=5',
+    imageUrl:
+      'https://images.unsplash.com/photo-1747926836633-e45cc5193310?q=80&w=1147&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 7,
@@ -397,7 +436,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 18000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=16',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750779941284-09ee2d6a619c?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 12,
@@ -407,7 +447,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 11000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=8',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750779941037-b3cbfde22acb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 15,
@@ -417,7 +458,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 23000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=7',
+    imageUrl:
+      'https://images.unsplash.com/photo-1744274800188-4f3159c408cf?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 13,
@@ -427,7 +469,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 27000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=1',
+    imageUrl:
+      'https://images.unsplash.com/photo-1738316849598-8cbe1e5ca3f6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDU0NHxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 2,
@@ -437,7 +480,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 19000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=9',
+    imageUrl:
+      'https://images.unsplash.com/photo-1743527173859-2cf44e80cef8?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 13,
@@ -447,7 +491,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 22000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=5',
+    imageUrl:
+      'https://images.unsplash.com/photo-1747926836633-e45cc5193310?q=80&w=1147&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 6,
@@ -457,7 +502,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 27000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=7',
+    imageUrl:
+      'https://images.unsplash.com/photo-1744274800188-4f3159c408cf?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 18,
@@ -467,7 +513,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 23000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=7',
+    imageUrl:
+      'https://images.unsplash.com/photo-1744274800188-4f3159c408cf?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 5,
@@ -477,7 +524,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 13000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=16',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750779941284-09ee2d6a619c?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 9,
@@ -487,7 +535,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 17000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=15',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750848299202-a95856df3be7?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 17,
@@ -497,7 +546,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 15000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=2',
+    imageUrl:
+      'https://images.unsplash.com/photo-1742403949587-42a767b9ea5b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 10,
@@ -507,7 +557,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 7000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=9',
+    imageUrl:
+      'https://images.unsplash.com/photo-1743527173859-2cf44e80cef8?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 9,
@@ -517,7 +568,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 18000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=13',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750848299202-a95856df3be7?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 8,
@@ -527,7 +579,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 18000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=18',
+    imageUrl:
+      'https://images.unsplash.com/photo-1746990263194-0e2826fed608?q=80&w=1172&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 15,
@@ -537,7 +590,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 7000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=3',
+    imageUrl:
+      'https://images.unsplash.com/photo-1739536176048-caa7190dba66?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ0MHxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 17,
@@ -547,7 +601,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 10000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=19',
+    imageUrl:
+      'https://images.unsplash.com/photo-1734688246098-141f0cae5cbf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ2M3xibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 16,
@@ -557,7 +612,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 23000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=0',
+    imageUrl:
+      'https://images.unsplash.com/photo-1626208655973-78ae68dbbc30?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 8,
@@ -567,7 +623,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 12000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=1',
+    imageUrl:
+      'https://images.unsplash.com/photo-1738316849598-8cbe1e5ca3f6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDU0NHxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 2,
@@ -577,7 +634,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 28000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=13',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750848299202-a95856df3be7?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 20,
@@ -587,7 +645,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 11000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=3',
+    imageUrl:
+      'https://images.unsplash.com/photo-1739536176048-caa7190dba66?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ0MHxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 8,
@@ -597,7 +656,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 17000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=0',
+    imageUrl:
+      'https://images.unsplash.com/photo-1626208655973-78ae68dbbc30?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 15,
@@ -607,7 +667,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 28000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=9',
+    imageUrl:
+      'https://images.unsplash.com/photo-1743527173859-2cf44e80cef8?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 2,
@@ -617,7 +678,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 25000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=11',
+    imageUrl:
+      'https://images.unsplash.com/photo-1753925364019-0fa40a7eac5a?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 6,
@@ -627,7 +689,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 29000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=19',
+    imageUrl:
+      'https://images.unsplash.com/photo-1734688246098-141f0cae5cbf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ2M3xibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 1,
@@ -637,7 +700,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 13000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=12',
+    imageUrl:
+      'https://images.unsplash.com/photo-1740166260070-4d129541aa52?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ4OHxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 7,
@@ -647,7 +711,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 15000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=18',
+    imageUrl:
+      'https://images.unsplash.com/photo-1746990263194-0e2826fed608?q=80&w=1172&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 15,
@@ -657,7 +722,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 13000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=2',
+    imageUrl:
+      'https://images.unsplash.com/photo-1742403949587-42a767b9ea5b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 7,
@@ -667,7 +733,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 20000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=2',
+    imageUrl:
+      'https://images.unsplash.com/photo-1742403949587-42a767b9ea5b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 4,
@@ -677,7 +744,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 13000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=7',
+    imageUrl:
+      'https://images.unsplash.com/photo-1744274800188-4f3159c408cf?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 11,
@@ -687,7 +755,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 9000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=9',
+    imageUrl:
+      'https://images.unsplash.com/photo-1743527173859-2cf44e80cef8?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 7,
@@ -697,7 +766,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 20000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=17',
+    imageUrl:
+      'https://images.unsplash.com/photo-1739869610059-86fabc7bcd7b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDUwMnxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 9,
@@ -707,7 +777,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 15000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=13',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750848299202-a95856df3be7?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 7,
@@ -717,7 +788,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 25000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=11',
+    imageUrl:
+      'https://images.unsplash.com/photo-1753925364019-0fa40a7eac5a?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 5,
@@ -727,7 +799,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 13000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=19',
+    imageUrl:
+      'https://images.unsplash.com/photo-1734688246098-141f0cae5cbf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ2M3xibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 9,
@@ -737,7 +810,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 12000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=14',
+    imageUrl:
+      'https://images.unsplash.com/photo-1741282198587-65bf77e6075d?q=80&w=1091&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 16,
@@ -747,7 +821,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 28000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=4',
+    imageUrl:
+      'https://images.unsplash.com/photo-1739361133037-77be66a4ea6a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDUyMHxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 16,
@@ -757,7 +832,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 20000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=11',
+    imageUrl:
+      'https://images.unsplash.com/photo-1753925364019-0fa40a7eac5a?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 4,
@@ -767,7 +843,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 15000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=14',
+    imageUrl:
+      'https://images.unsplash.com/photo-1741282198587-65bf77e6075d?q=80&w=1091&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 13,
@@ -777,7 +854,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 29000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=6',
+    imageUrl:
+      'https://images.unsplash.com/photo-1738193026612-4a953a4f4e96?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDUzMnxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 5,
@@ -787,7 +865,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 12000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=1',
+    imageUrl:
+      'https://images.unsplash.com/photo-1738316849598-8cbe1e5ca3f6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDU0NHxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 13,
@@ -797,7 +876,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 25000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=4',
+    imageUrl:
+      'https://images.unsplash.com/photo-1739361133037-77be66a4ea6a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDUyMHxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 18,
@@ -807,7 +887,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 22000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=10',
+    imageUrl:
+      'https://images.unsplash.com/photo-1730396384575-6cefbf4380f9?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 2,
@@ -817,7 +898,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 14000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=12',
+    imageUrl:
+      'https://images.unsplash.com/photo-1740166260070-4d129541aa52?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ4OHxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 8,
@@ -827,7 +909,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 25000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=13',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750848299202-a95856df3be7?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 6,
@@ -837,7 +920,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 10000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=2',
+    imageUrl:
+      'https://images.unsplash.com/photo-1742403949587-42a767b9ea5b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 2,
@@ -847,7 +931,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 17000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=3',
+    imageUrl:
+      'https://images.unsplash.com/photo-1739536176048-caa7190dba66?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ0MHxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 4,
@@ -857,7 +942,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 21000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=5',
+    imageUrl:
+      'https://images.unsplash.com/photo-1747926836633-e45cc5193310?q=80&w=1147&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 9,
@@ -867,7 +953,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 25000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=8',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750779941037-b3cbfde22acb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 17,
@@ -877,7 +964,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 17000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=0',
+    imageUrl:
+      'https://images.unsplash.com/photo-1626208655973-78ae68dbbc30?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 20,
@@ -887,7 +975,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 28000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=8',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750779941037-b3cbfde22acb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 20,
@@ -897,7 +986,8 @@ export const photoCardData = [
     grade: 'COMMON',
     initialPrice: 23000,
     totalQuantity: 2,
-    imageUrl: 'https://picsum.photos/360/270?random=18',
+    imageUrl:
+      'https://images.unsplash.com/photo-1746990263194-0e2826fed608?q=80&w=1172&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 4,
@@ -907,7 +997,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 10000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=14',
+    imageUrl:
+      'https://images.unsplash.com/photo-1741282198587-65bf77e6075d?q=80&w=1091&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 15,
@@ -917,7 +1008,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 29000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=9',
+    imageUrl:
+      'https://images.unsplash.com/photo-1743527173859-2cf44e80cef8?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 8,
@@ -927,7 +1019,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 11000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=8',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750779941037-b3cbfde22acb?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 18,
@@ -937,7 +1030,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 19000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=3',
+    imageUrl:
+      'https://images.unsplash.com/photo-1739536176048-caa7190dba66?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDQ0MHxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 9,
@@ -947,7 +1041,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 23000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=17',
+    imageUrl:
+      'https://images.unsplash.com/photo-1739869610059-86fabc7bcd7b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDUwMnxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
   {
     creatorId: 10,
@@ -957,7 +1052,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 25000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=16',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750779941284-09ee2d6a619c?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 12,
@@ -967,7 +1063,8 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 29000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=16',
+    imageUrl:
+      'https://images.unsplash.com/photo-1750779941284-09ee2d6a619c?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 15,
@@ -977,7 +1074,8 @@ export const photoCardData = [
     grade: 'LEGENDARY',
     initialPrice: 26000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=11',
+    imageUrl:
+      'https://images.unsplash.com/photo-1753925364019-0fa40a7eac5a?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 7,
@@ -987,7 +1085,8 @@ export const photoCardData = [
     grade: 'SUPER_RARE',
     initialPrice: 26000,
     totalQuantity: 3,
-    imageUrl: 'https://picsum.photos/360/270?random=14',
+    imageUrl:
+      'https://images.unsplash.com/photo-1741282198587-65bf77e6075d?q=80&w=1091&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     creatorId: 14,
@@ -997,6 +1096,7 @@ export const photoCardData = [
     grade: 'RARE',
     initialPrice: 10000,
     totalQuantity: 1,
-    imageUrl: 'https://picsum.photos/360/270?random=17',
+    imageUrl:
+      'https://images.unsplash.com/photo-1739869610059-86fabc7bcd7b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDUwMnxibzhqUUtUYUUwWXx8ZW58MHx8fHx8',
   },
 ];
