@@ -157,7 +157,7 @@ model CardCreationLimit {
 enum CardGrade {
   COMMON
   RARE
-  SUPER_RARE @map("SUPER_RARE")
+  SUPER_RARE 
   LEGENDARY
 }
 

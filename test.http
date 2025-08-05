@@ -34,5 +34,5 @@ Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsIm5pY2tuYW1
 Content-Type: application/json
 
 ### 판매 목록 조회
-GET http://localhost:3000/sales?
+GET http://localhost:3000/sales?includeSoldOut=false
 Content-Type: application/json
