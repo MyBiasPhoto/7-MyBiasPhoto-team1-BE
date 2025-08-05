@@ -1,5 +1,9 @@
 ### 회원가입
+<<<<<<< HEAD
 POST http://localhost:4000/auth/signup
+=======
+POST http://localhost:3500/auth/signup
+>>>>>>> 100b48f (머지용 임시 커밋)
 Content-Type: application/json 
 
 {
