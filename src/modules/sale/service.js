@@ -38,6 +38,7 @@ class SaleService {
         },
       ],
     };
+
     const orderByClause = {
       priceLowToHigh: { price: 'asc' },
       priceHighToLow: { price: 'desc' },
@@ -45,15 +46,29 @@ class SaleService {
       oldest: { createdAt: 'asc' },
     }[orderBy];
 
-    const { saleList, totalCount } = await this.saleRepository.getSaleListAndTotalCount({
-      where,
-      orderByClause,
-      skip,
-      take,
-    });
+    const include = {
+      photoCard: {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          imageUrl: true,
+          grade: true,
+          genre: true,
+        },
+      },
+      seller: {
+        select: { nickname: true },
+      },
+    };
 
-    console.log('saleList: ', saleList);
-    console.log('totalCount: ', totalCount);
+    const [saleList, totalCount] = await Promise.all([
+      this.saleRepository.getSaleList({ where, orderByClause, include, skip, take }),
+      this.saleRepository.getTotalCount({ where }),
+    ]);
+
+    // console.log('saleList: ', saleList);
+    // console.log('totalCount: ', totalCount);
 
     const formattedSales = saleList.map((sale) => ({
       saleId: sale.id,
