@@ -3,7 +3,7 @@ import {
   genreMap,
   genreMapReverse,
   gradeMapReverse,
-  CARD_GRADE,
+  CARD_GRADE_VALUES,
 } from '../../common/constants/enum.js';
 
 class UserCardService {
@@ -108,7 +108,73 @@ class UserCardService {
       pageSize,
       totalPages: Math.ceil(totalCount / pageSize),
       // gradeCount: formattedGradeCounts,
-      gradeCount: gradeCountMap,
+      gradeCounts: gradeCountMap,
+    };
+  };
+
+  getMyMarketList = async (userId, query) => {
+    const { page, pageSize, search, grade, genre } = query;
+
+    const skip = (page - 1) * pageSize;
+    const take = pageSize;
+    const where = {
+      ownerId: userId,
+      status: { in: ['ON_SALE', 'PROPOSED'] },
+      photoCard: {
+        ...(grade && { grade }),
+        ...(genre && { genre }),
+        ...(search && {
+          name: { contains: search, mode: 'insensitive' },
+        }),
+      },
+    };
+    const orderBy = { updatedAt: 'desc' };
+    const include = {
+      photoCard: {
+        select: {
+          name: true,
+          description: true,
+          imageUrl: true,
+          grade: true,
+          genre: true,
+        },
+      },
+    };
+
+    const myMarketList = await this.userCardRepository.getUserCardList({
+      where,
+      orderBy,
+      skip,
+      take,
+      include,
+    });
+
+    const formattedMyMarketList = myMarketList.map((myGallery) => ({
+      userCardId: myGallery.id,
+      name: myGallery.photoCard.name,
+      description: myGallery.photoCard.description,
+      imageUrl: myGallery.photoCard.imageUrl,
+      grade: gradeMapReverse[myGallery.photoCard.grade] || myGallery.photoCard.grade,
+      genre: genreMapReverse[myGallery.photoCard.genre] || myGallery.photoCard.genre,
+      owner: myGallery.ownerId,
+      updatedAt: myGallery.updatedAt,
+    }));
+
+    const totalCount = await this.userCardRepository.getTotalCount({ where });
+    const gradeCounts = await this.userCardRepository.getGradeCounts({ userId });
+
+    const filledGradeCountMap = CARD_GRADE_VALUES.reduce((acc, grade) => {
+      acc[grade] = gradeCounts[grade] || 0;
+      return acc;
+    }, {});
+
+    return {
+      myMarketList: formattedMyMarketList,
+      totalCount,
+      page,
+      pageSize,
+      totalPages: Math.ceil(totalCount / pageSize),
+      gradeCounts: filledGradeCountMap,
     };
   };
 }

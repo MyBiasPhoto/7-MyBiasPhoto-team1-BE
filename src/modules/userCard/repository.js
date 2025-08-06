@@ -68,6 +68,24 @@ class UserCardRepository {
       return [myGalleryList, totalCount, gradeCountMap];
     });
   };
+
+  getGradeCounts = async ({ userId }) => {
+    const gradeCounts = await prisma.$queryRaw`
+      SELECT pc.grade, COUNT(*)::int AS count
+      FROM "UserCard" uc
+      JOIN "PhotoCard" pc ON uc."photoCardId" = pc.id
+      WHERE uc."ownerId" = ${userId}
+        AND uc.status IN ('ON_SALE', 'PROPOSED')
+      GROUP BY pc.grade
+    `;
+
+    const gradeCountMap = gradeCounts.reduce((acc, row) => {
+      acc[row.grade] = row.count;
+      return acc;
+    }, {});
+
+    return gradeCountMap;
+  };
 }
 
 export default UserCardRepository;

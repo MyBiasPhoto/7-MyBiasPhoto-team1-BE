@@ -16,6 +16,19 @@ class UserCardController {
       next(error);
     }
   };
+
+  getMyMarketList = async (req, res, next) => {
+    try {
+      const { id: userId } = req.user;
+      const query = req.query;
+
+      const myMarketList = await this.userCardService.getMyMarketList(userId, query);
+
+      return res.status(200).json(myMarketList);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default UserCardController;
