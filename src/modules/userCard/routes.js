@@ -19,4 +19,10 @@ userCardRouter.get(
   userCardController.getMyGalleryList
 );
 
+userCardRouter.get(
+  '/market',
+  verifyAccessToken,
+  validate(getMyGalleryListSchema, 'query'),
+  userCardController.getMyMarketList
+);
 export default userCardRouter;
