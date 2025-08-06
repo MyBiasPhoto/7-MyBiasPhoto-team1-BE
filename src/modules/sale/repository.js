@@ -16,6 +16,34 @@ class SaleRepository {
     const totalCount = await prisma.sale.count({ where });
     return totalCount;
   };
+  //   return { saleList, totalCount };
+  // }
+
+  async getSaleCardById(id) {
+    const saleCard = await prisma.sale.findUnique({
+      where: { id },
+      include: {
+        photoCard: {
+          select: {
+            id: true,
+            name: true,
+            description: true,
+            imageUrl: true,
+            grade: true,
+            genre: true,
+            initialPrice: true,
+            totalQuantity: true,
+          },
+        },
+        seller: {
+          select: {
+            nickname: true,
+          },
+        },
+      },
+    });
+    return saleCard;
+  }
 }
 
 export default SaleRepository;

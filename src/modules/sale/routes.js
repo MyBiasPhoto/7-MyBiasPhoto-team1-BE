@@ -12,5 +12,6 @@ const saleService = new SaleService(saleRepository);
 const saleController = new SaleController(saleService);
 
 saleRouter.get('/', validate(getSaleListSchema, 'query'), saleController.getSaleList);
+saleRouter.get('/:id', saleController.getSaleCardById);
 
 export default saleRouter;
