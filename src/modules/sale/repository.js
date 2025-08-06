@@ -40,6 +40,37 @@ class SaleRepository {
             nickname: true,
           },
         },
+        proposals: {
+          select: {
+            id: true,
+            proposedCardId: true,
+            message: true,
+            status: true,
+            createdAt: true,
+            updatedAt: true,
+            proposer: {
+              select: {
+                id: true,
+                nickname: true,
+              },
+            },
+            proposedCard: {
+              select: {
+                id: true,
+                status: true,
+                photoCard: {
+                  select: {
+                    id: true,
+                    name: true,
+                    imageUrl: true,
+                    grade: true,
+                    genre: true,
+                  },
+                },
+              },
+            },
+          },
+        },
       },
     });
     return saleCard;
