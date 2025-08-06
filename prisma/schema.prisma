@@ -55,6 +55,7 @@ model UserCard {
   // 개별 카드의 거래 상태를 나타내기 위한 데이터
   status            UserCardStatus    @default(IDLE) 
   createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @default(now()) @updatedAt
   ownerId           Int
   owner             User              @relation("UserOwnedCards", fields: [ownerId], references: [id])
   photoCardId       Int
