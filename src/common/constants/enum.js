@@ -1,3 +1,13 @@
+import { CardGrade, CardGenre, UserCardStatus } from '@prisma/client';
+
+export const CARD_GRADE = CardGrade;
+export const CARD_GENRE = CardGenre;
+export const USER_CARD_STATUS = UserCardStatus;
+
+// enum을 배열형태로 저장
+export const CARD_GRADE_VALUES = Object.values(CardGrade);
+export const CARD_GENRE_VALUES = Object.values(CardGenre);
+
 export const genreMap = {
   앨범: 'ALBUM',
   특전: 'SPECIAL',
