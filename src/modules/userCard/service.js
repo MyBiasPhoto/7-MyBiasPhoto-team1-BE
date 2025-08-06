@@ -7,14 +7,16 @@ import {
 } from '../../common/constants/enum.js';
 
 class UserCardService {
-  constructor(userCardRepository) {
+  constructor(userCardRepository, userCardTransaction, userRepository) {
     this.userCardRepository = userCardRepository;
+    this.userCardTransaction = userCardTransaction;
+    this.userRepository = userRepository;
   }
 
   getMyGalleryList = async (userId, query) => {
     const { page, pageSize, search, grade, genre } = query;
 
-    const user = await this.userCardRepository.findUserById(userId);
+    const user = await this.userRepository.findUserById(userId);
     if (!user) {
       const error = new Error('존재하지 않는 유저 id 입니다');
       error.statusCode = 401;
@@ -41,9 +43,7 @@ class UserCardService {
         }),
       },
     };
-
     const orderBy = { createdAt: 'desc' };
-
     const include = {
       photoCard: {
         select: {
@@ -73,7 +73,7 @@ class UserCardService {
     // - 모든 쿼리를 한 트랜잭션 안에서 실행 → 데이터 일관성 보장
     // - 등급별 카운트는 enum에서 가져온 값 기반으로 동적 처리
     const [myGalleryList, totalCount, gradeCountMap] =
-      await this.userCardRepository.getGalleryDataInTransaction({
+      await this.userCardTransaction.getGalleryDataInTransaction({
         where,
         orderBy,
         skip,
@@ -101,6 +101,12 @@ class UserCardService {
     //   LEGENDARY: legendary,
     // };
 
+    const gradeCounts = gradeCountMap;
+    const filledgradeCountMap = CARD_GRADE_VALUES.reduce((acc, grade, idx) => {
+      acc[grade] = gradeCounts[idx];
+      return acc;
+    }, {});
+
     return {
       MyGalleryList: formattedMyGalleryList,
       totalCount,
@@ -108,12 +114,19 @@ class UserCardService {
       pageSize,
       totalPages: Math.ceil(totalCount / pageSize),
       // gradeCount: formattedGradeCounts,
-      gradeCounts: gradeCountMap,
+      gradeCounts: filledgradeCountMap,
     };
   };
 
   getMyMarketList = async (userId, query) => {
     const { page, pageSize, search, grade, genre } = query;
+
+    const user = await this.userRepository.findUserById(userId);
+    if (!user) {
+      const error = new Error('존재하지 않는 유저 id 입니다');
+      error.statusCode = 401;
+      throw error;
+    }
 
     const skip = (page - 1) * pageSize;
     const take = pageSize;
@@ -141,13 +154,14 @@ class UserCardService {
       },
     };
 
-    const myMarketList = await this.userCardRepository.getUserCardList({
-      where,
-      orderBy,
-      skip,
-      take,
-      include,
-    });
+    const [myMarketList, totalCount, gradeCounts] =
+      await this.userCardTransaction.getMyMarketDataInTransaction({
+        where,
+        orderBy,
+        skip,
+        take,
+        include,
+      });
 
     const formattedMyMarketList = myMarketList.map((myGallery) => ({
       userCardId: myGallery.id,
@@ -159,9 +173,6 @@ class UserCardService {
       owner: myGallery.ownerId,
       updatedAt: myGallery.updatedAt,
     }));
-
-    const totalCount = await this.userCardRepository.getTotalCount({ where });
-    const gradeCounts = await this.userCardRepository.getGradeCounts({ userId });
 
     const filledGradeCountMap = CARD_GRADE_VALUES.reduce((acc, grade) => {
       acc[grade] = gradeCounts[grade] || 0;
