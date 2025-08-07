@@ -39,10 +39,10 @@ Content-Type: application/json
 
 ### MyGallery 목록 조회
 GET http://localhost:3000/users/me/userCard/gallery
-Cookie:   accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywibmlja25hbWUiOiJ1c2VyMyIsImlhdCI6MTc1NDQ5NDIyMSwiZXhwIjoxNzU0NDk3ODIxfQ.QYr97B0kUH4gnAEH2-I6AUCUzIaq45VI-I3obmbO0Oo;
+Cookie:   accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywibmlja25hbWUiOiJ1c2VyMyIsImlhdCI6MTc1NDUyODUxOSwiZXhwIjoxNzU0NTMyMTE5fQ.e4NtgsLO0ktZ4T3tiQlC7tEr76ckZptla_OKHNIv3cg;
 Content-Type: application/json
 
 ### MyMarket 목록 조회
 GET http://localhost:3000/users/me/userCard/market
-Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywibmlja25hbWUiOiJ1c2VyMyIsImlhdCI6MTc1NDQ5NDIyMSwiZXhwIjoxNzU0NDk3ODIxfQ.QYr97B0kUH4gnAEH2-I6AUCUzIaq45VI-I3obmbO0Oo;
+Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywibmlja25hbWUiOiJ1c2VyMyIsImlhdCI6MTc1NDUyODUxOSwiZXhwIjoxNzU0NTMyMTE5fQ.e4NtgsLO0ktZ4T3tiQlC7tEr76ckZptla_OKHNIv3cg;
 Content-Type: application/json

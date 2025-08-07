@@ -43,9 +43,9 @@ class UserCardTransaction {
 
       const totalCountPromise = this.userCardRepository.getTotalCount({ where }, tx);
 
-      const gradeCountsPromises = this.userCardRepository.getGradeCounts({ userId }, tx);
+      const gradeCountsPromises = this.userCardRepository.getGradeCounts({ ownerId: userId }, tx);
 
-      const [myGalleryList, totalCount, ...gradeCounts] = await Promise.all([
+      const [myGalleryList, totalCount, gradeCounts] = await Promise.all([
         myMarketListPromise,
         totalCountPromise,
         gradeCountsPromises,
