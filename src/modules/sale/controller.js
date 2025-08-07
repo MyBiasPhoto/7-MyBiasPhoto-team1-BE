@@ -13,6 +13,17 @@ class SaleController {
       next(error);
     }
   };
+  getSaleCardById = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      console.log('getSaleCardById에서의 req.parms.id : ', Number(id));
+
+      const saleCardById = await this.saleService.getSaleCardById(id);
+      return res.status(200).json(saleCardById);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default SaleController;

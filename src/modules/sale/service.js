@@ -91,5 +91,9 @@ class SaleService {
       totalPages: Math.ceil(totalCount / pageSize),
     };
   };
+  getSaleCardById = async (id) => {
+    const cardById = await this.saleRepository.getSaleCardById(Number(id));
+    return cardById;
+  };
 }
 export default SaleService;
