@@ -21,8 +21,8 @@ class SaleService {
 
     const where = {
       AND: [
-        ...(includeSoldOut === 'true' ? [{ quantity: { gt: 0 } }] : []),
-        ...(includeSoldOut === 'false' ? [{ quantity: { equals: 0 } }] : []),
+        ...(includeSoldOut === 'false' ? [{ quantity: { gt: 0 } }] : []),
+        ...(includeSoldOut === 'true' ? [{ quantity: { equals: 0 } }] : []),
         {
           photoCard: {
             is: {
