@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import AuthController from './controller.js';
+import UserRepository from '../user/repository.js';
 import AuthService from './service.js';
 import AuthRepository from './repository.js';
 import { validate } from '../../common/middleware/validate.js';
@@ -10,7 +11,8 @@ import { verifyAccessToken } from '../../common/middleware/verifyAccessToken.js'
 const authRouter = Router();
 
 const authRepository = new AuthRepository();
-const authService = new AuthService(authRepository);
+const userRepository = new UserRepository();
+const authService = new AuthService(authRepository, userRepository);
 const authController = new AuthController(authService);
 
 authRouter.post('/signup', validate(signupSchema, 'body'), authController.signup);

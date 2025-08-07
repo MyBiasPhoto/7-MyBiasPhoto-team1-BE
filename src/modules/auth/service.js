@@ -2,12 +2,13 @@ import bcrypt from 'bcryptjs';
 import { generateToken } from '../../common/utils/jwt.js';
 
 class AuthService {
-  constructor(authRepository) {
+  constructor(authRepository, userRepository) {
     this.authRepository = authRepository;
+    this.userRepository = userRepository;
   }
 
   createUser = async ({ email, password, nickname }) => {
-    const existingUser = await this.authRepository.findUserByEmail(email);
+    const existingUser = await this.userRepository.findUserByEmail(email);
     if (existingUser) {
       const error = new Error('이미 등록된 이메일 주소 입니다.');
       error.statusCode = 409;
@@ -16,7 +17,7 @@ class AuthService {
 
     const hashedPassword = await bcrypt.hash(password, 14);
 
-    const newUser = await this.authRepository.createUser({
+    const newUser = await this.userRepository.createUser({
       email,
       password: hashedPassword,
       nickname,
@@ -27,7 +28,7 @@ class AuthService {
   };
 
   login = async ({ email, password: passwordInput }) => {
-    const existingUser = await this.authRepository.findUserByEmail(email);
+    const existingUser = await this.userRepository.findUserByEmail(email);
     if (!existingUser) {
       const error = new Error('등록되지 않은 이메일 주소 입니다.');
       error.statusCode = 404;
