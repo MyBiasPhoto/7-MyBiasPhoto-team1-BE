@@ -1,3 +1,4 @@
+// src/modules/sale/schema/getSaleListSchema.js
 import { z } from 'zod';
 
 export const getSaleListSchema = z.object({

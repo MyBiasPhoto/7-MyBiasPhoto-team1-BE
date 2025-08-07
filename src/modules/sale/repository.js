@@ -1,3 +1,4 @@
+// src/modules/sale/repository.js
 import { prisma } from '../../common/utils/prisma.js';
 
 class SaleRepository {
