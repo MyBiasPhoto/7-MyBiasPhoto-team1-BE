@@ -1,3 +1,4 @@
+// src/modules/sale/routes.js
 import SaleController from './controller.js';
 import SaleService from './service.js';
 import SaleRepository from './repository.js';
