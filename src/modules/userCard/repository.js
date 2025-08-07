@@ -19,7 +19,7 @@ class UserCardRepository {
 
   // Promise All 로 처리할경우
   getGradeCount = async ({ ownerId, status, grade }, client = prisma) => {
-    const gradeCount = prisma.userCard.count({
+    const gradeCount = client.userCard.count({
       where: {
         ownerId,
         status,
@@ -31,12 +31,12 @@ class UserCardRepository {
     return gradeCount;
   };
 
-  getGradeCounts = async ({ userId }, client = prisma) => {
+  getGradeCounts = async ({ ownerId }, client = prisma) => {
     const gradeCounts = await client.$queryRaw`
       SELECT pc.grade, COUNT(*)::int AS count
       FROM "UserCard" uc
       JOIN "PhotoCard" pc ON uc."photoCardId" = pc.id
-      WHERE uc."ownerId" = ${userId}
+      WHERE uc."ownerId" = ${ownerId}
         AND uc.status IN ('ON_SALE', 'PROPOSED')
       GROUP BY pc.grade
     `;

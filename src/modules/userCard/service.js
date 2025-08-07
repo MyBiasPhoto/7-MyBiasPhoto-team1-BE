@@ -161,6 +161,7 @@ class UserCardService {
         skip,
         take,
         include,
+        userId,
       });
 
     const formattedMyMarketList = myMarketList.map((myGallery) => ({
@@ -174,8 +175,13 @@ class UserCardService {
       updatedAt: myGallery.updatedAt,
     }));
 
+    const countsFromDB = gradeCounts.reduce((acc, item) => {
+      acc[item.grade] = item.count;
+      return acc;
+    }, {});
+
     const filledGradeCountMap = CARD_GRADE_VALUES.reduce((acc, grade) => {
-      acc[grade] = gradeCounts[grade] || 0;
+      acc[grade] = countsFromDB[grade] || 0;
       return acc;
     }, {});
 
