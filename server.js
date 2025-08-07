@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import authRouter from './src/modules/auth/routes.js';
 import saleRouter from './src/modules/sale/routes.js';
 import userRouter from './src/modules/user/routes.js';
+import photoCardRouter from './src/modules/photoCard/routes.js';
 dotenv.config();
 const app = express();
 
@@ -25,7 +26,10 @@ app.get('/', (req, res) => {
 
 app.use('/auth', authRouter);
 app.use('/sales', saleRouter);
+
 app.use('/users', userRouter);
+
+app.use('/api/photoCard', photoCardRouter);
 
 app.use((err, req, res, next) => {
   if (process.env.NODE_ENV === 'development') {
