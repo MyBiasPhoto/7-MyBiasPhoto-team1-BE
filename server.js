@@ -9,6 +9,8 @@ import saleRouter from './src/modules/sale/routes.js';
 import userRouter from './src/modules/user/routes.js';
 import photoCardRouter from './src/modules/photoCard/routes.js';
 import uploadRouter from './src/modules/photoCard/upload.js';
+import { errorHandler } from './src/common/middleware/errorHandler.js';
+
 dotenv.config();
 const app = express();
 
@@ -41,21 +43,25 @@ app.use('/api/photoCard', photoCardRouter);
 // 테스트용으로 upload 폴더만 만들고 배포때는 다른 방식 사용
 app.use('/api/upload', uploadRouter);
 
-app.use((err, req, res, next) => {
-  if (process.env.NODE_ENV === 'development') {
-    console.error(err.stack);
-  }
+app.use(errorHandler);
 
-  console.error('에러 메시지:', err.message);
+// app.use((err, req, res, next) => {
+//   if (process.env.NODE_ENV === 'development') {
+//     console.error(err.stack);
+//   }
 
-  const statusCode = err.statusCode || err.status || 500;
-  const message = err.message || '서버 오류가 발생했습니다.';
+//   console.error('에러 메시지:', err.message);
 
-  res.status(statusCode).json({
-    success: false,
-    message: message,
-  });
-});
+//   const statusCode = err.statusCode || err.status || 500;
+//   const message = err.message || '서버 오류가 발생했습니다.';
+//   const code = err.code || 'INTERNAL_SERVER_ERROR';
+
+//   res.status(statusCode).json({
+//     success: false,
+//     error: code,
+//     message: message,
+//   });
+// });
 
 const PORT = process.env.PORT || 3000;
 

@@ -14,8 +14,8 @@ POST http://localhost:4000/auth/login
 Content-Type: application/json 
 
 {
-    "email": "jwj@gg.com",
-    "password": "1q2w3e4r1!"
+    "email": "user2@example.com",
+    "password": "password2@"
 }
 
 ### 시딩데이터 로그인
@@ -39,10 +39,19 @@ Content-Type: application/json
 
 ### MyGallery 목록 조회
 GET http://localhost:4000/users/me/userCard/gallery
-Cookie:   accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsIm5pY2tuYW1lIjoi7Jqp7JWU7KCE7IKs7J6l7JuQ7JiBIiwiaWF0IjoxNzU0NTQwNDI5LCJleHAiOjE3NTQ1NDQwMjl9.lNwi6KhpzaZSsYsWwjoLdQ-NDPvrj6GinX_m23brnDE;
+Cookie:   accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsIm5pY2tuYW1lIjoi7Jqp7JWU7KCE7IKs7J6l7JuQ7JiBIiwiaWF0IjoxNzU0NTM5NjM5LCJleHAiOjE3NTQ1NDMyMzl9.XMqbq7nH6toOMFzQvMd0WTAq8-ZzQB7DveOoWZyqPRc; 
 Content-Type: application/json
 
 ### MyMarket 목록 조회
 GET http://localhost:4000/users/me/userCard/market
 Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmlja25hbWUiOiJ1c2VyNCIsImlhdCI6MTc1NDU1MTY2MCwiZXhwIjoxNzU0NTU1MjYwfQ.miUZeJXlpnoLDTc4NpcBoH6J7TQsWgJyePXXpDmFUzo;
 Content-Type: application/json
+
+###구매하기
+POST http://localhost:4000/sales/45/buy
+Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsIm5pY2tuYW1lIjoidXNlcjE1IiwiaWF0IjoxNzU0NjM3MDY3LCJleHAiOjE3NTQ2NDA2Njd9.jVhDDg0Lu9kFa2EzV7g93XSDkRZ_EDoSEaiU33LHl68
+Content-Type: application/json
+
+{
+    "quantity": 1
+}

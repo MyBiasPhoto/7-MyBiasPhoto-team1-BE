@@ -5,7 +5,7 @@ import {
   genreMapReverse,
   gradeMapReverse,
 } from '../../common/constants/enum.js';
-
+import { throwApiError } from '../../common/utils/throwApiErrors.js';
 class SaleService {
   constructor(saleRepository) {
     this.saleRepository = saleRepository;
@@ -41,7 +41,7 @@ class SaleService {
         { deletedAt: null },
       ],
     };
-//con
+    //con
     const orderByClause = {
       priceLowToHigh: { price: 'asc' },
       priceHighToLow: { price: 'desc' },
@@ -108,6 +108,42 @@ class SaleService {
   patchSaleListById = async (id, deletedAt) => {
     const card = await this.saleRepository.patchSaleListById(Number(id), deletedAt);
     return card;
+  };
+  buySale = async (userId, saleId, quantity) => {
+    // 1. 사전 검증 (판매 존재 여부, 수량, 포인트 등)
+    const sale = await this.saleRepository.getSaleById(saleId);
+    if (!sale) {
+      throwApiError('SALE_NOT_FOUND', '해당 판매글이 존재하지 않습니다.', 404);
+    }
+
+    if (sale.quantity < quantity) {
+      throwApiError(
+        'INSUFFICIENT_QUANTITY_CONFLICT',
+        `요청한 수량(${quantity})이 남은 수량(${sale.quantity})보다 많습니다.`,
+        409
+      );
+    }
+
+    const buyer = await this.saleRepository.getUserById(userId);
+    const totalPrice = sale.price * quantity;
+    if (buyer.points < totalPrice) {
+      throwApiError(
+        'NOT_ENOUGH_MINERALS(POINTS)',
+        `포인트가 부족합니다. 필요한 포인트: ${totalPrice}, 현재 보유 포인트: ${buyer.points}`,
+        400
+      );
+    }
+
+    // 2. 트랜잭션 실행 (판매자 포인트 증가, 구매자 포인트 차감 등)
+    const result = await this.saleRepository.executeBuySaleTx({
+      userId,
+      sale,
+      buyer,
+      quantity,
+      totalPrice,
+    });
+
+    return result;
   };
 }
 export default SaleService;

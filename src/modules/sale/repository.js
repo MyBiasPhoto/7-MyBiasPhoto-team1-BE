@@ -101,6 +101,26 @@ class SaleRepository {
     });
     return patch;
   }
+  getSaleById = async (id) => {
+    return await prisma.sale.findUnique({
+      where: { id },
+    });
+  };
+
+  getUserById = async (id) => {
+    return await prisma.user.findUnique({
+      where: { id },
+    });
+  };
+
+  executeBuySaleTx = async (txArgs) => {
+    const { executeBuySaleTx } = await import('./transaction.js');
+    // import 해서 똑 때오는게 아니라서 class 형으로 작성하여 서로가 서로를 의존하는 수가 생김
+    // 의존성 순환 (Circular Dependency)발생할때 await import 걸어서 회피
+    //   SaleRepository → transaction.js
+    // transaction.js → 또다시 SaleRepository 참조할 경우
+    return await executeBuySaleTx(txArgs);
+  };
 }
 
 export default SaleRepository;
