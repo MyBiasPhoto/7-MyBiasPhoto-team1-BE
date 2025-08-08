@@ -103,5 +103,10 @@ class SaleService {
     const card = await this.saleRepository.patchSaleCardById(Number(id), patchData);
     return card;
   };
+
+  patchSaleListById = async (id, deletedAt) => {
+    const card = await this.saleRepository.patchSaleListById(Number(id), deletedAt);
+    return card;
+  };
 }
 export default SaleService;

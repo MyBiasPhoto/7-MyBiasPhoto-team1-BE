@@ -37,6 +37,19 @@ class SaleController {
       next(error);
     }
   };
+
+  patchSaleListById = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const deletedAt = req.body;
+
+      const saleList = await this.saleService.patchSaleListById(id, deletedAt);
+
+      return res.status(200).json(saleList);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default SaleController;
