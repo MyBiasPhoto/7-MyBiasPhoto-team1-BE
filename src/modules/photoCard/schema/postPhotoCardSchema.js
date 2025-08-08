@@ -18,6 +18,10 @@ export const postPhotoCardSchema = z.object({
     'ETC',
   ]),
   initialPrice: z.coerce.number().int().min(0, '0원 이상 입력해 주세요.'),
-  totalQuantity: z.coerce.number().int().min(1, '1개 이상 입력해 주세요.'),
+  totalQuantity: z.coerce
+    .number()
+    .int()
+    .min(1, '1개 이상 입력해 주세요.')
+    .max(10, '10개 이하로만 선택할 수 있습니다.'),
   creatorId: z.coerce.number().int().min(1, '유효한 userId를 입력해 주세요.'),
 });

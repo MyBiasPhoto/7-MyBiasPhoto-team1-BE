@@ -35,6 +35,15 @@ class AuthController {
         secure: true,
       });
 
+      // Application/Cookies 에 refreshToken 보이게 하는 테스트 코드
+      // res.cookie('refreshToken', refreshToken, {
+      //   path: '/',
+      //   httpOnly: true,
+      //   maxAge: 7 * 24 * 60 * 60 * 1000,
+      //   sameSite: 'lax',
+      //   secure: false,
+      // });
+
       return res.status(200).json(user);
     } catch (error) {
       next(error);
@@ -55,6 +64,14 @@ class AuthController {
       sameSite: 'none',
       secure: true,
     });
+
+    // Application/Cookies 에 refreshToken 보이게 하는 테스트 코드
+    // res.clearCookie('refreshToken', {
+    //   path: '/',
+    //   httpOnly: true,
+    //   sameSite: 'lax',
+    //   secure: false,
+    // });
 
     return res.status(200).json({ message: '로그아웃 완료' });
   };
