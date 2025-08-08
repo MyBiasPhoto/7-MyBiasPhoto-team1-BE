@@ -1,35 +1,11 @@
-import { prisma } from '../../common/utils/prisma.js';
-
 class PhotoCardService {
-  constructor(photoCardRepository) {
+  constructor(photoCardRepository, photoCardTransaction) {
     this.photoCardRepository = photoCardRepository;
+    this.photoCardTransaction = photoCardTransaction;
   }
 
   async createPhotoCard(data, userId) {
-    const { name, description, imageUrl, grade, genre, initialPrice, totalQuantity } = data;
-
-    return await prisma.$transaction(async (transaction) => {
-      const photoCard = await this.photoCardRepository.createPhotoCard(transaction, {
-        name,
-        description,
-        imageUrl,
-        grade,
-        genre,
-        initialPrice,
-        totalQuantity,
-        creator: { connect: { id: userId } },
-      });
-
-      const userCards = await this.photoCardRepository.createUserCards(
-        transaction,
-        Array.from({ length: totalQuantity }).map(() => ({
-          ownerId: userId,
-          photoCardId: photoCard.id,
-        }))
-      );
-
-      return { photoCard, userCards };
-    });
+    return await this.photoCardTransaction.createPhotoCardInTransaction(data, userId);
   }
 }
 
