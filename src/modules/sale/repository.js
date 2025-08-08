@@ -75,6 +75,23 @@ class SaleRepository {
     });
     return saleCard;
   }
+
+  async patchSaleCardById(id, patchData) {
+    console.log('레포에서id', id);
+    const check = await prisma.sale.findUnique({
+      where: { id },
+    });
+
+    if (!check) {
+      throw new Error('존재하지않는 카드입니다.');
+    }
+
+    const patchCard = await prisma.sale.update({
+      where: { id },
+      data: patchData,
+    });
+    return patchCard;
+  }
 }
 
 export default SaleRepository;

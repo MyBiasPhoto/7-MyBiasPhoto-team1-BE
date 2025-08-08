@@ -24,6 +24,19 @@ class SaleController {
       next(error);
     }
   };
+
+  patchSaleCardById = async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      console.log('req.params.id:', id);
+      const patchData = req.body;
+      console.log('PatchSaleCardById에서의 req.parms.id : ', Number(id));
+      const saleCardById = await this.saleService.patchSaleCardById(id, patchData);
+      return res.status(200).json(saleCardById);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default SaleController;
