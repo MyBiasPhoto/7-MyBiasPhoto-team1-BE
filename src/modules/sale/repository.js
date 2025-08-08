@@ -92,6 +92,14 @@ class SaleRepository {
     });
     return patchCard;
   }
+
+  async patchSaleListById(id, deletedAt) {
+    const patch = await prisma.sale.update({
+      where: { id },
+      data: deletedAt,
+    });
+    return patch;
+  }
 }
 
 export default SaleRepository;

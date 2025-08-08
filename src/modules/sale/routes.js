@@ -12,7 +12,8 @@ const saleService = new SaleService(saleRepository);
 const saleController = new SaleController(saleService);
 
 saleRouter.get('/', validate(getSaleListSchema, 'query'), saleController.getSaleList);
+saleRouter.patch('/:id', saleController.patchSaleListById);
 saleRouter.get('/:id', saleController.getSaleCardById);
-saleRouter.patch(`/:id`,saleController.patchSaleCardById)
+saleRouter.patch(`/:id`, saleController.patchSaleCardById);
 
 export default saleRouter;
