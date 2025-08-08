@@ -96,5 +96,11 @@ class SaleService {
     const cardById = await this.saleRepository.getSaleCardById(Number(id));
     return cardById;
   };
+
+  patchSaleCardById = async (id, patchData) => {
+    console.log('서비스에서', id);
+    const card = await this.saleRepository.patchSaleCardById(Number(id), patchData);
+    return card;
+  };
 }
 export default SaleService;

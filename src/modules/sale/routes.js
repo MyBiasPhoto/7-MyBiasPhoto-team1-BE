@@ -13,5 +13,6 @@ const saleController = new SaleController(saleService);
 
 saleRouter.get('/', validate(getSaleListSchema, 'query'), saleController.getSaleList);
 saleRouter.get('/:id', saleController.getSaleCardById);
+saleRouter.patch(`/:id`,saleController.patchSaleCardById)
 
 export default saleRouter;
