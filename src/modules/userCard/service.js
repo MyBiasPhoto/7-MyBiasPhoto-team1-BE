@@ -19,7 +19,8 @@ class UserCardService {
     const user = await this.userRepository.findUserById(userId);
     if (!user) {
       const error = new Error('존재하지 않는 유저 id 입니다');
-      error.statusCode = 401;
+      error.statusCode = 401; // 401은 인증토큰 에러로만 구성하고 다른 에러코드 써야할듯
+      // console.error(error.message);
       throw error;
     }
 
@@ -124,7 +125,7 @@ class UserCardService {
     const user = await this.userRepository.findUserById(userId);
     if (!user) {
       const error = new Error('존재하지 않는 유저 id 입니다');
-      error.statusCode = 401;
+      error.statusCode = 401; // 401은 인증토큰 에러로만 구성하고 다른 에러코드 써야할듯
       throw error;
     }
 
