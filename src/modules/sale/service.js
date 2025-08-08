@@ -37,6 +37,7 @@ class SaleService {
             },
           },
         },
+        { deletedAt: null },
       ],
     };
 
