@@ -8,23 +8,23 @@ datasource db {
 }
 
 model User {
-  id                  Int                 @id @default(autoincrement())
-  email               String              @unique
-  nickname            String
-  password            String?
-  provider            AuthProvider        @default(LOCAL)
-  providerId          String?
-  points              Int                 @default(0)
-  createdAt           DateTime            @default(now())
-  updatedAt           DateTime            @updatedAt
-  photoCards          PhotoCard[]         @relation("OwnerCards")
-  userCards           UserCard[]          @relation("UserOwnedCards")
-  sales               Sale[]              @relation("SalesBySeller")
-  purchases           Purchase[]          @relation("BuyerPurchases")
-  proposedExchanges   ExchangeProposal[]  @relation("ProposingUser")
-  notifications       Notification[] 
-  pointLogs           PointLog[] 
-  cardCreationLimits  CardCreationLimit[]
+  id                 Int                 @id @default(autoincrement())
+  email              String              @unique
+  nickname           String
+  password           String?
+  provider           AuthProvider        @default(LOCAL)
+  providerId         String?
+  points             Int                 @default(0)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  photoCards         PhotoCard[]         @relation("OwnerCards")
+  userCards          UserCard[]          @relation("UserOwnedCards")
+  sales              Sale[]              @relation("SalesBySeller")
+  purchases          Purchase[]          @relation("BuyerPurchases")
+  proposedExchanges  ExchangeProposal[]  @relation("ProposingUser")
+  notifications      Notification[]
+  pointLogs          PointLog[]
+  cardCreationLimits CardCreationLimit[]
 }
 
 enum AuthProvider {
@@ -33,75 +33,76 @@ enum AuthProvider {
 }
 
 model PhotoCard {
-  id              Int        @id @default(autoincrement())
-  name            String
-  description     String
-  imageUrl        String
-  grade           CardGrade
-  genre           CardGenre
-  initialPrice    Int
+  id            Int        @id @default(autoincrement())
+  name          String
+  description   String
+  imageUrl      String
+  grade         CardGrade
+  genre         CardGenre
+  initialPrice  Int
   // 유저가 포토카드 생성 시 설정한 총 발행량 (변경되지 않음)
-  totalQuantity   Int
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
-  creatorId       Int
-  creator         User       @relation("OwnerCards", fields: [creatorId], references: [id])
-  userCards       UserCard[]
-  sales           Sale[]     @relation("SalesForPhotoCard")
+  totalQuantity Int
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  creatorId     Int
+  creator       User       @relation("OwnerCards", fields: [creatorId], references: [id])
+  userCards     UserCard[]
+  sales         Sale[]     @relation("SalesForPhotoCard")
 }
 
 model UserCard {
-  id                Int               @id @default(autoincrement())
+  id                Int                @id @default(autoincrement())
   // 개별 카드의 거래 상태를 나타내기 위한 데이터
-  status            UserCardStatus    @default(IDLE) 
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @default(now()) @updatedAt
+  status            UserCardStatus     @default(IDLE)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @default(now()) @updatedAt
   ownerId           Int
-  owner             User              @relation("UserOwnedCards", fields: [ownerId], references: [id])
+  owner             User               @relation("UserOwnedCards", fields: [ownerId], references: [id])
   photoCardId       Int
-  photoCard         PhotoCard         @relation(fields: [photoCardId], references: [id])
-  purchases         Purchase[] 
+  photoCard         PhotoCard          @relation(fields: [photoCardId], references: [id])
+  purchases         Purchase[]
   exchangeProposals ExchangeProposal[]
 }
 
 enum UserCardStatus {
-  IDLE         
-  ON_SALE      
-  PROPOSED     
+  IDLE
+  ON_SALE
+  PROPOSED
 }
 
 model Sale {
-  id               Int               @id @default(autoincrement())
-  sellerId         Int
-  seller           User              @relation("SalesBySeller", fields: [sellerId], references: [id])
-  photoCardId      Int
-  photoCard        PhotoCard         @relation("SalesForPhotoCard", fields: [photoCardId], references: [id])
-  price            Int
+  id              Int                @id @default(autoincrement())
+  sellerId        Int
+  seller          User               @relation("SalesBySeller", fields: [sellerId], references: [id])
+  photoCardId     Int
+  photoCard       PhotoCard          @relation("SalesForPhotoCard", fields: [photoCardId], references: [id])
+  price           Int
   // 판매 등록 시 올린 카드 수량입니다 (ex. 5장 중 3장 판매 등록 → 3)
-  initialQuantity  Int 
-   // 거래가 발생할 때마다 감소하며, 남은 수량을 나타냅니다.
-  quantity         Int             
-  desiredGrade     CardGrade?
-  desiredGenre     CardGenre?
-  desiredDesc      String?
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
-  proposals        ExchangeProposal[]
-  purchases        Purchase[]
+  initialQuantity Int
+  // 거래가 발생할 때마다 감소하며, 남은 수량을 나타냅니다.
+  quantity        Int
+  desiredGrade    CardGrade?
+  desiredGenre    CardGenre?
+  desiredDesc     String?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  proposals       ExchangeProposal[]
+  purchases       Purchase[]
+  deletedAt       DateTime?
 }
 
 // 포인트 구매 또는 카드 교환 거래의 이력을 저장하는 테이블입니다.
 // 거래를 통해 userCard의 소유권이 변경된 내역을 기록합니다.
 model Purchase {
-  id         Int           @id @default(autoincrement())
-  buyer      User          @relation("BuyerPurchases", fields: [buyerId], references: [id])
+  id         Int          @id @default(autoincrement())
+  buyer      User         @relation("BuyerPurchases", fields: [buyerId], references: [id])
   buyerId    Int
-  sale       Sale          @relation(fields: [saleId], references: [id])
+  sale       Sale         @relation(fields: [saleId], references: [id])
   saleId     Int
-  userCard   UserCard      @relation(fields: [userCardId], references: [id])
+  userCard   UserCard     @relation(fields: [userCardId], references: [id])
   userCardId Int
-  type       PurchaseType  
-  createdAt  DateTime      @default(now())
+  type       PurchaseType
+  createdAt  DateTime     @default(now())
 }
 
 enum PurchaseType {
@@ -110,36 +111,36 @@ enum PurchaseType {
 }
 
 model ExchangeProposal {
-  id              Int             @id @default(autoincrement())
-  saleId          Int
-  sale            Sale            @relation(fields: [saleId], references: [id])
-  proposedCardId  Int
-  proposedCard    UserCard        @relation(fields: [proposedCardId], references: [id])
-  proposerId      Int
-  proposer        User            @relation("ProposingUser", fields: [proposerId], references: [id])
-  message         String
-  status          ProposalStatus  @default(PENDING)
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  id             Int            @id @default(autoincrement())
+  saleId         Int
+  sale           Sale           @relation(fields: [saleId], references: [id])
+  proposedCardId Int
+  proposedCard   UserCard       @relation(fields: [proposedCardId], references: [id])
+  proposerId     Int
+  proposer       User           @relation("ProposingUser", fields: [proposerId], references: [id])
+  message        String
+  status         ProposalStatus @default(PENDING)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 }
 
 model Notification {
-  id          Int               @id @default(autoincrement())
-  user        User              @relation(fields: [userId], references: [id])
-  userId      Int
-  content     String
-  type        NotificationType
-  createdAt   DateTime          @default(now())
-  read        Boolean           @default(false)
+  id        Int              @id @default(autoincrement())
+  user      User             @relation(fields: [userId], references: [id])
+  userId    Int
+  content   String
+  type      NotificationType
+  createdAt DateTime         @default(now())
+  read      Boolean          @default(false)
 }
 
 model PointLog {
-  id          Int               @id @default(autoincrement())
-  user        User              @relation(fields: [userId], references: [id])
-  userId      Int
-  amount      Int
-  reason      String
-  createdAt   DateTime          @default(now())
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  amount    Int
+  reason    String
+  createdAt DateTime @default(now())
 }
 
 model CardCreationLimit {
@@ -158,7 +159,7 @@ model CardCreationLimit {
 enum CardGrade {
   COMMON
   RARE
-  SUPER_RARE 
+  SUPER_RARE
   LEGENDARY
 }
 
