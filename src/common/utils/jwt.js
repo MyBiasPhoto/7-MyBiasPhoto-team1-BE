@@ -8,7 +8,7 @@ export function generateAccessToken(user) {
   return jwt.sign(payload, process.env.ACCESS_SECRET, { expiresIn: ACCESS_TTL });
 }
 
-export function generateRefreshToken(user, jti = randomUUID()) {
+export function generateRefreshJWT(user, jti = randomUUID()) {
   const payload = {
     id: user.id,
     nickname: user.nickname,
@@ -20,11 +20,11 @@ export function generateRefreshToken(user, jti = randomUUID()) {
   return { token, jti, expiresIn: REFRESH_TTL };
 }
 
-export function verifyAccessToken(token) {
+export function verifyAccessJWT(token) {
   return jwt.verify(token, process.env.ACCESS_SECRET);
 }
 
-export function verifyRefreshToken(token) {
+export function verifyRefreshJWT(token) {
   return jwt.verify(token, process.env.REFRESH_SECRET);
 }
 
