@@ -1,29 +1,28 @@
-import { verifyToken } from '../utils/jwt.js';
+import { verifyAccessJWT } from '../utils/jwt.js';
+import { ApiError } from '../utils/apiError.js';
 
 export const verifyAccessToken = (req, res, next) => {
   try {
-    const { accessToken } = req.cookies;
-    if (!accessToken) {
-      throw new Error('accessToken이 존재하지 않습니다.');
+    const token = req.cookies?.accessToken;
+    if (!token) {
+      return next(new ApiError('AUTH_AT_MISSING', 'accessToken이 존재하지 않습니다.', 401));
     }
 
-    const decoded = verifyToken(accessToken);
+    const decoded = verifyAccessJWT(token);
 
     req.user = {
       id: decoded.id,
       nickname: decoded.nickname,
     };
 
-    next();
-  } catch (error) {
-    if (error.name === 'TokenExpiredError') {
-      return res.status(401).json({ message: 'accessToken이 만료되었습니다.' });
+    return next();
+  } catch (err) {
+    if (err.name === 'TokenExpiredError') {
+      return next(new ApiError('AUTH_AT_EXPIRED', 'accessToken이 만료되었습니다.', 401));
     }
-
-    if (error.name === 'JsonWebTokenError') {
-      return res.status(401).json({ message: '유효하지 않은 accessToken입니다.' });
+    if (err.name === 'JsonWebTokenError') {
+      return next(new ApiError('AUTH_AT_INVALID', '유효하지 않은 accessToken입니다.', 401));
     }
-
-    res.status(401).json({ message: error.message || 'accessToken 오류' });
+    return next(new ApiError('AUTH_AT_ERROR', err.message || 'accessToken 오류', 401));
   }
 };
