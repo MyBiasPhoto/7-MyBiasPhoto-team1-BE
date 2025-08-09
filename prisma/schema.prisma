@@ -25,11 +25,35 @@ model User {
   notifications      Notification[]
   pointLogs          PointLog[]
   cardCreationLimits CardCreationLimit[]
+  RefreshToken       RefreshToken[]
 }
 
 enum AuthProvider {
   LOCAL
   GOOGLE
+}
+
+model RefreshToken {
+  id       Int     @id @default(autoincrement())
+  userId   Int
+  // Rotation 전략용
+  jti      String? @unique
+  hashed   String?
+  // Sliding 전략용
+  opaqueId String? @unique
+
+  userAgent  String?
+  ip         String?
+  revoked    Boolean   @default(false)
+  expiresAt  DateTime
+  lastUsedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
 }
 
 model PhotoCard {
