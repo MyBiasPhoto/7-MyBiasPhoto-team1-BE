@@ -69,8 +69,8 @@ class UserCardService {
         statuses: ['IDLE'],
       });
 
-    console.log('myGalleryList : ', myGalleryList);
-    console.log(gradeCounts);
+    // console.log('myGalleryList : ', myGalleryList);
+    // console.log(gradeCounts);
 
     const formattedMyGalleryList = myGalleryList.map((uc) => ({
       userCardId: uc.id,
@@ -149,7 +149,7 @@ class UserCardService {
         userId,
         statuses,
       });
-    console.log('myMarketList : ', myMarketList);
+    // console.log('myMarketList : ', myMarketList);
     const formattedMySaleList = myMarketList.map((uc) => ({
       userCardId: uc.id,
       name: uc.photoCard.name,
