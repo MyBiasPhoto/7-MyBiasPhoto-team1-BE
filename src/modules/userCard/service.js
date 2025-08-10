@@ -5,6 +5,7 @@ import {
   gradeMapReverse,
   CARD_GRADE_VALUES,
 } from '../../common/constants/enum.js';
+import { throwApiError } from '../../common/utils/throwApiErrors.js';
 
 class UserCardService {
   constructor(userCardRepository, userCardTransaction, userRepository) {
@@ -13,15 +14,12 @@ class UserCardService {
     this.userRepository = userRepository;
   }
 
-  getMyGalleryList = async (userId, query) => {
+  getMyGalleryList = async (userId, userNickname, query) => {
     const { page, pageSize, search, grade, genre } = query;
 
     const user = await this.userRepository.findUserById(userId);
     if (!user) {
-      const error = new Error('존재하지 않는 유저 id 입니다');
-      error.statusCode = 401; // 401은 인증토큰 에러로만 구성하고 다른 에러코드 써야할듯
-      // console.error(error.message);
-      throw error;
+      throwApiError('USER_NOT_FOUND', '해당 유저를 찾을 수 없습니다.', 404);
     }
 
     const skip = (page - 1) * pageSize;
@@ -44,7 +42,7 @@ class UserCardService {
         }),
       },
     };
-    const orderBy = { createdAt: 'desc' };
+    const orderBy = { updatedAt: 'desc' };
     const include = {
       photoCard: {
         select: {
@@ -55,88 +53,73 @@ class UserCardService {
           genre: true,
         },
       },
+      owner: {
+        select: { nickname: true },
+      },
     };
 
-    //  [버전 1] Promise.all 방식
-    // - 각 쿼리를 병렬 실행하지만, 트랜잭션은 사용하지 않음.
-    // - 속도는 빠르지만, 도중에 데이터가 변경되면 일관성이 깨질 수 있음.
-    /*
-     const [myGalleryList, totalCount, common, rare, superRare, legendary] = await Promise.all([
-       this.userCardRepository.getUserCardList({ where, orderBy, skip, take, include }),
-       this.userCardRepository.getTotalCount({ where }),
-       this.userCardRepository.getGradeCount({ ownerId: userId, status: 'IDLE', grade: 'COMMON' }),
-       this.userCardRepository.getGradeCount({ ownerId: userId, status: 'IDLE', grade: 'RARE' }),
-       this.userCardRepository.getGradeCount({ ownerId: userId, status: 'IDLE', grade: 'SUPER_RARE' }),
-       this.userCardRepository.getGradeCount({ ownerId: userId, status: 'IDLE', grade: 'LEGENDARY' }),
-     ]); */
-
-    /// [버전 2] 트랜잭션 방식
-    // - 모든 쿼리를 한 트랜잭션 안에서 실행 → 데이터 일관성 보장
-    // - 등급별 카운트는 enum에서 가져온 값 기반으로 동적 처리
-    const [myGalleryList, totalCount, gradeCountMap] =
-      await this.userCardTransaction.getGalleryDataInTransaction({
+    const [myGalleryList, totalCount, gradeCounts] =
+      await this.userCardTransaction.getUserCardDataInTransaction({
         where,
         orderBy,
         skip,
         take,
         include,
         userId,
+        statuses: ['IDLE'],
       });
 
-    const formattedMyGalleryList = myGalleryList.map((myGallery) => ({
-      userCardId: myGallery.id,
-      name: myGallery.photoCard.name,
-      description: myGallery.photoCard.description,
-      imageUrl: myGallery.photoCard.imageUrl,
-      grade: gradeMapReverse[myGallery.photoCard.grade] || myGallery.photoCard.grade,
-      genre: genreMapReverse[myGallery.photoCard.genre] || myGallery.photoCard.genre,
-      owner: myGallery.ownerId,
-      updatedAt: myGallery.updatedAt,
+    console.log('myGalleryList : ', myGalleryList);
+    console.log(gradeCounts);
+
+    const formattedMyGalleryList = myGalleryList.map((uc) => ({
+      userCardId: uc.id,
+      name: uc.photoCard.name,
+      description: uc.photoCard.description,
+      imageUrl: uc.photoCard.imageUrl,
+      grade: gradeMapReverse[uc.photoCard.grade] || uc.photoCard.grade,
+      genre: genreMapReverse[uc.photoCard.genre] || uc.photoCard.genre,
+      ownerId: uc.ownerId,
+      ownerNickName: uc.owner.nickname,
+      updatedAt: uc.updatedAt,
     }));
 
-    // Promise.all 방식을 사용할 경우 데이터 포맷이 필요하다.
-    // const formattedGradeCounts = {
-    //   COMMON: common,
-    //   RARE: rare,
-    //   SUPER_RARE: superRare,
-    //   LEGENDARY: legendary,
-    // };
-
-    const gradeCounts = gradeCountMap;
-    const filledgradeCountMap = CARD_GRADE_VALUES.reduce((acc, grade, idx) => {
-      acc[grade] = gradeCounts[idx];
-      return acc;
-    }, {});
+    const by = Object.fromEntries(gradeCounts.map(({ grade, count }) => [grade, count]));
+    const formattedGradeCounts = CARD_GRADE_VALUES.map((g) => ({
+      grade: gradeMapReverse[g] ?? g,
+      count: by[g] ?? 0,
+    }));
 
     return {
+      userNickname,
       MyGalleryList: formattedMyGalleryList,
       totalCount,
       page,
       pageSize,
       totalPages: Math.ceil(totalCount / pageSize),
-      // gradeCount: formattedGradeCounts,
-      gradeCounts: filledgradeCountMap,
+      gradeCounts: formattedGradeCounts,
     };
   };
 
-  getMyMarketList = async (userId, query) => {
-    const { page, pageSize, search, grade, genre } = query;
+  getMyMarketList = async (userId, userNickname, query) => {
+    const { page, pageSize, search, grade, genre, saleType } = query;
 
     const user = await this.userRepository.findUserById(userId);
     if (!user) {
-      const error = new Error('존재하지 않는 유저 id 입니다');
-      error.statusCode = 401; // 401은 인증토큰 에러로만 구성하고 다른 에러코드 써야할듯
-      throw error;
+      throwApiError('USER_NOT_FOUND', '해당 유저를 찾을 수 없습니다.', 404);
     }
 
     const skip = (page - 1) * pageSize;
     const take = pageSize;
+    const mappedGrade = grade ? gradeMap[grade] : undefined;
+    const mappedGenre = genre ? genreMap[genre] : undefined;
+    const statuses = saleType ? [saleType] : ['ON_SALE', 'PROPOSED'];
     const where = {
       ownerId: userId,
-      status: { in: ['ON_SALE', 'PROPOSED'] },
+      status: { in: statuses },
       photoCard: {
-        ...(grade && { grade }),
-        ...(genre && { genre }),
+        ...(mappedGrade && { grade: mappedGrade }),
+        ...(mappedGenre && { genre: mappedGenre }),
         ...(search && {
           name: { contains: search, mode: 'insensitive' },
         }),
@@ -153,46 +136,47 @@ class UserCardService {
           genre: true,
         },
       },
+      owner: { select: { nickname: true } },
     };
 
     const [myMarketList, totalCount, gradeCounts] =
-      await this.userCardTransaction.getMyMarketDataInTransaction({
+      await this.userCardTransaction.getUserCardDataInTransaction({
         where,
         orderBy,
         skip,
         take,
         include,
         userId,
+        statuses,
       });
-
-    const formattedMyMarketList = myMarketList.map((myGallery) => ({
-      userCardId: myGallery.id,
-      name: myGallery.photoCard.name,
-      description: myGallery.photoCard.description,
-      imageUrl: myGallery.photoCard.imageUrl,
-      grade: gradeMapReverse[myGallery.photoCard.grade] || myGallery.photoCard.grade,
-      genre: genreMapReverse[myGallery.photoCard.genre] || myGallery.photoCard.genre,
-      owner: myGallery.ownerId,
-      updatedAt: myGallery.updatedAt,
+    console.log('myMarketList : ', myMarketList);
+    const formattedMySaleList = myMarketList.map((uc) => ({
+      userCardId: uc.id,
+      name: uc.photoCard.name,
+      description: uc.photoCard.description,
+      imageUrl: uc.photoCard.imageUrl,
+      grade: gradeMapReverse[uc.photoCard.grade] || uc.photoCard.grade,
+      genre: genreMapReverse[uc.photoCard.genre] || uc.photoCard.genre,
+      status: uc.status,
+      ownerId: uc.ownerId,
+      ownerNickName: uc.owner.nickname,
+      updatedAt: uc.updatedAt,
     }));
 
-    const countsFromDB = gradeCounts.reduce((acc, item) => {
-      acc[item.grade] = item.count;
-      return acc;
-    }, {});
-
-    const filledGradeCountMap = CARD_GRADE_VALUES.reduce((acc, grade) => {
-      acc[grade] = countsFromDB[grade] || 0;
-      return acc;
-    }, {});
+    const by = Object.fromEntries(gradeCounts.map(({ grade, count }) => [grade, count]));
+    const formattedGradeCounts = CARD_GRADE_VALUES.map((g) => ({
+      grade: gradeMapReverse[g] ?? g,
+      count: by[g] ?? 0,
+    }));
 
     return {
-      myMarketList: formattedMyMarketList,
+      userNickname,
+      myMarketList: formattedMySaleList,
       totalCount,
       page,
       pageSize,
       totalPages: Math.ceil(totalCount / pageSize),
-      gradeCounts: filledGradeCountMap,
+      gradeCounts: formattedGradeCounts,
     };
   };
 }
