@@ -7,7 +7,7 @@ class UserCardController {
     try {
       const { id: userId, nickname: userNickname } = req.user;
       const query = req.query;
-      console.log(req.user);
+      // console.log(req.user);
 
       const myGalleryList = await this.userCardService.getMyGalleryList(
         userId,
