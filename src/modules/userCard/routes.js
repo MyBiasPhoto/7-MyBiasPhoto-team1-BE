@@ -7,7 +7,7 @@ import { Router } from 'express';
 import { verifyAccessToken } from '../../common/middleware/verifyAccessToken.js';
 import { getMyGalleryListSchema } from './schema/getMyGalleryListSchema.js';
 import { validate } from '../../common/middleware/validate.js';
-
+import { getMySaleListSchema } from './schema/getMySaleListSchema.js';
 const userCardRouter = Router({ mergeParams: true });
 
 const userCardRepository = new UserCardRepository();
@@ -30,7 +30,7 @@ userCardRouter.get(
 userCardRouter.get(
   '/market',
   verifyAccessToken,
-  validate(getMyGalleryListSchema, 'query'),
+  validate(getMySaleListSchema, 'query'),
   userCardController.getMyMarketList
 );
 export default userCardRouter;
