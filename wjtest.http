@@ -48,8 +48,8 @@ Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmlja25h
 Content-Type: application/json
 
 ###구매하기
-POST http://localhost:4000/sales/42/buy
-Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsIm5pY2tuYW1lIjoi7Jqp7JWU7KCE7IKs7J6l7JuQ7JiBIiwiaWF0IjoxNzU0NzM3MTEzLCJleHAiOjE3NTQ3NDA3MTN9.mBAZZqJRfe-LcRACZolQcAgOzVpdx0qOQrLZjI6ILSQ
+POST http://localhost:4000/sales/44/buy
+Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsIm5pY2tuYW1lIjoi7Jqp7JWU7KCE7IKs7J6l7JuQ7JiBIiwiaWF0IjoxNzU0NzkxNDQ0LCJleHAiOjE3NTQ3OTUwNDR9.vwndP6LRf84qLpelvFtpGLxIBQICTKYSvNy6JVf8Hgw
 Content-Type: application/json
 
 {

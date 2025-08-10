@@ -79,7 +79,9 @@ class SaleController {
       const result = await this.saleService.buySale(userId, saleId, quantity);
 
       return res.status(200).json({
-        message: `saleId : ${saleId} 카드 ${quantity}장 구매 완료!`,
+        success: true,
+        code: 'PURCHASE_COMPLETED',
+        message: `saleId(${saleId}) -  카드 ${quantity}장 구매 완료!`,
         data: {
           saleId,
           quantity,
