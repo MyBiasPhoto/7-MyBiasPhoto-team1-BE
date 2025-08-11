@@ -9,6 +9,7 @@ import saleRouter from './src/modules/sale/routes.js';
 import userRouter from './src/modules/user/routes.js';
 import photoCardRouter from './src/modules/photoCard/routes.js';
 import uploadRouter from './src/modules/photoCard/upload.js';
+import exchangeRouter from './src/modules/exchange/routes.js'; //KJS
 import { errorHandler } from './src/common/middleware/errorHandler.js';
 import { verifyAccessToken } from './src/common/middleware/verifyAccessToken.js';
 
@@ -37,6 +38,8 @@ app.get('/', (req, res) => {
 
 app.use('/auth', authRouter);
 app.use('/sales', saleRouter);
+
+app.use('/api/sales', exchangeRouter); //KJS
 
 app.use('/users', userRouter);
 
