@@ -6,13 +6,25 @@ class SaleController {
 
   getSaleList = async (req, res, next) => {
     try {
-      console.log('컨트롤러에서 req.query: ', req.query);
+      // console.log('컨트롤러에서 req.query: ', req.query);
       const query = req.query;
       const saleList = await this.saleService.getSaleList(query);
       return res.status(200).json(saleList);
     } catch (error) {
       next(error);
     }
+  };
+
+  getOnSaleCountsByGrade = async () => {
+    const rows = await prisma.$queryRaw`
+    SELECT "photoCard"."grade" AS grade, COUNT(*)::int AS count
+      FROM "Sale" s
+      JOIN "PhotoCard" "photoCard" ON "photoCard"."id" = s."photoCardId"
+      WHERE s."quantity" > 0 AND s."deletedAt" IS NULL
+      GROUP BY "photoCard"."grade"
+      `;
+
+    return rows;
   };
   getSaleCardById = async (req, res, next) => {
     try {
