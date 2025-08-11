@@ -33,7 +33,7 @@ export async function executeCreateProposalTx(
     });
 
     // 5. 내 카드 상태 변경
-    await repo.updateUserCardStatusTx(tx, proposedCardId, 'ON_PROPOSAL');
+    await repo.updateUserCardStatusTx(tx, proposedCardId, 'IDLE');
 
     return proposal;
   });
