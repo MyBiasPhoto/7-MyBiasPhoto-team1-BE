@@ -4,6 +4,7 @@ import {
   gradeMap,
   genreMapReverse,
   gradeMapReverse,
+  CARD_GRADE_VALUES,
 } from '../../common/constants/enum.js';
 import { throwApiError } from '../../common/utils/throwApiErrors.js';
 class SaleService {
@@ -65,13 +66,15 @@ class SaleService {
       },
     };
 
-    const [saleList, totalCount] = await Promise.all([
+    const [saleList, totalCount, gradeCounts] = await Promise.all([
       this.saleRepository.getSaleList({ where, orderByClause, include, skip, take }),
       this.saleRepository.getTotalCount({ where }),
+      this.saleRepository.getOnSaleCountsByGrade(),
     ]);
 
     // console.log('saleList: ', saleList);
     // console.log('totalCount: ', totalCount);
+    // console.log(gradeCounts);
 
     const formattedSales = saleList.map((sale) => ({
       saleId: sale.id,
@@ -86,12 +89,19 @@ class SaleService {
       sellerNickname: sale.seller.nickname,
     }));
 
+    const by = Object.fromEntries(gradeCounts.map(({ grade, count }) => [grade, count]));
+    const formattedGradeCounts = CARD_GRADE_VALUES.map((g) => ({
+      grade: gradeMapReverse[g] ?? g,
+      count: by[g] ?? 0,
+    }));
+
     return {
       sales: formattedSales,
       totalCount,
       page,
       pageSize,
       totalPages: Math.ceil(totalCount / pageSize),
+      gradeCounts: formattedGradeCounts,
     };
   };
   getSaleCardById = async (id) => {
