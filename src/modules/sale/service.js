@@ -25,6 +25,7 @@ class SaleService {
       AND: [
         ...(includeSoldOut === 'false' ? [{ quantity: { gt: 0 } }] : []),
         ...(includeSoldOut === 'true' ? [{ quantity: { equals: 0 } }] : []),
+        //true일때 품절만 보이고 있음
         {
           photoCard: {
             is: {
@@ -119,11 +120,16 @@ class SaleService {
     const card = await this.saleRepository.patchSaleListById(Number(id), deletedAt);
     return card;
   };
+
   buySale = async (userId, saleId, quantity) => {
     // 1. 사전 검증 (판매 존재 여부, 수량, 포인트 등)
     const sale = await this.saleRepository.getSaleById(saleId);
     if (!sale) {
       throwApiError('SALE_NOT_FOUND', '해당 판매글이 존재하지 않습니다.', 404);
+    }
+
+    if (sale.sellerId === userId) {
+      throwApiError('CANNOT_BUY_MY_SALE', '본인 판매글은 구매할 수 없습니다.', 400);
     }
 
     if (sale.quantity < quantity) {
@@ -138,7 +144,7 @@ class SaleService {
     const totalPrice = sale.price * quantity;
     if (buyer.points < totalPrice) {
       throwApiError(
-        'NOT_ENOUGH_MINERALS(POINTS)',
+        'NOT_ENOUGH_MINERALS',
         `포인트가 부족합니다. 필요한 포인트: ${totalPrice}, 현재 보유 포인트: ${buyer.points}`,
         400
       );
