@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { randomUUID } from 'crypto';
-export const ACCESS_TTL = process.env.ACCESS_TTL ?? '1h';
+export const ACCESS_TTL = process.env.ACCESS_TTL ?? '10s';
 export const REFRESH_TTL = process.env.REFRESH_TTL ?? '7d';
 
 export function generateAccessToken(user) {

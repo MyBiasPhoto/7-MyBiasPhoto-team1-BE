@@ -10,6 +10,7 @@ import userRouter from './src/modules/user/routes.js';
 import photoCardRouter from './src/modules/photoCard/routes.js';
 import uploadRouter from './src/modules/photoCard/upload.js';
 import { errorHandler } from './src/common/middleware/errorHandler.js';
+import { verifyAccessToken } from './src/common/middleware/verifyAccessToken.js';
 
 dotenv.config();
 const app = express();
@@ -42,6 +43,11 @@ app.use('/users', userRouter);
 app.use('/api/photoCard', photoCardRouter);
 // 테스트용으로 upload 폴더만 만들고 배포때는 다른 방식 사용
 app.use('/api/upload', uploadRouter);
+
+//  토큰 테스트 용 코드
+app.get('/me', verifyAccessToken, (req, res) => {
+  res.json({ me: req.user });
+});
 
 app.use(errorHandler);
 
