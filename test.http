@@ -27,6 +27,23 @@ Content-Type: application/json
     "password": "password3@"
 }
 
+### 2) 보호 API 호출(AT 유효 시 200 )
+GET http://localhost:4000/me
+Cookie: accessToken=
+
+### 3) AT 만료를 기다렸다가 리프레시 요청
+# @name refresh1
+POST http://localhost:4000/auth/refresh
+Cookie: refreshToken=
+
+### 4) 보호 API 재호출
+GET http://localhost:4000/me
+Cookie: accessToken=
+
+### 5) 재사용 탐지 확인
+POST http://localhost:4000/auth/refresh
+Cookie: refreshToken=
+
 ### 로그아웃
 POST http://localhost:4000/auth/logout
 Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywibmlja25hbWUiOiJ1c2VyMyIsImlhdCI6MTc1NDUzMjMzOSwiZXhwIjoxNzU0NTM1OTM5fQ.c_eqm3P0j95XtUbqlu13-8QiicEqYrNZKfvG_rF6Ylc;
