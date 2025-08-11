@@ -19,6 +19,17 @@ class SaleRepository {
   };
   //   return { saleList, totalCount };
   // }
+  getOnSaleCountsByGrade = async () => {
+    const rows = await prisma.$queryRaw`
+    SELECT "photoCard"."grade" AS grade, COUNT(*)::int AS count
+      FROM "Sale" s
+      JOIN "PhotoCard" "photoCard" ON "photoCard"."id" = s."photoCardId"
+      WHERE s."quantity" > 0 AND s."deletedAt" IS NULL
+      GROUP BY "photoCard"."grade"
+      `;
+
+    return rows;
+  };
 
   async getSaleCardById(id) {
     const saleCard = await prisma.sale.findUnique({
