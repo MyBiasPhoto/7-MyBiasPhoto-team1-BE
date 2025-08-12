@@ -38,6 +38,14 @@ class UserRepository {
       return updated;
     });
   };
+
+  incrementPoints = ({ userId, points }, client = prisma) => {
+    return client.user.update({
+      where: { id: userId },
+      data: { points: { increment: points } },
+      select: { id: true, points: true },
+    });
+  };
 }
 
 export default UserRepository;

@@ -68,10 +68,15 @@ Content-Type: application/json
 
 ### MyGallery 목록 조회
 GET http://localhost:4000/users/me/userCard/gallery
-Cookie:   accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsIm5pY2tuYW1lIjoi7Jqp7JWU7KCE7IKs7J6l7JuQ7JiBIiwiaWF0IjoxNzU0ODA5NDc1LCJleHAiOjE3NTQ4MTMwNzV9.0jQ1BdGGjc1PDha6FyO4ICk07nmFGYybhfQzsyfW3cU;
+Cookie:   accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywibmlja25hbWUiOiJ1c2VyMyIsInBvaW50cyI6NjAwMCwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc1NDg3NTk0MywiZXhwIjoxNzU0ODc5NTQzfQ.Y7o9la2EjHO8IpTK-gsvQ_-ngdxTm6gWP9V8nSJIr5U;
 Content-Type: application/json
 
 ### MyMarket 목록 조회
 GET http://localhost:4000/users/me/userCard/market
 Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywibmlja25hbWUiOiJ1c2VyMyIsImlhdCI6MTc1NDgxMjUyNywiZXhwIjoxNzU0ODE2MTI3fQ.X8mjhvbrru0PT0Fo0LJY_0hZaMmeq-V3kqilgk0-M2g;
+Content-Type: application/json
+
+### 랜덤 포인트 지급
+POST http://localhost:4000/points/events/random
+Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywibmlja25hbWUiOiJ1c2VyMyIsInBvaW50cyI6NjIwMCwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc1NDk4NzQ2OSwiZXhwIjoxNzU0OTkxMDY5fQ.cqH5-iIwhBYNCfOSVIvX1UdnSt37fGl56tp3lCKDAXg;
 Content-Type: application/json

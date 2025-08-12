@@ -11,7 +11,10 @@ export const errorHandler = (err, req, res, next) => {
 
   const statusCode = isApiError ? err.status : err.statusCode || err.status || 500;
   const code = isApiError ? err.code : 'INTERNAL_SERVER_ERROR';
-  const message = isApiError ? err.message : (err.message || '서버 오류가 발생했습니다.');
+  const message = isApiError ? err.message : err.message || '서버 오류가 발생했습니다.';
+  if (statusCode === 429 && err?.meta?.retryAfterSeconds != null) {
+    res.set('Retry-After', String(err.meta.retryAfterSeconds));
+  }
 
   console.error('💥 에러 발생:', { statusCode, code, message });
 
@@ -19,5 +22,6 @@ export const errorHandler = (err, req, res, next) => {
     success: false,
     code,
     message,
+    ...(err?.meta ? { meta: err.meta } : {}),
   });
 };
