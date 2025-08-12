@@ -9,7 +9,8 @@ import {
 import { throwApiError } from '../../common/utils/throwApiErrors.js';
 import { generateOpaqueId, generateOpaqueToken } from '../../common/utils/opaque.js';
 
-const STRATEGY = (process.env.REFRESH_STRATEGY ?? 'rotation').toLowerCase();
+const STRATEGY = (process.env.REFRESH_STRATEGY ?? 'rotation').toLowerCase(); // 'rotation' | 'sliding' | 'both'
+const IS_BOTH = STRATEGY === 'both';
 const REFRESH_TTL_MS = parseExpiresToMs(REFRESH_TTL);
 
 class AuthService {
@@ -34,7 +35,7 @@ class AuthService {
     return userWithoutPassword;
   };
 
-  login = async ({ email, password: passwordInput, ctx }) => {
+  login = async ({ email, password: passwordInput, ctx, preferredStrategy }) => {
     const existingUser = await this.userRepository.findUserByEmail(email);
     if (!existingUser)
       throwApiError('AUTH_EMAIL_NOT_FOUND', '등록되지 않은 이메일 주소 입니다.', 404);
@@ -49,8 +50,9 @@ class AuthService {
       points: existingUser.points,
     };
     const accessToken = generateAccessToken(user);
+    const mode = IS_BOTH ? (preferredStrategy === 'sliding' ? 'sliding' : 'rotation') : STRATEGY;
 
-    if (STRATEGY === 'rotation') {
+    if (mode === 'rotation') {
       const { token: refreshToken, jti } = generateRefreshJWT(user);
       await this.authRepository.saveRotationRT({
         userId: user.id,
@@ -81,6 +83,14 @@ class AuthService {
     if (!refreshTokenRaw) {
       throwApiError('AUTH_RT_MISSING', 'refreshToken이 존재하지 않습니다.', 401);
     }
+
+    if (IS_BOTH) {
+      const isJWT = refreshTokenRaw.split('.').length === 3;
+      return isJWT
+        ? this._refreshRotation({ refreshTokenRaw, ctx })
+        : this._refreshSliding({ refreshTokenRaw, opaqueId, ctx });
+    }
+
     return STRATEGY === 'rotation'
       ? this._refreshRotation({ refreshTokenRaw, ctx })
       : this._refreshSliding({ refreshTokenRaw, opaqueId, ctx });
@@ -95,9 +105,9 @@ class AuthService {
       throwApiError('AUTH_RT_INVALID', '유효하지 않은 refreshToken입니다.', 401);
     }
 
-    const recode = await this.authRepository.findByJti(decoded.jti);
+    const record = await this.authRepository.findByJti(decoded.jti);
     // 토큰 탈취 의심 시 모든 세션 폐기
-    if (!recode || recode.revoked) {
+    if (!record || record.revoked) {
       await this.authRepository.revokeAllByUser(decoded.id);
       throwApiError(
         'AUTH_RT_REUSE',
@@ -106,7 +116,7 @@ class AuthService {
       );
     }
 
-    const match = await this.authRepository.isSameRawToken(recode.hashed, refreshTokenRaw);
+    const match = await this.authRepository.isSameRawToken(record.hashed, refreshTokenRaw);
     if (!match) {
       await this.authRepository.revokeAllByUser(decoded.id);
       throwApiError(
@@ -116,20 +126,19 @@ class AuthService {
       );
     }
 
-    // 정상 사용 시 기존 토큰 폐기
-    await this.authRepository.revokeById(recode.id);
-
     const user = { id: decoded.id, nickname: decoded.nickname, points: decoded.points };
     const accessToken = generateAccessToken(user);
     const { token: newRT, jti: newJti } = generateRefreshJWT(user);
+    const expiresAt = new Date(Date.now() + REFRESH_TTL_MS);
 
-    await this.authRepository.saveRotationRT({
+    await this.authRepository.rotateRTAtomic({
+      oldId: record.id,
       userId: user.id,
-      jti: newJti,
-      refreshToken: newRT,
+      newJti,
+      newToken: newRT,
       userAgent: ctx?.userAgent,
       ip: ctx?.ip,
-      expiresAt: new Date(Date.now() + REFRESH_TTL_MS),
+      expiresAt,
     });
 
     return { user, accessToken, refreshToken: newRT };
@@ -139,18 +148,18 @@ class AuthService {
   _refreshSliding = async ({ refreshTokenRaw, opaqueId }) => {
     if (!opaqueId) throwApiError('AUTH_OPAQUE_MISSING', 'opaqueId가 누락되었습니다.', 400);
 
-    const recode = await this.authRepository.findByOpaqueId(opaqueId);
-    if (!recode || recode.revoked)
+    const record = await this.authRepository.findByOpaqueId(opaqueId);
+    if (!record || record.revoked)
       throwApiError('AUTH_SESSION_INVALID', '유효하지 않은 세션입니다.', 401);
 
-    if (recode.expiresAt.getTime() <= Date.now()) {
-      await this.authRepository.revokeById(recode.id);
+    if (record.expiresAt.getTime() <= Date.now()) {
+      await this.authRepository.revokeById(record.id);
       throwApiError('AUTH_SESSION_EXPIRED', '세션이 만료되었습니다.', 401);
     }
 
-    const match = await this.authRepository.isSameRawToken(recode.hashed, refreshTokenRaw);
+    const match = await this.authRepository.isSameRawToken(record.hashed, refreshTokenRaw);
     if (!match) {
-      await this.authRepository.revokeAllByUser(recode.userId);
+      await this.authRepository.revokeAllByUser(record.userId);
       throwApiError(
         'AUTH_SESSION_REUSE',
         '세션 재사용이 감지되어 모든 세션이 만료되었습니다.',
@@ -159,9 +168,9 @@ class AuthService {
     }
 
     // 만료 연장
-    await this.authRepository.updateSlidingOnUse(recode.id, { extendsMs: REFRESH_TTL_MS });
+    await this.authRepository.updateSlidingOnUse(record.id, { extendsMs: REFRESH_TTL_MS });
 
-    const userRow = await this.userRepository.findUserById(recode.userId);
+    const userRow = await this.userRepository.findUserById(record.userId);
     const user = { id: userRow.id, nickname: userRow.nickname, points: userRow.points };
     const accessToken = generateAccessToken(user);
 
