@@ -47,11 +47,6 @@ app.use('/api/photoCard', photoCardRouter);
 // 테스트용으로 upload 폴더만 만들고 배포때는 다른 방식 사용
 app.use('/api/upload', uploadRouter);
 
-//  토큰 테스트 용 코드
-app.get('/me', verifyAccessToken, (req, res) => {
-  res.json({ me: req.user });
-});
-
 app.use(errorHandler);
 
 // app.use((err, req, res, next) => {
