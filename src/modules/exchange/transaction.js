@@ -33,30 +33,90 @@ export async function executeCreateProposalTx(
     });
 
     // 5. 내 카드 상태 변경
-    await repo.updateUserCardStatusTx(tx, proposedCardId, 'IDLE');
+    await repo.updateUserCardStatusTx(tx, proposedCardId, 'PROPOSED');
 
     return proposal;
   });
 }
 
-export async function cancelProposalTx(repo, { userId, proposalId }) {
+export async function executeCancelProposalTx(repo, { proposerId, proposalId }) {
   return await prisma.$transaction(async (tx) => {
-    // 권한 + 존재 확인
-    const proposal = await repo.getProposalForOwnerTx(tx, proposalId, userId);
+    const proposal = await repo.getProposalForCancelTx(tx, proposalId, proposerId);
+    if (!proposal) throwApiError('PROPOSAL_NOT_FOUND', '취소할 제안을 찾을 수 없습니다.', 404);
+
+    await repo.updateProposalStatusTx(tx, proposal.id, 'CANCELLED');
+    await repo.updateUserCardStatusTx(tx, proposal.proposedCardId, 'IDLE');
+
+    return { id: proposal.id, status: 'CANCELLED' };
+  });
+}
+
+export async function executeAcceptProposalTx(repo, { sellerId, proposalId }) {
+  return await prisma.$transaction(async (tx) => {
+    const proposal = await repo.getProposalForSellerTx(tx, proposalId, sellerId);
     if (!proposal) {
-      throwApiError('PROPOSAL_NOT_FOUND', '해당 제안을 찾을 수 없습니다.', 404);
+      throwApiError('PROPOSAL_NOT_FOUND', '승인할 제안을 찾을 수 없습니다.', 404);
     }
 
-    if (proposal.status !== 'PENDING') {
-      throwApiError('INVALID_STATUS', '대기중(PENDING)인 제안만 취소할 수 있습니다.', 400);
+    // 판매자 카드 1장 확보 (ON_SALE 상태)
+    const sellerCard = await tx.userCard.findFirst({
+      where: {
+        ownerId: sellerId,
+        photoCardId: proposal.sale.photoCardId,
+        status: 'ON_SALE',
+      },
+    });
+
+    if (!sellerCard) {
+      throwApiError('SELLER_CARD_NOT_FOUND', '판매자의 교환 가능한 카드가 없습니다.', 400);
     }
 
-    // 소프트 캔슬
-    await repo.cancelProposalStatusTx(tx, proposalId);
+    // 1. 승인된 제안 상태 변경
+    await repo.updateProposalStatusTx(tx, proposal.id, 'ACCEPTED');
 
-    // (선택) 카드 상태 원복: 제안 시 PROPOSED로 잠궜다면 여기서 IDLE로
-    // await repo.updateUserCardStatusTx(tx, proposal.proposedCardId, 'IDLE');
+    // 2. 카드 소유권 교환
+    // 제안자의 카드 → 판매자 소유
+    await repo.updateUserCardOwnerAndStatusTx(tx, proposal.proposedCardId, sellerId, 'IDLE');
 
-    return true;
+    // 판매자의 카드 → 제안자 소유
+    await repo.updateUserCardOwnerAndStatusTx(tx, sellerCard.id, proposal.proposerId, 'IDLE');
+
+    // 3. 판매 수량 1 감소
+    await repo.decrementSaleQuantityTx(tx, proposal.saleId, 1);
+
+    // 4. 거래 로그 생성
+    await tx.purchase.createMany({
+      data: [
+        {
+          buyerId: proposal.proposerId,
+          saleId: proposal.saleId,
+          userCardId: sellerCard.id,
+          type: 'EXCHANGE',
+        },
+        {
+          buyerId: sellerId,
+          saleId: proposal.saleId,
+          userCardId: proposal.proposedCardId,
+          type: 'EXCHANGE',
+        },
+      ],
+    });
+
+    // 5. 같은 판매글의 나머지 제안 자동 거절 + 카드 상태 원복
+    await repo.rejectOtherProposalsForSaleTx(tx, proposal.saleId, proposal.id);
+
+    return { id: proposal.id, status: 'ACCEPTED' };
+  });
+}
+
+export async function executeRejectProposalTx(repo, { sellerId, proposalId }) {
+  return await prisma.$transaction(async (tx) => {
+    const proposal = await repo.getProposalForSellerTx(tx, proposalId, sellerId);
+    if (!proposal) throwApiError('PROPOSAL_NOT_FOUND', '거절할 제안을 찾을 수 없습니다.', 404);
+
+    await repo.updateProposalStatusTx(tx, proposal.id, 'REJECTED');
+    await repo.updateUserCardStatusTx(tx, proposal.proposedCardId, 'IDLE');
+
+    return { id: proposal.id, status: 'REJECTED' };
   });
 }

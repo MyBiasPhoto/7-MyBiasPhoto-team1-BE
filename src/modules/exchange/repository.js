@@ -65,21 +65,79 @@ class ExchangeRepository {
   }
 
   // ---------- 제시 취소 ----------
-  async getProposalForOwnerTx(tx, proposalId, ownerId) {
+  async getProposalForCancelTx(tx, proposalId, proposerId) {
     return await tx.exchangeProposal.findFirst({
-      where: { id: proposalId, proposerId: ownerId },
-      include: { proposedCard: true, sale: true },
+      where: { id: proposalId, proposerId, status: 'PENDING' },
+      include: { proposedCard: true },
     });
   }
 
-  async cancelProposalStatusTx(tx, proposalId) {
+  // ---------- 판매자 승인 / 거절 ----------
+  async getProposalForSellerTx(tx, proposalId, sellerId) {
+    const proposal = await tx.exchangeProposal.findFirst({
+      where: { id: proposalId, status: 'PENDING' },
+      include: {
+        sale: {
+          include: { seller: true },
+        },
+        proposedCard: true,
+      },
+    });
+
+    if (!proposal) return null;
+    if (proposal.sale.seller.id !== sellerId) return null;
+    return proposal;
+  }
+
+  async updateProposalStatusTx(tx, proposalId, status) {
     return await tx.exchangeProposal.update({
       where: { id: proposalId },
-      data: { status: 'CANCELLED' },
+      data: { status },
     });
   }
 
-  // ---------- 일반 조회 ----------
+  async rejectOtherProposalsForSaleTx(tx, saleId, exceptProposalId) {
+    // 나머지 PENDING → REJECTED
+    await tx.exchangeProposal.updateMany({
+      where: {
+        saleId,
+        status: 'PENDING',
+        id: { not: exceptProposalId },
+      },
+      data: { status: 'REJECTED' },
+    });
+
+    // 거절된 제안 카드 상태 원복
+    await tx.userCard.updateMany({
+      where: {
+        exchangeProposals: {
+          some: {
+            saleId,
+            status: 'REJECTED',
+          },
+        },
+        status: 'PROPOSED',
+      },
+      data: { status: 'IDLE' },
+    });
+  }
+  // 카드 소유자 및 상태 변경
+  async updateUserCardOwnerAndStatusTx(tx, userCardId, newOwnerId, status) {
+    return await tx.userCard.update({
+      where: { id: userCardId },
+      data: { ownerId: newOwnerId, status },
+    });
+  }
+
+  // 판매 수량 감소
+  async decrementSaleQuantityTx(tx, saleId, amount) {
+    return await tx.sale.update({
+      where: { id: saleId },
+      data: { quantity: { decrement: amount } },
+    });
+  }
+
+  // ---------- 조회 ----------
   async getMyProposals(userId, { page, pageSize, status }) {
     const skip = (page - 1) * pageSize;
     const where = {
@@ -99,8 +157,21 @@ class ExchangeRepository {
     });
 
     const totalCount = await prisma.exchangeProposal.count({ where });
-
     return { proposals, totalCount };
+  }
+
+  async getReceivedProposals(userId, saleId) {
+    return await prisma.exchangeProposal.findMany({
+      where: {
+        saleId,
+        sale: { sellerId: userId },
+      },
+      orderBy: { createdAt: 'desc' },
+      include: {
+        proposer: { select: { id: true, nickname: true } },
+        proposedCard: { include: { photoCard: true } },
+      },
+    });
   }
 
   // ---------- 트랜잭션 실행 ----------
@@ -108,10 +179,17 @@ class ExchangeRepository {
     const { executeCreateProposalTx } = await import('./transaction.js');
     return await executeCreateProposalTx(this, args);
   }
-
-  async cancelProposalTx(userId, proposalId) {
-    const { cancelProposalTx } = await import('./transaction.js');
-    return await cancelProposalTx(this, { userId, proposalId });
+  async executeCancelProposalTx(args) {
+    const { executeCancelProposalTx } = await import('./transaction.js');
+    return await executeCancelProposalTx(this, args);
+  }
+  async executeAcceptProposalTx(args) {
+    const { executeAcceptProposalTx } = await import('./transaction.js');
+    return await executeAcceptProposalTx(this, args);
+  }
+  async executeRejectProposalTx(args) {
+    const { executeRejectProposalTx } = await import('./transaction.js');
+    return await executeRejectProposalTx(this, args);
   }
 }
 
