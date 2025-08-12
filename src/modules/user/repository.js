@@ -27,6 +27,17 @@ class UserRepository {
 
     return user;
   };
+
+  addPoints = async (userId, amount) => {
+    return prisma.$transaction(async (tx) => {
+      const updated = await tx.user.update({
+        where: { id: userId },
+        data: { points: { increment: amount } },
+        select: { id: true, nickname: true, points: true },
+      });
+      return updated;
+    });
+  };
 }
 
 export default UserRepository;
