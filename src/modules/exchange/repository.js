@@ -64,6 +64,21 @@ class ExchangeRepository {
     });
   }
 
+  // ---------- 제시 취소 ----------
+  async getProposalForOwnerTx(tx, proposalId, ownerId) {
+    return await tx.exchangeProposal.findFirst({
+      where: { id: proposalId, proposerId: ownerId },
+      include: { proposedCard: true, sale: true },
+    });
+  }
+
+  async cancelProposalStatusTx(tx, proposalId) {
+    return await tx.exchangeProposal.update({
+      where: { id: proposalId },
+      data: { status: 'CANCELLED' },
+    });
+  }
+
   // ---------- 일반 조회 ----------
   async getMyProposals(userId, { page, pageSize, status }) {
     const skip = (page - 1) * pageSize;
@@ -92,6 +107,11 @@ class ExchangeRepository {
   async executeCreateProposalTx(args) {
     const { executeCreateProposalTx } = await import('./transaction.js');
     return await executeCreateProposalTx(this, args);
+  }
+
+  async cancelProposalTx(userId, proposalId) {
+    const { cancelProposalTx } = await import('./transaction.js');
+    return await cancelProposalTx(this, { userId, proposalId });
   }
 }
 

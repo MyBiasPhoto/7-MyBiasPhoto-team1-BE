@@ -29,4 +29,11 @@ exchangeRouter.get(
   exchangeController.getMyExchangeProposals
 );
 
+// PATCH /api/sales/exchange-proposals/:proposalId/cancel
+exchangeRouter.patch(
+  '/exchange-proposals/:proposalId/cancel',
+  verifyAccessToken,
+  exchangeController.cancelMyProposal
+);
+
 export default exchangeRouter;

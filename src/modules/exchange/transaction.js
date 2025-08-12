@@ -38,3 +38,25 @@ export async function executeCreateProposalTx(
     return proposal;
   });
 }
+
+export async function cancelProposalTx(repo, { userId, proposalId }) {
+  return await prisma.$transaction(async (tx) => {
+    // 권한 + 존재 확인
+    const proposal = await repo.getProposalForOwnerTx(tx, proposalId, userId);
+    if (!proposal) {
+      throwApiError('PROPOSAL_NOT_FOUND', '해당 제안을 찾을 수 없습니다.', 404);
+    }
+
+    if (proposal.status !== 'PENDING') {
+      throwApiError('INVALID_STATUS', '대기중(PENDING)인 제안만 취소할 수 있습니다.', 400);
+    }
+
+    // 소프트 캔슬
+    await repo.cancelProposalStatusTx(tx, proposalId);
+
+    // (선택) 카드 상태 원복: 제안 시 PROPOSED로 잠궜다면 여기서 IDLE로
+    // await repo.updateUserCardStatusTx(tx, proposal.proposedCardId, 'IDLE');
+
+    return true;
+  });
+}
