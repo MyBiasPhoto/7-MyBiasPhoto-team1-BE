@@ -9,31 +9,47 @@ import { getExchangeProposalsSchema } from './schema/getExchangeProposalSchema.j
 
 const exchangeRouter = Router();
 
-const exchangeRepository = new ExchangeRepository();
-const exchangeService = new ExchangeService(exchangeRepository);
-const exchangeController = new ExchangeController(exchangeService);
+const repo = new ExchangeRepository();
+const service = new ExchangeService(repo);
+const controller = new ExchangeController(service);
 
-// POST /api/sales/:saleId/proposals
+// 교환 제시 (구매자)
 exchangeRouter.post(
   '/:saleId/proposals',
   verifyAccessToken,
   validate(exchangeProposalSchema, 'body'),
-  exchangeController.postExchangeProposal
+  controller.postExchangeProposal
 );
-
-// GET /api/sales/exchange-proposals/my
+// 교환 제시 취소 (구매자)
+exchangeRouter.patch(
+  '/exchange-proposals/:proposalId/cancel',
+  verifyAccessToken,
+  controller.cancelExchangeProposal
+);
+// 교환 제시 승인 (판매자)
+exchangeRouter.patch(
+  '/exchange-proposals/:proposalId/accept',
+  verifyAccessToken,
+  controller.acceptExchangeProposal
+);
+// 교환 제시 거절 (판매자)
+exchangeRouter.patch(
+  '/exchange-proposals/:proposalId/reject',
+  verifyAccessToken,
+  controller.rejectExchangeProposal
+);
+// 교환 제시 목록 조회 (구매자)
 exchangeRouter.get(
   '/exchange-proposals/my',
   verifyAccessToken,
   validate(getExchangeProposalsSchema, 'query'),
-  exchangeController.getMyExchangeProposals
+  controller.getMyExchangeProposals
 );
-
-// PATCH /api/sales/exchange-proposals/:proposalId/cancel
-exchangeRouter.patch(
-  '/exchange-proposals/:proposalId/cancel',
+// 받은 교환 제시 목록 조회 (판매자)
+exchangeRouter.get(
+  '/:saleId/exchange-proposals/received',
   verifyAccessToken,
-  exchangeController.cancelMyProposal
+  controller.getReceivedProposals
 );
 
 export default exchangeRouter;
