@@ -60,6 +60,7 @@ class SaleService {
           imageUrl: true,
           grade: true,
           genre: true,
+          totalQuantity: true,
         },
       },
       seller: {
@@ -88,6 +89,7 @@ class SaleService {
       quantity: sale.quantity,
       isSoldOut: sale.quantity <= 0,
       sellerNickname: sale.seller.nickname,
+      totalQuantity: sale.photoCard.totalQuantity,
     }));
 
     const by = Object.fromEntries(gradeCounts.map(({ grade, count }) => [grade, count]));
