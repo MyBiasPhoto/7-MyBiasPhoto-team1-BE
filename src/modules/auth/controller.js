@@ -1,5 +1,12 @@
 import { verifyRefreshJWT } from '../../common/utils/jwt.js';
 
+const isProd = process.env.NODE_ENV === 'production';
+
+const cookieBase = {
+  httpOnly: true,
+  sameSite: isProd ? 'none' : 'lax', // 운영: none, 개발: lax
+  secure: isProd, // 운영: true, 개발: false
+};
 class AuthController {
   constructor(authService) {
     this.authService = authService;
@@ -19,26 +26,27 @@ class AuthController {
     try {
       const { email, password } = req.body;
       const ctx = { userAgent: req.get('user-agent'), ip: req.ip };
-      const result = await this.authService.login({ email, password, ctx });
+      const preferredStrategy = (req.get('x-refresh-strategy') || '').toLowerCase();
+      const result = await this.authService.login({ email, password, ctx, preferredStrategy });
 
-      // TODO: 배포 전 sameSite 설정을 'lax'로 변경
       res.cookie('accessToken', result.accessToken, {
+        ...cookieBase,
         path: '/',
-        httpOnly: true,
         maxAge: 60 * 60 * 1000,
-        sameSite: 'none',
-        secure: true,
       });
 
-      const base = {
-        httpOnly: true,
+      res.cookie('refreshToken', result.refreshToken, {
+        ...cookieBase,
+        path: '/auth/refresh',
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        sameSite: 'none',
-        secure: true,
-      };
-      res.cookie('refreshToken', result.refreshToken, { ...base, path: '/auth/refresh' });
+      });
+
       if (result.opaqueId) {
-        res.cookie('opaqueId', result.opaqueId, { ...base, path: '/auth/refresh' });
+        res.cookie('opaqueId', result.opaqueId, {
+          ...cookieBase,
+          path: '/auth/refresh',
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
       }
 
       // 리프레쉬 토큰 코드 변경전 코드
@@ -80,22 +88,24 @@ class AuthController {
 
       // accessToken 교체
       res.cookie('accessToken', accessToken, {
+        ...cookieBase,
         path: '/',
-        httpOnly: true,
         maxAge: 60 * 60 * 1000,
-        sameSite: 'none',
-        secure: true,
       });
 
-      // Rotation = refreshToken 교체 , Sliding = refreshToken 갱신
-      const base = {
-        httpOnly: true,
+      res.cookie('refreshToken', newRT, {
+        ...cookieBase,
+        path: '/auth/refresh',
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        sameSite: 'none',
-        secure: true,
-      };
-      res.cookie('refreshToken', newRT, { ...base, path: '/auth/refresh' });
-      if (newOpaque) res.cookie('opaqueId', newOpaque, { ...base, path: '/auth/refresh' });
+      });
+
+      if (newOpaque) {
+        res.cookie('opaqueId', newOpaque, {
+          ...cookieBase,
+          path: '/auth/refresh',
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
+      }
 
       return res.status(200).json(user);
     } catch (error) {
@@ -139,19 +149,10 @@ class AuthController {
     //   secure: false,
     // });
 
-    res.clearCookie('accessToken', { path: '/', httpOnly: true, sameSite: 'none', secure: true });
-    res.clearCookie('refreshToken', {
-      path: '/auth/refresh',
-      httpOnly: true,
-      sameSite: 'none',
-      secure: true,
-    });
-    res.clearCookie('opaqueId', {
-      path: '/auth/refresh',
-      httpOnly: true,
-      sameSite: 'none',
-      secure: true,
-    });
+    res.clearCookie('accessToken', { ...cookieBase, path: '/' });
+    res.clearCookie('refreshToken', { ...cookieBase, path: '/auth/refresh' });
+    res.clearCookie('opaqueId', { ...cookieBase, path: '/auth/refresh' });
+
     return res.status(200).json({ message: '로그아웃 완료' });
   };
 }

@@ -47,6 +47,16 @@ class AuthRepository {
       data: { lastUsedAt: new Date(now), expiresAt: new Date(now + extendsMs) },
     });
   }
+
+  async rotateRTAtomic({ oldId, userId, newJti, newToken, userAgent, ip, expiresAt }) {
+    const hashed = await bcrypt.hash(newToken, 12);
+    return prisma.$transaction(async (tx) => {
+      await tx.refreshToken.update({ where: { id: oldId }, data: { revoked: true } });
+      await tx.refreshToken.create({
+        data: { userId, jti: newJti, hashed, userAgent, ip, expiresAt },
+      });
+    });
+  }
 }
 
 export default AuthRepository;
