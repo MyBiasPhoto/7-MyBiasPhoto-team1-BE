@@ -26,6 +26,7 @@ model User {
   pointLogs          PointLog[]
   cardCreationLimits CardCreationLimit[]
   RefreshToken       RefreshToken[]
+  pointCooldown     PointCooldown[]
 }
 
 enum AuthProvider {
@@ -165,6 +166,15 @@ model PointLog {
   amount    Int
   reason    String
   createdAt DateTime @default(now())
+}
+
+model PointCooldown {
+  userId        Int
+  user      User     @relation(fields: [userId], references: [id])
+  reason        String
+  nextAllowedAt DateTime   
+  updatedAt     DateTime   @updatedAt
+  @@id([userId, reason]) 
 }
 
 model CardCreationLimit {
