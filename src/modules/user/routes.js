@@ -10,6 +10,7 @@ const userRepository = new UserRepository();
 const userController = new UserController(userRepository);
 
 userRouter.get('/me', verifyAccessToken, userController.me);
+userRouter.post('/points/charge', verifyAccessToken, userController.chargePoints);
 userRouter.use('/me/userCard', userCardRouter);
 
 export default userRouter;
