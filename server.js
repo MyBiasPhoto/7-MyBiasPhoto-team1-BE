@@ -4,14 +4,14 @@ import dotenv from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
 import path from 'path';
+import { errorHandler } from './src/common/middleware/errorHandler.js';
 import authRouter from './src/modules/auth/routes.js';
-import saleRouter from './src/modules/sale/routes.js';
-import userRouter from './src/modules/user/routes.js';
+import exchangeRouter from './src/modules/exchange/routes.js'; //KJS
 import photoCardRouter from './src/modules/photoCard/routes.js';
 import uploadRouter from './src/modules/photoCard/upload.js';
-import exchangeRouter from './src/modules/exchange/routes.js'; //KJS
-import { errorHandler } from './src/common/middleware/errorHandler.js';
-import { verifyAccessToken } from './src/common/middleware/verifyAccessToken.js';
+import pointRouter from './src/modules/point/routes.js';
+import saleRouter from './src/modules/sale/routes.js';
+import userRouter from './src/modules/user/routes.js';
 
 dotenv.config();
 const app = express();
@@ -46,6 +46,8 @@ app.use('/users', userRouter);
 app.use('/api/photoCard', photoCardRouter);
 // 테스트용으로 upload 폴더만 만들고 배포때는 다른 방식 사용
 app.use('/api/upload', uploadRouter);
+
+app.use('/points', pointRouter);
 
 app.use(errorHandler);
 
