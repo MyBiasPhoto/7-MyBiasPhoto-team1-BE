@@ -1,36 +1,270 @@
-import express from 'express';
-import multer from 'multer';
+import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
-
-// 백엔드에 upload 폴더 생성됨 그곳에 포토카드 생성 사진 들어감
-const uploadDir = path.resolve('uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadDir); // uploads 폴더에 저장
-  },
-  filename: (req, file, cb) => {
-    const uniqueName = `${Date.now()}_${file.originalname}`;
-    cb(null, uniqueName);
-  },
-});
-
-const upload = multer({ storage });
+import { fileURLToPath } from 'url';
+import express from 'express';
+import crypto from 'crypto';
+import {
+  S3Client,
+  PutObjectCommand,
+  HeadObjectCommand,
+  DeleteObjectCommand,
+} from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { prisma } from '../../common/utils/prisma.js';
 
 const router = express.Router();
 
-router.post('/', upload.single('image'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: '파일이 없습니다.' });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const envCandidates = [
+  path.resolve(__dirname, '../../../.env'),
+  path.resolve(process.cwd(), '.env'),
+];
+
+let loadedEnv = null;
+for (const p of envCandidates) {
+  if (fs.existsSync(p)) {
+    dotenv.config({ path: p });
+    loadedEnv = p;
+    break;
   }
-  res.json({
-    filename: req.file.filename,
-    url: `/uploads/${req.file.filename}`,
+}
+console.log('[ENV] loaded from:', loadedEnv);
+
+const REQUIRED = ['AWS_REGION', 'AWS_ACCESS_KEY_ID', 'AWS_SECRET_ACCESS_KEY', 'S3_BUCKET'];
+for (const k of REQUIRED) {
+  if (!process.env[k]) throw new Error(`Missing env ${k}`);
+}
+
+const s3 = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+});
+
+const MAX_UPLOAD_MB = Number(process.env.S3_MAX_UPLOAD_MB || 10); //파일 크기 제한(MB)
+const CACHE_SECONDS = Number(process.env.S3_CACHE_SECONDS || 60 * 60 * 24 * 365);
+const EXPIRES = Number(process.env.S3_PRESIGN_EXPIRES) || 60;
+
+// 값 동일 해야 함
+const MONTHLY_LIMIT = 35;
+
+function nowMY() {
+  const d = new Date();
+  return { month: d.getMonth() + 1, year: d.getFullYear() };
+}
+
+async function getMonthlyStatus(userId) {
+  const { month, year } = nowMY();
+  const rec = await prisma.cardCreationLimit.findUnique({
+    where: { userId_month_year: { userId: Number(userId), month, year } },
   });
+  const created = rec?.created || 0;
+  const remaining = Math.max(MONTHLY_LIMIT - created, 0);
+  return { created, remaining, limit: MONTHLY_LIMIT };
+}
+
+router.get('/quota', async (req, res) => {
+  try {
+    const { userId } = req.query;
+    if (!userId) return res.status(400).json({ message: 'userId 필요' });
+    const monthly = await getMonthlyStatus(userId);
+    return res.json({ monthly });
+  } catch (e) {
+    console.error('[quota ERROR]', e);
+    return res.status(500).json({ message: 'quota 조회 실패' });
+  }
+});
+
+router.delete('/object', async (req, res) => {
+  try {
+    const { key } = req.query;
+    if (!key) return res.status(400).json({ message: 'key 필요' });
+
+    const allowedPrefix = process.env.S3_UPLOAD_PREFIX || 'photocards/';
+    if (!String(key).startsWith(allowedPrefix)) {
+      return res.status(400).json({ message: '허용된 prefix만 삭제 가능' });
+    }
+
+    await s3.send(
+      new DeleteObjectCommand({
+        Bucket: process.env.S3_BUCKET,
+        Key: String(key),
+      })
+    );
+    return res.status(204).end();
+  } catch (e) {
+    console.error('[delete object ERROR]', e);
+    return res.status(500).json({ message: '삭제 실패' });
+  }
+});
+
+router.get('/s3-url', async (req, res) => {
+  try {
+    const { contentType, size, sha256, userId } = req.query;
+    const sizeNum = Number(size || 0);
+
+    if (!userId) {
+      return res.status(400).json({ message: 'userId 필요' });
+    }
+
+    if (!contentType?.startsWith('image/')) {
+      return res.status(400).json({ message: 'contentType=image/* 필요' });
+    }
+    if (!sizeNum || Number.isNaN(sizeNum)) {
+      return res.status(400).json({ message: '파일 크기(size)가 필요' });
+    }
+    if (sizeNum > MAX_UPLOAD_MB * 1024 * 1024) {
+      return res.status(413).json({ message: `파일이 너무 큽니다 (최대 ${MAX_UPLOAD_MB}MB)` });
+    }
+    const monthly = await getMonthlyStatus(userId);
+    if (monthly.remaining <= 0) {
+      return res.status(409).json({
+        message: '이번 달 생성 한도를 초과했습니다.',
+        monthly,
+      });
+    }
+
+    console.log(
+      '[presign] ct=',
+      contentType,
+      'region=',
+      process.env.AWS_REGION,
+      'bucket=',
+      process.env.S3_BUCKET
+    );
+
+    console.log(
+      '[presign] has keys?',
+      !!process.env.AWS_ACCESS_KEY_ID,
+      !!process.env.AWS_SECRET_ACCESS_KEY
+    );
+
+    const ext = contentType.split('/')[1] || 'bin';
+    const prefix = process.env.S3_UPLOAD_PREFIX || 'photocards/';
+
+    const baseName = sha256
+      ? `${sha256}.${ext}`
+      : `${Date.now()}-${crypto.randomUUID?.() || crypto.randomBytes(16).toString('hex')}.${ext}`;
+
+    const key = `${prefix}${baseName}`;
+    const publicUrl = `https://${process.env.S3_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+
+    // 같은 키가 이미 있으면 업로드 생략하고 URL만 반환
+    if (sha256) {
+      try {
+        await s3.send(new HeadObjectCommand({ Bucket: process.env.S3_BUCKET, Key: key }));
+        return res.json({ alreadyExists: true, key, publicUrl });
+      } catch (e) {
+        // 404(없음)
+        if (e?.$metadata?.httpStatusCode && e.$metadata.httpStatusCode !== 404) {
+          console.warn('[HeadObject warn]', e?.name || e);
+        }
+      }
+    }
+
+    const cmd = new PutObjectCommand({
+      Bucket: process.env.S3_BUCKET,
+      Key: key,
+      ContentType: contentType,
+      CacheControl: `public, max-age=${CACHE_SECONDS}, immutable`,
+    });
+
+    const uploadUrl = await getSignedUrl(s3, cmd, { expiresIn: EXPIRES });
+
+    return res.json({ uploadUrl, key, publicUrl, expires: EXPIRES });
+  } catch (err) {
+    console.error('[presign ERROR]', err);
+    return res.status(500).json({
+      name: err.name || 'Error',
+      message: err.message || '프리사인드 URL 생성 실패',
+      code: err.Code || err.code,
+      env: {
+        loadedFrom: loadedEnv,
+        region: !!process.env.AWS_REGION,
+        bucket: !!process.env.S3_BUCKET,
+        akid: !!process.env.AWS_ACCESS_KEY_ID,
+        secret: !!process.env.AWS_SECRET_ACCESS_KEY,
+      },
+    });
+  }
 });
 
 export default router;
+
+/** AWS S3 시작하는 방법 (참고용)
+* 1. AWS S3 버킷 만들기
+*    - AWS 리전 - 아시아 태평양(서울) ap-norteast-2
+*    - 모든 퍼블릭 액세스 차단 끄기 (직접 공개 url 보기 위해서)
+*    
+* 2. CORS 설정 (S3콘솔 -> 권한 -> 맨 아래 CORS규칙)
+*             아래는 예시(현재 S3 CORS임)
+[
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "GET",
+            "PUT",
+            "POST"
+        ],
+        "AllowedOrigins": [
+            "*"
+        ],
+        "ExposeHeaders": [
+            "ETag"
+        ]
+    }
+]
+* 3. 버킷 정책 설정 (CORS에서 위로 올리면 있음)
+*                  아래는 예시(현재 버킷 정책임)
+*
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowPublicRead",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::mybiasphoto-upload/*"
+        }
+    ]
+}
+* 3. IAM 사용자 생성 및 키 생성 (.env에 들어가는 키)
+*    - aws 검색창에 IAM 검색하고 들어가서 사용자 생성한 후 액세스 키 만들기
+*    - 시크릿키는 만들때만 보여주니 저장해놓고 .env에 복붙
+*
+* 4. .env 작성 및 프론트 config 수정
+
+  AWS_REGION=ap-northeast-2
+  S3_BUCKET=mybiasphoto-upload
+  AWS_ACCESS_KEY_ID=IAM 사용자 ID 키
+  AWS_SECRET_ACCESS_KEY=시크릿 키
+
+
+  프론트 next.config.mjs 에 domains 안에
+  "mybiasphoto-upload.s3.ap-northeast-2.amazonaws.com", 입력
+*
+* 5. 설치 npm install, npx prisma generate
+*
+
+npm install @aws-sdk/client-s3 @aws-sdk/s3-request-presigner
+
+
+package.json
+
+{
+  "scripts": {
+    "dev": "nodemon -r dotenv/config server.js"
+  }
+}
+
+* 6. 끝
+*
+*/

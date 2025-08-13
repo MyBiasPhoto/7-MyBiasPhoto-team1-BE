@@ -10,10 +10,17 @@ class PhotoCardController {
       if (!userId) {
         return res.status(400).json({ success: false, message: 'userId(creatorId)가 필요합니다.' });
       }
-      const photoCard = await this.photoCardService.createPhotoCard(req.body, userId);
-      return res.status(201).json(photoCard);
-    } catch (error) {
-      next(error);
+      const { photoCard, userCards, monthly } = await this.photoCardService.createPhotoCard(
+        req.body,
+        userId
+      );
+      return res.status(201).json({
+        photoCard,
+        createdUserCards: userCards.length,
+        monthly,
+      });
+    } catch (e) {
+      next(e);
     }
   };
 }
