@@ -4,8 +4,10 @@ class PhotoCardService {
     this.photoCardTransaction = photoCardTransaction;
   }
 
-  async createPhotoCard(data, userId) {
-    return await this.photoCardTransaction.createPhotoCardInTransaction(data, userId);
+  async createPhotoCard(dto, userId) {
+    const { photoCard, userCards, monthly } =
+      await this.photoCardTransaction.createPhotoCardInTransaction(dto, userId);
+    return { photoCard, userCards, monthly };
   }
 }
 

@@ -1,7 +1,7 @@
 // server.js
+import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
 import path from 'path';
@@ -18,7 +18,6 @@ import userRouter from './src/modules/user/routes.js';
 import notificationRouter from './src/modules/notification/routes.js';
 // import { verifyAccessToken } from './src/common/middleware/verifyAccessToken.js';
 
-dotenv.config();
 const app = express();
 
 const __dirname = path.resolve();
@@ -34,9 +33,6 @@ app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(express.json());
 
-// 테스트용으로 upload 폴더만 만들고 배포때는 다른 방식 사용(사진 저장)
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 app.get('/', (req, res) => {
   res.send('서버 실행 중');
 });
@@ -49,8 +45,6 @@ app.use('/api/sales', exchangeRouter); //KJS
 app.use('/users', userRouter);
 
 app.use('/api/photoCard', photoCardRouter);
-// 테스트용으로 upload 폴더만 만들고 배포때는 다른 방식 사용
-app.use('/api/upload', uploadRouter);
 
 app.use('/points', pointRouter);
 
