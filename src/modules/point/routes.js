@@ -11,11 +11,12 @@ const pointRepository = new PointRepository();
 const cooldownRepository = new CooldownRepository();
 const userRepository = new UserRepository();
 const pointTransaction = new PointTransaction(pointRepository, cooldownRepository, userRepository);
-const pointService = new PointService(pointRepository, pointTransaction);
+const pointService = new PointService(pointRepository, pointTransaction, cooldownRepository);
 const pointController = new PointController(pointService);
 
 const pointRouter = Router();
 
 pointRouter.post('/events/random', verifyAccessToken, pointController.postRandomPointEvent);
+pointRouter.get('/events/random/status', verifyAccessToken, pointController.getRandomPointStatus);
 
 export default pointRouter;
