@@ -12,6 +12,10 @@ import uploadRouter from './src/modules/photoCard/upload.js';
 import pointRouter from './src/modules/point/routes.js';
 import saleRouter from './src/modules/sale/routes.js';
 import userRouter from './src/modules/user/routes.js';
+import exchangeRouter from './src/modules/exchange/routes.js'; //KJS
+import { errorHandler } from './src/common/middleware/errorHandler.js';
+import { verifyAccessToken } from './src/common/middleware/verifyAccessToken.js';
+import notificationRouter from './src/modules/notification/routes.js';
 
 dotenv.config();
 const app = express();
@@ -48,6 +52,9 @@ app.use('/api/photoCard', photoCardRouter);
 app.use('/api/upload', uploadRouter);
 
 app.use('/points', pointRouter);
+
+//알림 라우터
+app.use('/notifications', notificationRouter);
 
 app.use(errorHandler);
 

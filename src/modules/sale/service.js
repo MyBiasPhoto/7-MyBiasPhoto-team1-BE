@@ -8,8 +8,9 @@ import {
 } from '../../common/constants/enum.js';
 import { throwApiError } from '../../common/utils/throwApiErrors.js';
 class SaleService {
-  constructor(saleRepository) {
+  constructor(saleRepository, notificationService) {
     this.saleRepository = saleRepository;
+    this.notificationService = notificationService; // SSE 퍼블리셔 주입
   }
 
   getSaleList = async (query) => {
@@ -153,7 +154,11 @@ class SaleService {
     }
 
     // 2. 트랜잭션 실행 (판매자 포인트 증가, 구매자 포인트 차감 등)
-    const result = await this.saleRepository.executeBuySaleTx({
+    const {
+      purchaseIds,
+      notificationIds = [],
+      soldOut = false,
+    } = await this.saleRepository.executeBuySaleTx({
       userId,
       sale,
       buyer,
@@ -161,7 +166,18 @@ class SaleService {
       totalPrice,
     });
 
-    return result;
+    // 3. 커밋 이후에만 SSE 퍼블리시 (실패해도 거래는 유지)
+    if (this.notificationService && notificationIds.length > 0) {
+      try {
+        await this.notificationService.publishMany(notificationIds);
+      } catch (err) {
+        // 네트워크 이슈 등으로 푸시는 실패할 수 있음 → 로그만 남기고 무시(백필/목록으로 복구 가능)
+        console.error('[notifications] publishMany failed:', err);
+      }
+    }
+
+    // 4. 서비스 반환(컨트롤러에서 success/message/data 포맷으로 감싸서 응답)
+    return { purchaseIds, soldOut };
   };
 }
 export default SaleService;

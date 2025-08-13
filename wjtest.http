@@ -49,9 +49,36 @@ Content-Type: application/json
 
 ###구매하기
 POST http://localhost:4000/sales/44/buy
-Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsIm5pY2tuYW1lIjoi7Jqp7JWU7KCE7IKs7J6l7JuQ7JiBIiwiaWF0IjoxNzU0NzkxNDQ0LCJleHAiOjE3NTQ3OTUwNDR9.vwndP6LRf84qLpelvFtpGLxIBQICTKYSvNy6JVf8Hgw
+Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsIm5pY2tuYW1lIjoidXNlcjE1IiwicG9pbnRzIjo5MTg1NDUsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NTQ5NzM3MjIsImV4cCI6MTc1NDk3NzMyMn0.aSLrc6XrL0BhQxZEETA_dccUz4GmcBqgqyU22qapKVU
 Content-Type: application/json
 
 {
     "quantity": 1
 }
+
+###알림 목록 가져오기
+GET http://localhost:4000/notifications?limit=10
+Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsIm5pY2tuYW1lIjoidXNlcjE1IiwicG9pbnRzIjo5MTg1NDUsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NTUwNDkxNjksImV4cCI6MTc1NTA1Mjc2OX0.cLP_SBgYbb4nJgM-3wJeh8UQFx_P5lh8jKCLS93V300
+
+###미확인알림 수 카운트
+GET http://localhost:4000/notifications/unread-count
+Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsIm5pY2tuYW1lIjoidXNlcjE1IiwicG9pbnRzIjo5MTg1NDUsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NTUwNDkxNjksImV4cCI6MTc1NTA1Mjc2OX0.cLP_SBgYbb4nJgM-3wJeh8UQFx_P5lh8jKCLS93V300
+
+### 단건 알림 확인
+PATCH http://localhost:4000/notifications/19/read
+Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsIm5pY2tuYW1lIjoidXNlcjE1IiwicG9pbnRzIjo5MTg1NDUsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NTQ5ODA4MDUsImV4cCI6MTc1NDk4NDQwNX0.G8GcegcoXc2iFD5yKGl4SsONO9_tHPVl35eAH6z4T8Y
+
+### 일괄 읽음 처리
+PATCH http://localhost:4000/notifications/read-all
+Content-Type: application/json
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsIm5pY2tuYW1lIjoidXNlcjE3IiwicG9pbnRzIjozNTAwMCwidHlwZSI6ImFjY2VzcyIsImlhdCI6MTc1NDk3NjcxOCwiZXhwIjoxNzU0OTgwMzE4fQ.wTDeNPTpCIv_daVHWfOMavlc7D2tcz4D2cs-bHFow_s
+
+
+###sse연결확인
+### 아래 내용은 한줄한줄 terminal에서 엔터쳐가면서 실행하시면 됩니다.
+curl -N \
+  -H "Accept: text/event-stream" \
+  -H "Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsIm5pY2tuYW1lIjoidXNlcjE1IiwicG9pbnRzIjo5MTg1NDUsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NTUwNDM1MzAsImV4cCI6MTc1NTA0NzEzMH0.LgBeGbjYZe77OUiA9c4fcF5jZk8JB4nkNlXf-5wcHiM" \
+  "http://localhost:4000/notifications/stream?backfillLimit=10&lastEventId=1"
+
+  ###
