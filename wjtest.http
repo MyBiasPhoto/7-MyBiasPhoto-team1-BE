@@ -39,7 +39,7 @@ Content-Type: application/json
 
 ### MyGallery 목록 조회
 GET http://localhost:4000/users/me/userCard/gallery
-Cookie:   accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsIm5pY2tuYW1lIjoi7Jqp7JWU7KCE7IKs7J6l7JuQ7JiBIiwicG9pbnRzIjo5MzYwMDAsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NTQ4NzU4MDQsImV4cCI6MTc1NDg3OTQwNH0.Xa0pZAyeDtTnBX-HbAsB3zN3PRGxB8MJ8u-e0f6rG88
+Cookie:   accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Nywibmlja25hbWUiOiJ1c2VyNyIsInBvaW50cyI6NTkwMDAsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NTUwNjM1NjksImV4cCI6MTc1NTA2NzE2OX0.pKd3vQMGeU0MaYj4P56nWfOm1l3U8MV9RGokrIGqcPs
 Content-Type: application/json
 
 ### MyMarket 목록 조회

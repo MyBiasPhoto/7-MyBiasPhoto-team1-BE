@@ -79,6 +79,7 @@ export const executeBuySaleTx = async ({ userId, sale, buyer, quantity, totalPri
       );
 
       // 6) 알림 생성 (구매, 품절)
+      // 여기서는 row만 생성하고 실제 퍼블리시는 커밋 이후 서비스에서 수행
       const notificationIds = [];
       const purchased = await repo.createPurchasedNotification(
         { sellerId, buyerNickname: buyer.nickname, saleId, quantity, amount: totalPrice },
@@ -91,11 +92,12 @@ export const executeBuySaleTx = async ({ userId, sale, buyer, quantity, totalPri
         notificationIds.push(sold.id);
       }
 
+      //서비스가 받아서 응답/퍼블리시 처리
       return { purchaseIds, notificationIds, soldOut };
     },
     {
-      timeout: 10_000,
-      maxWait: 12_000,
+      timeout: 15_000,
+      maxWait: 20_000,
     }
   );
 };
