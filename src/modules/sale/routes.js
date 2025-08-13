@@ -15,7 +15,7 @@ const saleService = new SaleService(saleRepository);
 const saleController = new SaleController(saleService);
 
 saleRouter.get('/', validate(getSaleListSchema, 'query'), saleController.getSaleList);
-saleRouter.patch('/:id', saleController.patchSaleListById);
+saleRouter.patch('/:id/delete', saleController.patchSaleListById);
 saleRouter.get('/:id', saleController.getSaleCardById);
 saleRouter.patch(`/:id`, saleController.patchSaleCardById);
 saleRouter.post(
