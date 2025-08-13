@@ -5,15 +5,7 @@ class UserCardTransaction {
     this.userCardRepository = userCardRepository;
   }
 
-  getUserCardDataInTransaction = async ({
-    where,
-    orderBy,
-    skip,
-    take,
-    include,
-    userId,
-    statuses,
-  }) => {
+  getUserCardData = async ({ where, orderBy, skip, take, include, userId, statuses }) => {
     return prisma.$transaction(async (tx) => {
       const myGalleryListPromise = this.userCardRepository.getUserCardList(
         { where, orderBy, skip, take, include },
@@ -34,6 +26,46 @@ class UserCardTransaction {
       ]);
 
       return [myGalleryList, totalCount, gradeCounts];
+    });
+  };
+
+  getGroupedUserCardData = async ({ userId, limit, offset, search, mappedGrade, mappedGenre }) => {
+    return prisma.$transaction(async (tx) => {
+      console.log('transaction에서 repository로 넘어가는 arguments');
+      console.log('userId :', userId);
+      console.log('limit: ', limit);
+      console.log('offset: ', offset);
+      console.log('search : ', search);
+      console.log('maapedGrade :', mappedGrade);
+      console.log('mappedGenre : ', mappedGenre);
+      const MyGroupedCardsPromise = this.userCardRepository.getGroupedByPhoto(
+        {
+          userId,
+          limit,
+          offset,
+          search,
+          mappedGrade,
+          mappedGenre,
+        },
+        tx
+      );
+
+      const totalCountsPromise = this.userCardRepository.countGroupedByPhoto(
+        {
+          userId,
+          search,
+          mappedGrade,
+          mappedGenre,
+        },
+        tx
+      );
+
+      const [MyGroupedCards, totalCounts] = await Promise.all([
+        MyGroupedCardsPromise,
+        totalCountsPromise,
+      ]);
+
+      return [MyGroupedCards, totalCounts];
     });
   };
 }
