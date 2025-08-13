@@ -12,6 +12,16 @@ class PointController {
       next(error);
     }
   };
+
+  getRandomPointStatus = async (req, res, next) => {
+    try {
+      const { id: userId } = req.user;
+      const status = await this.pointService.getRandomPointStatus(userId);
+      return res.status(200).json(status);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default PointController;

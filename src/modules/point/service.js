@@ -1,8 +1,9 @@
 import { pickPoints } from '../../common/utils/pickPoints.js';
 class PointService {
-  constructor(pointRepository, pointTransaction) {
+  constructor(pointRepository, pointTransaction, cooldownRepository) {
     this.pointRepository = pointRepository;
     this.pointTransaction = pointTransaction;
+    this.cooldownRepository = cooldownRepository;
   }
 
   postRandomPointEvent = async (userId) => {
@@ -21,6 +22,22 @@ class PointService {
     );
 
     return randomPoint;
+  };
+
+  getRandomPointStatus = async (userId) => {
+    const reason = 'RANDOM';
+    const now = new Date();
+
+    await this.cooldownRepository.getCooldown({ userId, reason });
+    const next = row?.nextAllowedAt ?? new Date(0);
+    const remainingSeconds = Math.max(0, Math.ceil((next.getTime() - now.getTime()) / 1000));
+
+    return {
+      active: remainingSeconds > 0,
+      remainingSeconds,
+      nextAllowedAt: next.toISOString(),
+      serverNow: now.toISOString(),
+    };
   };
 }
 
