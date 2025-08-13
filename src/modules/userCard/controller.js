@@ -33,6 +33,19 @@ class UserCardController {
       next(error);
     }
   };
+
+  getMyGroupedCards = async (req, res, next) => {
+    try {
+      const { id: userId } = req.user;
+      const query = req.query;
+
+      const myGroupedCardList = await this.userCardService.getMyGroupedCards(userId, query);
+
+      return res.status(200).json(myGroupedCardList);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default UserCardController;

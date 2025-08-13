@@ -58,8 +58,8 @@ class UserCardService {
       },
     };
 
-    const [myGalleryList, totalCount, gradeCounts] =
-      await this.userCardTransaction.getUserCardDataInTransaction({
+    const [myGalleryList, totalCount, gradeCounts] = await this.userCardTransaction.getUserCardData(
+      {
         where,
         orderBy,
         skip,
@@ -67,7 +67,8 @@ class UserCardService {
         include,
         userId,
         statuses: ['IDLE'],
-      });
+      }
+    );
 
     // console.log('myGalleryList : ', myGalleryList);
     // console.log(gradeCounts);
@@ -139,16 +140,15 @@ class UserCardService {
       owner: { select: { nickname: true } },
     };
 
-    const [myMarketList, totalCount, gradeCounts] =
-      await this.userCardTransaction.getUserCardDataInTransaction({
-        where,
-        orderBy,
-        skip,
-        take,
-        include,
-        userId,
-        statuses,
-      });
+    const [myMarketList, totalCount, gradeCounts] = await this.userCardTransaction.getUserCardData({
+      where,
+      orderBy,
+      skip,
+      take,
+      include,
+      userId,
+      statuses,
+    });
     // console.log('myMarketList : ', myMarketList);
     const formattedMySaleList = myMarketList.map((uc) => ({
       userCardId: uc.id,
@@ -178,6 +178,32 @@ class UserCardService {
       totalPages: Math.ceil(totalCount / pageSize),
       gradeCounts: formattedGradeCounts,
     };
+  };
+
+  getMyGroupedCards = async (userId, query) => {
+    const { page, pageSize, search, grade, genre } = query;
+
+    const user = await this.userRepository.findUserById(userId);
+    if (!user) {
+      throwApiError('USER_NOT_FOUND', '해당 유저를 찾을 수 없습니다.', 404);
+    }
+
+    const offset = (page - 1) * pageSize;
+    const limit = pageSize;
+    const mappedGrade = grade ? gradeMap[grade] : undefined;
+    const mappedGenre = genre ? genreMap[genre] : undefined;
+    const s = search?.trim() ? search.trim() : null;
+
+    const MyGroupedCards = await this.userCardTransaction.getGroupedUserCardData({
+      userId,
+      limit,
+      offset,
+      search: s,
+      mappedGrade,
+      mappedGenre,
+    });
+    console.log(MyGroupedCards);
+    return MyGroupedCards;
   };
 }
 

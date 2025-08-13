@@ -8,6 +8,7 @@ import { verifyAccessToken } from '../../common/middleware/verifyAccessToken.js'
 import { getMyGalleryListSchema } from './schema/getMyGalleryListSchema.js';
 import { validate } from '../../common/middleware/validate.js';
 import { getMySaleListSchema } from './schema/getMySaleListSchema.js';
+import { getMyGroupedCards } from './schema/getMyGroupedCards.js';
 const userCardRouter = Router({ mergeParams: true });
 
 const userCardRepository = new UserCardRepository();
@@ -33,4 +34,12 @@ userCardRouter.get(
   validate(getMySaleListSchema, 'query'),
   userCardController.getMyMarketList
 );
+
+userCardRouter.get(
+  '/grouped',
+  validate(getMyGroupedCards, 'query'),
+  verifyAccessToken,
+  userCardController.getMyGroupedCards
+);
+
 export default userCardRouter;
