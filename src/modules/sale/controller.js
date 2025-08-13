@@ -63,6 +63,12 @@ class SaleController {
       next(error);
     }
   };
+
+
+  /**
+   * 
+   */
+
   buySale = async (req, res, next) => {
     try {
       const userId = req.user.id;
@@ -87,10 +93,9 @@ class SaleController {
           quantity,
           ...result,
         },
-        // ...result,
       });
     } catch (error) {
-      //error.message별 에러코드및 error, message 설정
+      //@TODO error.message별 에러코드및 error, message 설정
 
       next(error);
     }

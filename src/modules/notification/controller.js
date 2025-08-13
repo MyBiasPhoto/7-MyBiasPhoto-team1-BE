@@ -79,6 +79,11 @@ class NotificationController {
     }
   };
 
+  /***
+   * SSE 헤더 세팅 후 서비스의 openStream에 구독 등록.
+   * 재연결용 lastEventId와 초기 백필 크기 backfillLimit 전달.
+   * 연결 종료 시 closeStream 호출.
+   */
   stream = async (req, res, next) => {
     try {
       const userId = req.user.id;
@@ -91,13 +96,14 @@ class NotificationController {
       // CORS 프록시/중간단에서 버퍼링 막기용(환경에 따라)
       res.flushHeaders?.();
 
-      // 헤더/쿼리에서 lastEventId 취합
+      // 헤더/쿼리에서 lastEventId 취합 (헤더/쿼리 모두 지원)
       const headerLastId = req.headers['last-event-id'];
       const queryLastId = req.query.lastEventId;
       const lastEventId =
         (typeof headerLastId === 'string' ? Number(headerLastId) : undefined) ??
         (queryLastId ? Number(queryLastId) : undefined);
 
+      //초기 백필 크기
       const backfillLimit = Number(req.query.backfillLimit);
       const types = req.query.types;
 
@@ -108,11 +114,13 @@ class NotificationController {
         types,
       });
 
-      // 연결 종료 처리
+      // 연결 종료 시 구독 해제
       req.on('close', () => {
         this.notificationService.closeStream(userId, res);
       });
     } catch (err) {
+      // 스트림 중간 오류 시에도 구독 정리 시도
+      // try { this.notificationService.closeStream(req.user?.id, res); } catch {}
       next(err);
     }
   };

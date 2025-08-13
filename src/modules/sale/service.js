@@ -124,6 +124,12 @@ class SaleService {
     return card;
   };
 
+  /**
+   * 1. 사전 검증 - 판매 존재 여부, 수량, 포인트 등
+   * 2. 트랜잭션 - 재고 감소, 포인트 차감/증가, 소유권 이전, 로그/구매기록, 알림 row 생성
+   * 3. 트랜잭션 커밋 이후 알림퍼블리시 - 퍼블리시가 실패해도 거래를 되돌리지 않도록 트랜잭션 외부에서 실행
+   *  **/
+
   buySale = async (userId, saleId, quantity) => {
     // 1. 사전 검증 (판매 존재 여부, 수량, 포인트 등)
     const sale = await this.saleRepository.getSaleById(saleId);

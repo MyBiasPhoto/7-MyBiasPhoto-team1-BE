@@ -1,3 +1,4 @@
+// server.js
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -5,17 +6,17 @@ import express from 'express';
 import morgan from 'morgan';
 import path from 'path';
 import { errorHandler } from './src/common/middleware/errorHandler.js';
+
+//모듈 라우터
 import authRouter from './src/modules/auth/routes.js';
-import exchangeRouter from './src/modules/exchange/routes.js'; //KJS
+import exchangeRouter from './src/modules/exchange/routes.js';
 import photoCardRouter from './src/modules/photoCard/routes.js';
 import uploadRouter from './src/modules/photoCard/upload.js';
 import pointRouter from './src/modules/point/routes.js';
 import saleRouter from './src/modules/sale/routes.js';
 import userRouter from './src/modules/user/routes.js';
-import exchangeRouter from './src/modules/exchange/routes.js'; //KJS
-import { errorHandler } from './src/common/middleware/errorHandler.js';
-import { verifyAccessToken } from './src/common/middleware/verifyAccessToken.js';
 import notificationRouter from './src/modules/notification/routes.js';
+// import { verifyAccessToken } from './src/common/middleware/verifyAccessToken.js';
 
 dotenv.config();
 const app = express();
@@ -57,24 +58,6 @@ app.use('/points', pointRouter);
 app.use('/notifications', notificationRouter);
 
 app.use(errorHandler);
-
-// app.use((err, req, res, next) => {
-//   if (process.env.NODE_ENV === 'development') {
-//     console.error(err.stack);
-//   }
-
-//   console.error('에러 메시지:', err.message);
-
-//   const statusCode = err.statusCode || err.status || 500;
-//   const message = err.message || '서버 오류가 발생했습니다.';
-//   const code = err.code || 'INTERNAL_SERVER_ERROR';
-
-//   res.status(statusCode).json({
-//     success: false,
-//     error: code,
-//     message: message,
-//   });
-// });
 
 const PORT = process.env.PORT || 3000;
 
