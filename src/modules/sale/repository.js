@@ -113,6 +113,7 @@ class SaleRepository {
     });
     return patch;
   }
+
   getSaleById = async (id) => {
     return await prisma.sale.findUnique({
       where: { id },
@@ -124,6 +125,8 @@ class SaleRepository {
       where: { id },
     });
   };
+
+  //-- 트랜잭션에서 사용할 메서드들 (client 주입 가능) ---
 
   //판매가능한 유저카드목록
   getUserCardsForSale = async ({ photoCardId, sellerId, take }, client = prisma) => {
@@ -159,6 +162,14 @@ class SaleRepository {
       },
       data: { quantity: { decrement: quantity } },
     });
+  };
+
+  getSaleQuantity = async ({ saleId }, client = prisma) => {
+    const row = await client.sale.findUnique({
+      where: { id: saleId },
+      select: { quantity: true },
+    });
+    return row?.quantity ?? null;
   };
 
   //구매자 포인트 차감 (잔액 충분할때만)
@@ -199,7 +210,15 @@ class SaleRepository {
   };
 
   // 모든카드 판매알림도 추가예정
-  createSoldOutNotification = () => {};
+  createSoldOutNotification = ({ sellerId, saleId }, client = prisma) => {
+    return client.notification.create({
+      data: {
+        userId: sellerId,
+        type: NotificationType.CARD_SOLD_OUT,
+        content: `saleId ${saleId} - 등록하신 카드가 모두 판매되었습니다.`,
+      },
+    });
+  };
 
   executeBuySaleTx = async (txArgs) => {
     const { executeBuySaleTx } = await import('./transaction.js');
