@@ -82,7 +82,8 @@ export async function executeAcceptProposalTx(repo, { sellerId, proposalId }) {
     await repo.updateUserCardOwnerAndStatusTx(tx, sellerCard.id, proposal.proposerId, 'IDLE');
 
     // 3. 판매 수량 1 감소
-    await repo.decrementSaleQuantityTx(tx, proposal.saleId, 1);
+    const updatedSale = await repo.decrementSaleQuantityTx(tx, proposal.saleId, 1);
+    const remainingQuantity = updatedSale.quantity;
 
     // 4. 거래 로그 생성
     await tx.purchase.createMany({
@@ -102,10 +103,13 @@ export async function executeAcceptProposalTx(repo, { sellerId, proposalId }) {
       ],
     });
 
-    // 5. 같은 판매글의 나머지 제안 자동 거절 + 카드 상태 원복
-    await repo.rejectOtherProposalsForSaleTx(tx, proposal.saleId, proposal.id);
+    // 5) 남은 수량이 0일 때만 나머지 제안 자동 거절 + 카드 상태 원복
+    if (remainingQuantity === 0) {
+      await repo.rejectOtherProposalsForSaleTx(tx, proposal.saleId, proposal.id);
+    }
 
-    return { id: proposal.id, status: 'ACCEPTED' };
+    // 남은 수량 반환
+    return { id: proposal.id, status: 'ACCEPTED', remainingQuantity };
   });
 }
 
