@@ -1,3 +1,4 @@
+// src/modules/exchange/schema/getExchangeProposalSchema.js
 import { z } from 'zod';
 
 export const getExchangeProposalsSchema = z.object({

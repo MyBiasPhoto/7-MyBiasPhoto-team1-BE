@@ -1,4 +1,6 @@
+// src/modules/exchange/repository.js
 import { prisma } from '../../common/utils/prisma.js';
+import { NotificationType } from '@prisma/client';
 
 class ExchangeRepository {
   // ---------- 트랜잭션용 ----------
@@ -174,6 +176,48 @@ class ExchangeRepository {
       },
     });
   }
+
+  //알림 생성
+  // 교환 제안 도착 알림(대상: 판매자/수신자)
+  createProposalReceivedNotification = async (
+    { targetUserId, saleId, proposerNickname },
+    client = prisma
+  ) => {
+    return client.notification.create({
+      data: {
+        userId: targetUserId,
+        type: NotificationType.EXCHANGE_PROPOSAL_RECEIVED,
+        content: `saleId ${saleId} - ${proposerNickname} 님이 교환을 제안했습니다.`,
+      },
+    });
+  };
+
+  // 교환 제안 결정 알림(대상: 제안자 [+선택: 판매자])
+  createProposalDecidedNotification = async (
+    { targetUserId, saleId, decided }, // 'ACCEPTED' | 'REJECTED'
+    client = prisma
+  ) => {
+    const decidedMessage =
+      decided === 'ACCEPTED' ? '교환이 승인되어 완료되었습니다.' : '교환 제안이 거절되었습니다.';
+    return client.notification.create({
+      data: {
+        userId: targetUserId,
+        type: NotificationType.EXCHANGE_PROPOSAL_DECIDED,
+        content: `${decidedMessage} (saleId ${saleId})`,
+      },
+    });
+  };
+
+  // 판매 수량이 0이 된 경우 판매자에게 품절 알림
+  createSoldOutNotification = async ({ sellerUserId, saleId }, client = prisma) => {
+    return client.notification.create({
+      data: {
+        userId: sellerUserId,
+        type: NotificationType.CARD_SOLD_OUT,
+        content: `saleId ${saleId} - 등록하신 카드가 모두 판매(교환)되었습니다.`,
+      },
+    });
+  };
 
   // ---------- 트랜잭션 실행 ----------
   async executeCreateProposalTx(args) {
