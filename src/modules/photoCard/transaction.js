@@ -45,38 +45,44 @@ class PhotoCardTransaction {
   async createPhotoCardInTransaction(data, userId) {
     const { name, description, imageUrl, grade, genre, initialPrice, totalQuantity } = data;
 
-    return await prisma.$transaction(async (tx) => {
-      const newCount = await this.bumpMonthlyCreateOrThrow(tx, userId);
+    return await prisma.$transaction(
+      async (tx) => {
+        const newCount = await this.bumpMonthlyCreateOrThrow(tx, userId);
 
-      const photoCard = await this.photoCardRepository.createPhotoCard(tx, {
-        name,
-        description,
-        imageUrl,
-        grade,
-        genre,
-        initialPrice,
-        totalQuantity,
-        creator: { connect: { id: userId } },
-      });
+        const photoCard = await this.photoCardRepository.createPhotoCard(tx, {
+          name,
+          description,
+          imageUrl,
+          grade,
+          genre,
+          initialPrice,
+          totalQuantity,
+          creator: { connect: { id: userId } },
+        });
 
-      const userCards = await this.photoCardRepository.createUserCards(
-        tx,
-        Array.from({ length: totalQuantity }).map(() => ({
-          ownerId: userId,
-          photoCardId: photoCard.id,
-        }))
-      );
+        const userCards = await this.photoCardRepository.createUserCards(
+          tx,
+          Array.from({ length: totalQuantity }).map(() => ({
+            ownerId: userId,
+            photoCardId: photoCard.id,
+          }))
+        );
 
-      return {
-        photoCard,
-        userCards,
-        monthly: {
-          created: newCount,
-          remaining: Math.max(MONTHLY_LIMIT - newCount, 0),
-          limit: MONTHLY_LIMIT,
-        },
-      };
-    });
+        return {
+          photoCard,
+          userCards,
+          monthly: {
+            created: newCount,
+            remaining: Math.max(MONTHLY_LIMIT - newCount, 0),
+            limit: MONTHLY_LIMIT,
+          },
+        };
+      },
+      {
+        timeout: 15_000,
+        maxWait: 20_000,
+      }
+    );
   }
 }
 
