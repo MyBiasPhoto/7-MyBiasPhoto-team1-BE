@@ -1,3 +1,4 @@
+// src/modules/exchange/routes.js
 import { Router } from 'express';
 import ExchangeRepository from './repository.js';
 import ExchangeService from './service.js';
@@ -6,11 +7,18 @@ import { validate } from '../../common/middleware/validate.js';
 import { verifyAccessToken } from '../../common/middleware/verifyAccessToken.js';
 import { exchangeProposalSchema } from './schema/exchangeProposalSchema.js';
 import { getExchangeProposalsSchema } from './schema/getExchangeProposalSchema.js';
+import NotificationRepository from '../notification/repository.js';
+import NotificationService from '../notification/service.js';
 
 const exchangeRouter = Router();
 
 const repo = new ExchangeRepository();
-const service = new ExchangeService(repo);
+
+//알림 의존성 주입
+const notificationRepository = new NotificationRepository();
+const notificationService = new NotificationService(notificationRepository);
+
+const service = new ExchangeService(repo, notificationService);
 const controller = new ExchangeController(service);
 
 // 교환 제시 (구매자)

@@ -1,3 +1,4 @@
+// src/modules/exchange/transaction.js
 import { prisma } from '../../common/utils/prisma.js';
 import { throwApiError } from '../../common/utils/throwApiErrors.js';
 
@@ -7,6 +8,8 @@ export async function executeCreateProposalTx(
 ) {
   return await prisma.$transaction(
     async (tx) => {
+      const notificationIds = [];
+
       // 1. 판매글 조회
       const sale = await repo.getSaleForExchangeTx(tx, saleId);
       if (!sale) {
@@ -36,9 +39,22 @@ export async function executeCreateProposalTx(
       // 5. 내 카드 상태 변경
       await repo.updateUserCardStatusTx(tx, proposedCardId, 'PROPOSED');
 
-      return proposal;
+      // 6. 알림 생성: 판매자(수신자)에게 제안 도착
+      const proposalReceived = await repo.createProposalReceivedNotification(
+        {
+          targetUserId: sale.seller.id,
+          saleId: sale.id,
+          proposerNickname:
+            (await tx.user.findUnique({ where: { id: proposerId }, select: { nickname: true } }))
+              ?.nickname ?? '상대방',
+        },
+        tx
+      );
+      notificationIds.push(proposalReceived.id);
+
+      return { proposal, notificationIds };
     },
-    { timeout: 15_000, maxWait: 20_000 }
+    { timeout: 20_000, maxWait: 25_000 }
   );
 }
 
@@ -53,13 +69,15 @@ export async function executeCancelProposalTx(repo, { proposerId, proposalId }) 
 
       return { id: proposal.id, status: 'CANCELLED' };
     },
-    { timeout: 15_000, maxWait: 20_000 }
+    { timeout: 20_000, maxWait: 25_000 }
   );
 }
 
 export async function executeAcceptProposalTx(repo, { sellerId, proposalId }) {
   return await prisma.$transaction(
     async (tx) => {
+      const notificationIds = [];
+
       const proposal = await repo.getProposalForSellerTx(tx, proposalId, sellerId);
       if (!proposal) {
         throwApiError('PROPOSAL_NOT_FOUND', '승인할 제안을 찾을 수 없습니다.', 404);
@@ -115,24 +133,67 @@ export async function executeAcceptProposalTx(repo, { sellerId, proposalId }) {
         await repo.rejectOtherProposalsForSaleTx(tx, proposal.saleId, proposal.id);
       }
 
+      // 6) 알림 생성: 제안자에게 "승인" 결정 알림
+      const decidedForProposer = await repo.createProposalDecidedNotification(
+        {
+          targetUserId: proposal.proposerId,
+          saleId: proposal.saleId,
+          decided: 'ACCEPTED',
+        },
+        tx
+      );
+      notificationIds.push(decidedForProposer.id);
+
+      //  판매자에게도 알려주고 싶으면 추가 (정책에 따라)
+      const decidedForSeller = await repo.createProposalDecidedNotification(
+        {
+          targetUserId: sellerId,
+          saleId: proposal.saleId,
+          decided: 'ACCEPTED',
+        },
+        tx
+      );
+      notificationIds.push(decidedForSeller.id);
+
+      //  수량이 0이 되었다면 판매자에게 품절 알림
+      if (remainingQuantity === 0) {
+        const soldOut = await repo.createSoldOutNotification(
+          { sellerUserId: sellerId, saleId: proposal.saleId },
+          tx
+        );
+        notificationIds.push(soldOut.id);
+      }
+
       // 남은 수량 반환
-      return { id: proposal.id, status: 'ACCEPTED', remainingQuantity };
+      return { id: proposal.id, status: 'ACCEPTED', remainingQuantity, notificationIds };
     },
-    { timeout: 15_000, maxWait: 20_000 }
+    { timeout: 20_000, maxWait: 25_000 }
   );
 }
 
 export async function executeRejectProposalTx(repo, { sellerId, proposalId }) {
   return await prisma.$transaction(
     async (tx) => {
+      const notificationIds = [];
+
       const proposal = await repo.getProposalForSellerTx(tx, proposalId, sellerId);
       if (!proposal) throwApiError('PROPOSAL_NOT_FOUND', '거절할 제안을 찾을 수 없습니다.', 404);
 
       await repo.updateProposalStatusTx(tx, proposal.id, 'REJECTED');
       await repo.updateUserCardStatusTx(tx, proposal.proposedCardId, 'IDLE');
 
-      return { id: proposal.id, status: 'REJECTED' };
+      const decidedForProposer = await repo.createProposalDecidedNotification(
+        {
+          targetUserId: proposal.proposerId,
+          saleId: proposal.saleId,
+          decided: 'REJECTED',
+        },
+        tx
+      );
+      notificationIds.push(decidedForProposer.id);
+
+      return { id: proposal.id, status: 'REJECTED', notificationIds };
     },
-    { timeout: 15_000, maxWait: 20_000 }
+    { timeout: 20_000, maxWait: 25_000 }
   );
 }
