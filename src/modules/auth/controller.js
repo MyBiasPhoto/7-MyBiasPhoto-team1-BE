@@ -117,41 +117,41 @@ class AuthController {
   };
 
   oauthCallback = async (req, res, next) => {
-  try {
-    const socialUser = req.user; // passport 전략에서 넘겨준 { id, nickname, points }
-    if (!socialUser) {
-      throwApiError('AUTH_OAUTH_USER_MISSING', '인증 실패', 401);
-    }
+    try {
+      const socialUser = req.user; // passport 전략에서 넘겨준 { id, nickname, points }
+      if (!socialUser) {
+        throwApiError('AUTH_OAUTH_USER_MISSING', '인증 실패', 401);
+      }
 
-    const preferredStrategy = (req.get('x-refresh-strategy') || '').toLowerCase();
-    const ctx = { userAgent: req.get('user-agent'), ip: req.ip };
+      const preferredStrategy = (req.get('x-refresh-strategy') || '').toLowerCase();
+      const ctx = { userAgent: req.get('user-agent'), ip: req.ip };
 
-    const issued = await this.authService.issueTokensForUser(socialUser, {
-      ctx,
-      preferredStrategy,
-    });
-    const { user, accessToken, refreshToken, opaqueId } = issued;
+      const issued = await this.authService.issueTokensForUser(socialUser, {
+        ctx,
+        preferredStrategy,
+      });
+      const { user, accessToken, refreshToken, opaqueId } = issued;
 
-    res.cookie('accessToken', accessToken, { ...cookieBase, path: '/', maxAge: 60 * 60 * 1000 });
-    res.cookie('refreshToken', refreshToken, {
-      ...cookieBase,
-      path: '/auth/refresh',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
-    if (opaqueId) {
-      res.cookie('opaqueId', opaqueId, {
+      res.cookie('accessToken', accessToken, { ...cookieBase, path: '/', maxAge: 60 * 60 * 1000 });
+      res.cookie('refreshToken', refreshToken, {
         ...cookieBase,
         path: '/auth/refresh',
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
-    }
+      if (opaqueId) {
+        res.cookie('opaqueId', opaqueId, {
+          ...cookieBase,
+          path: '/auth/refresh',
+          maxAge: 7 * 24 * 60 * 60 * 1000,
+        });
+      }
 
-    const redirectTo =
-      process.env.OAUTH_SUCCESS_REDIRECT || 'http://localhost:3000/auth/success';
-    return res.redirect(302, redirectTo);
-  } catch (err) {
-    next(err);
-  }
-};
+      const redirectTo = process.env.OAUTH_SUCCESS_REDIRECT || 'http://localhost:3000/auth/success';
+      return res.redirect(302, redirectTo);
+    } catch (err) {
+      next(err);
+    }
+  };
+}
 
 export default AuthController;
