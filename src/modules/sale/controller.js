@@ -64,9 +64,8 @@ class SaleController {
     }
   };
 
-
   /**
-   * 
+   *
    */
 
   buySale = async (req, res, next) => {
@@ -97,6 +96,27 @@ class SaleController {
     } catch (error) {
       //@TODO error.message별 에러코드및 error, message 설정
 
+      next(error);
+    }
+  };
+  createSale = async (req, res, next) => {
+    try {
+      const { photoCardId } = req.params;
+      const { price, initialQuantity, desiredGrade, desiredGenre, desiredDesc } = req.body;
+      const { id: userId } = req.user;
+
+      const newSale = await this.saleService.createSale({
+        photoCardId,
+        price,
+        initialQuantity,
+        desiredGrade,
+        desiredGenre,
+        desiredDesc,
+        userId,
+      });
+
+      return res.status(201).json({ scuess: true, newSale });
+    } catch (error) {
       next(error);
     }
   };

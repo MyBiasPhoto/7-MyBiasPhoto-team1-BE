@@ -83,5 +83,18 @@ Content-Type: application/json
 
 ### MyGroupedCard 목록 조회 (판매 가능한 카드 List)
 GET http://localhost:4000/users/me/userCard/grouped
-Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5pY2tuYW1lIjoi7YOV7IiY7JyhIiwicG9pbnRzIjo5MDEwMDAsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NTUxMjk5MzcsImV4cCI6MTc1NTEzMzUzN30.Pzfn4P-LFyjanlCHI5KU4zVGcvbDaa8OafB1LMhehJU;
+Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibmlja25hbWUiOiJ1c2VyMiIsInBvaW50cyI6MTE3MDAwLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzU1MTU3NDM5LCJleHAiOjE3NTUxNjEwMzl9.qEhdRDzJe2oPADMwquW1g__K3zrdJ8bb3x9kKAaNmfQ;
 Content-Type: application/json
+
+### 포토카드 판매하기
+POST http://localhost:4000/sales/photo-card/102
+Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibmlja25hbWUiOiJ1c2VyMiIsInBvaW50cyI6MTE3MDAwLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzU1MTU3NDM5LCJleHAiOjE3NTUxNjEwMzl9.qEhdRDzJe2oPADMwquW1g__K3zrdJ8bb3x9kKAaNmfQ;
+Content-Type: application/json
+
+{
+    "price": 3000,
+    "initialQuantity": 1,
+    "desiredGrade": "RARE",
+    "desiredGenre": "앨범",
+    "desiredDesc": ",,"
+}

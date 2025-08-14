@@ -99,6 +99,30 @@ class UserCardRepository {
     `);
     return Number(rows?.[0]?.total ?? 0);
   };
+
+  updateCardStatus = async (
+    { ownerId, photoCardId, fromStatus, toStatus, take },
+    client = prisma
+  ) => {
+    const rows = await client.$queryRaw(Prisma.sql`
+      WITH picked AS (
+        SELECT id
+        FROM "UserCard"
+        WHERE "ownerId" = ${ownerId}
+          AND "photoCardId" = ${photoCardId}
+          AND status = ${fromStatus}::"UserCardStatus"
+        ORDER BY "updatedAt" ASC
+        FOR UPDATE SKIP LOCKED
+        LIMIT ${take}
+      )
+      UPDATE "UserCard" AS uc
+      SET status = ${toStatus}::"UserCardStatus"
+      FROM picked
+      WHERE uc.id = picked.id
+      RETURNING uc.id;
+    `);
+    return rows;
+  };
 }
 
 export default UserCardRepository;

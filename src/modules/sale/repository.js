@@ -228,6 +228,14 @@ class SaleRepository {
     // transaction.js → 또다시 SaleRepository 참조할 경우
     return await executeBuySaleTx({ ...txArgs, repo: this });
   };
+
+  createSale = async (saleData, client = prisma) => {
+    const newSale = await client.sale.create({
+      data: saleData,
+    });
+
+    return newSale;
+  };
 }
 
 export default SaleRepository;
