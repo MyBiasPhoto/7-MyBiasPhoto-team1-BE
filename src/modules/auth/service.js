@@ -187,6 +187,36 @@ class AuthService {
     const rec = await this.authRepository.findByOpaqueId(opaqueId);
     if (rec) await this.authRepository.revokeById(rec.id);
   };
+
+  issueTokensForUser = async (userPayload, { ctx, preferredStrategy }) => {
+    const user = { id: userPayload.id, nickname: userPayload.nickname, points: userPayload.points };
+    const accessToken = generateAccessToken(user);
+    const mode = IS_BOTH ? (preferredStrategy === 'sliding' ? 'sliding' : 'rotation') : STRATEGY;
+
+    if (mode === 'rotation') {
+      const { token: refreshToken, jti } = generateRefreshJWT(user);
+      await this.authRepository.saveRotationRT({
+        userId: user.id,
+        jti,
+        refreshToken,
+        userAgent: ctx?.userAgent,
+        ip: ctx?.ip,
+        expiresAt: new Date(Date.now() + REFRESH_TTL_MS),
+      });
+      return { user, accessToken, refreshToken };
+    }
+    const refreshToken = generateOpaqueToken();
+    const opaqueId = generateOpaqueId();
+    await this.authRepository.saveSlidingRT({
+      userId: user.id,
+      opaqueId,
+      refreshToken,
+      userAgent: ctx?.userAgent,
+      ip: ctx?.ip,
+      expiresAt: new Date(Date.now() + REFRESH_TTL_MS),
+    });
+    return { user, accessToken, refreshToken, opaqueId };
+  };
 }
 
 export default AuthService;

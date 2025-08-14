@@ -1,4 +1,5 @@
 import { verifyRefreshJWT } from '../../common/utils/jwt.js';
+import { throwApiError } from '../../common/utils/throwApiErrors.js';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -48,24 +49,6 @@ class AuthController {
           maxAge: 7 * 24 * 60 * 60 * 1000,
         });
       }
-
-      // 리프레쉬 토큰 코드 변경전 코드
-      // res.cookie('refreshToken', refreshToken, {
-      //   path: '/auth/refresh',
-      //   httpOnly: true,
-      //   maxAge: 7 * 24 * 60 * 60 * 1000,
-      //   sameSite: 'none',
-      //   secure: true,
-      // });
-
-      // Application/Cookies 에 refreshToken 보이게 하는 테스트 코드
-      // res.cookie('refreshToken', refreshToken, {
-      //   path: '/',
-      //   httpOnly: true,
-      //   maxAge: 7 * 24 * 60 * 60 * 1000,
-      //   sameSite: 'lax',
-      //   secure: false,
-      // });
 
       return res.status(200).json(result.user);
     } catch (error) {
@@ -126,35 +109,49 @@ class AuthController {
       await this.authService.logout({ refreshTokenRaw: refreshToken, jti, opaqueId });
     } catch (_) {}
 
-    // refresh token 수정 전 코드
-    // res.clearCookie('accessToken', {
-    //   path: '/',
-    //   httpOnly: true,
-    //   sameSite: 'none',
-    //   secure: true,
-    // });
-
-    // res.clearCookie('refreshToken', {
-    //   path: '/auth/refresh',
-    //   httpOnly: true,
-    //   sameSite: 'none',
-    //   secure: true,
-    // });
-
-    // Application/Cookies 에 refreshToken 보이게 하는 테스트 코드
-    // res.clearCookie('refreshToken', {
-    //   path: '/',
-    //   httpOnly: true,
-    //   sameSite: 'lax',
-    //   secure: false,
-    // });
-
     res.clearCookie('accessToken', { ...cookieBase, path: '/' });
     res.clearCookie('refreshToken', { ...cookieBase, path: '/auth/refresh' });
     res.clearCookie('opaqueId', { ...cookieBase, path: '/auth/refresh' });
 
     return res.status(200).json({ message: '로그아웃 완료' });
   };
-}
+
+  oauthCallback = async (req, res, next) => {
+  try {
+    const socialUser = req.user; // passport 전략에서 넘겨준 { id, nickname, points }
+    if (!socialUser) {
+      throwApiError('AUTH_OAUTH_USER_MISSING', '인증 실패', 401);
+    }
+
+    const preferredStrategy = (req.get('x-refresh-strategy') || '').toLowerCase();
+    const ctx = { userAgent: req.get('user-agent'), ip: req.ip };
+
+    const issued = await this.authService.issueTokensForUser(socialUser, {
+      ctx,
+      preferredStrategy,
+    });
+    const { user, accessToken, refreshToken, opaqueId } = issued;
+
+    res.cookie('accessToken', accessToken, { ...cookieBase, path: '/', maxAge: 60 * 60 * 1000 });
+    res.cookie('refreshToken', refreshToken, {
+      ...cookieBase,
+      path: '/auth/refresh',
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+    if (opaqueId) {
+      res.cookie('opaqueId', opaqueId, {
+        ...cookieBase,
+        path: '/auth/refresh',
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      });
+    }
+
+    const redirectTo =
+      process.env.OAUTH_SUCCESS_REDIRECT || 'http://localhost:3000/auth/success';
+    return res.redirect(302, redirectTo);
+  } catch (err) {
+    next(err);
+  }
+};
 
 export default AuthController;

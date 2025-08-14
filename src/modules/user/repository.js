@@ -46,6 +46,35 @@ class UserRepository {
       select: { id: true, points: true },
     });
   };
+
+  findByProvider = async (provider, providerId) => {
+    return prisma.user.findFirst({
+      where: { provider, providerId },
+      select: {
+        id: true,
+        nickname: true,
+        points: true,
+        email: true,
+        provider: true,
+        providerId: true,
+      },
+    });
+  };
+
+  linkProvider = async (userId, { provider, providerId }) => {
+    return prisma.user.update({
+      where: { id: userId },
+      data: { provider, providerId },
+      select: {
+        id: true,
+        nickname: true,
+        points: true,
+        email: true,
+        provider: true,
+        providerId: true,
+      },
+    });
+  };
 }
 
 export default UserRepository;
