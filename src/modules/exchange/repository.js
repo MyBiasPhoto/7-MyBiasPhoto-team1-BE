@@ -165,6 +165,7 @@ class ExchangeRepository {
       where: {
         saleId,
         sale: { sellerId: userId },
+        status: 'PENDING',
       },
       orderBy: { createdAt: 'desc' },
       include: {
