@@ -8,9 +8,20 @@ import {
 } from '../../common/constants/enum.js';
 import { throwApiError } from '../../common/utils/throwApiErrors.js';
 class SaleService {
-  constructor(saleRepository, notificationService) {
+  constructor(
+    saleRepository,
+    notificationService,
+    photoCardRepository,
+    userRepository,
+    userCardRepository,
+    saleTransaction
+  ) {
     this.saleRepository = saleRepository;
     this.notificationService = notificationService; // SSE 퍼블리셔 주입
+    this.photoCardRepository = photoCardRepository;
+    this.userRepository = userRepository;
+    this.userCardRepository = userCardRepository;
+    this.saleTransaction = saleTransaction;
   }
 
   getSaleList = async (query) => {
@@ -184,6 +195,38 @@ class SaleService {
 
     // 4. 서비스 반환(컨트롤러에서 success/message/data 포맷으로 감싸서 응답)
     return { purchaseIds, soldOut };
+  };
+
+  createSale = async ({
+    photoCardId,
+    price,
+    initialQuantity,
+    desiredGrade,
+    desiredGenre,
+    desiredDesc,
+    userId,
+  }) => {
+    const existingPhotoCard = await this.photoCardRepository.findPhotoCardById(photoCardId);
+    if (!existingPhotoCard) {
+      throwApiError('PHOTO_CARD_NOT_FOUND', `존재하지 않는 포토카드입니다.`, 404);
+    }
+
+    const existingUser = await this.userRepository.findUserById(userId);
+    if (!existingUser) {
+      throwApiError('USER_NOT_FOUND', `존재하지 않는 유저입니다.`, 404);
+    }
+
+    const newSale = await this.saleTransaction.excuteCreateSale({
+      photoCardId,
+      price,
+      initialQuantity,
+      desiredGrade,
+      desiredGenre,
+      desiredDesc,
+      userId,
+    });
+
+    return newSale;
   };
 }
 export default SaleService;

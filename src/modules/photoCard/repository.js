@@ -8,6 +8,15 @@ class PhotoCardRepository {
   createUserCards = async (transaction, userCards) => {
     return await transaction.userCard.createMany({ data: userCards });
   };
+
+  findPhotoCardById = async (photoCardId, client = prisma) => {
+    const photoCard = await client.photoCard.findUnique({
+      where: {
+        id: photoCardId,
+      },
+    });
+    return photoCard;
+  };
 }
 
 export default PhotoCardRepository;
