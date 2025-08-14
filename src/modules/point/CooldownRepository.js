@@ -1,4 +1,5 @@
 import { EPOCH } from '../../common/constants/date.js';
+import { prisma } from '../../common/utils/prisma.js';
 class CooldownRepository {
   ensureRow = async ({ userId, reason }, client = prisma) => {
     await client.pointCooldown.upsert({
