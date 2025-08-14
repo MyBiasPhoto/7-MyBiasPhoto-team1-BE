@@ -1,6 +1,6 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import KakaoStrategy from 'passport-kakao';
+import { Strategy as KakaoStrategy } from 'passport-kakao';
 import UserRepository from '../user/repository.js';
 import 'dotenv/config';
 
@@ -56,34 +56,33 @@ passport.use(
   )
 );
 
-// Kakao
-// passport.use(
-//   new KakaoStrategy(
-//     {
-//       clientID: process.env.KAKAO_CLIENT_ID,
-//       clientSecret: process.env.KAKAO_CLIENT_SECRET,
-//       callbackURL: process.env.KAKAO_CALLBACK_URL,
-//     },
-//     async (accessToken, refreshToken, profile, done) => {
-//       try {
-//         const email = profile._json?.kakao_account?.email ?? null;
-//         const nickname =
-//           profile.displayName ||
-//           profile.username ||
-//           profile._json?.kakao_account?.profile?.nickname ||
-//           'KakaoUser';
-//         const user = await upsertSocialUser({
-//           provider: 'KAKAO',
-//           providerId: String(profile.id),
-//           email,
-//           nickname,
-//         });
-//         return done(null, { id: user.id, nickname: user.nickname, points: user.points });
-//       } catch (err) {
-//         return done(err);
-//       }
-//     }
-//   )
-// );
+passport.use(
+  new KakaoStrategy(
+    {
+      clientID: process.env.KAKAO_CLIENT_ID,
+      clientSecret: process.env.KAKAO_CLIENT_SECRET,
+      callbackURL: process.env.KAKAO_CALLBACK_URL,
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        const email = profile._json?.kakao_account?.email ?? null;
+        const nickname =
+          profile.displayName ||
+          profile.username ||
+          profile._json?.kakao_account?.profile?.nickname ||
+          'KakaoUser';
+        const user = await upsertSocialUser({
+          provider: 'KAKAO',
+          providerId: String(profile.id),
+          email,
+          nickname,
+        });
+        return done(null, { id: user.id, nickname: user.nickname, points: user.points });
+      } catch (err) {
+        return done(err);
+      }
+    }
+  )
+);
 
 export default passport;
