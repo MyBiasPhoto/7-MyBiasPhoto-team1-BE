@@ -83,5 +83,5 @@ Content-Type: application/json
 
 ### MyGroupedCard 목록 조회 (판매 가능한 카드 List)
 GET http://localhost:4000/users/me/userCard/grouped
-Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibmlja25hbWUiOiJ1c2VyMiIsInBvaW50cyI6MTE3MDAwLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzU1MDcwMTgyLCJleHAiOjE3NTUwNzM3ODJ9.-hhCkXUCzsoUStIMydf_72U-qpkaI7GWr-cyRzNTd2g;
+Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjYsIm5pY2tuYW1lIjoi7YOV7IiY7JyhIiwicG9pbnRzIjo5MDEwMDAsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NTUxMjk5MzcsImV4cCI6MTc1NTEzMzUzN30.Pzfn4P-LFyjanlCHI5KU4zVGcvbDaa8OafB1LMhehJU;
 Content-Type: application/json

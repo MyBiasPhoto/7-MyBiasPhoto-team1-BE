@@ -31,13 +31,6 @@ class UserCardTransaction {
 
   getGroupedUserCardData = async ({ userId, limit, offset, search, mappedGrade, mappedGenre }) => {
     return prisma.$transaction(async (tx) => {
-      console.log('transaction에서 repository로 넘어가는 arguments');
-      console.log('userId :', userId);
-      console.log('limit: ', limit);
-      console.log('offset: ', offset);
-      console.log('search : ', search);
-      console.log('maapedGrade :', mappedGrade);
-      console.log('mappedGenre : ', mappedGenre);
       const MyGroupedCardsPromise = this.userCardRepository.getGroupedByPhoto(
         {
           userId,

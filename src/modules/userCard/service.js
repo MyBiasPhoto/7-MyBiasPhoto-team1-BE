@@ -194,7 +194,7 @@ class UserCardService {
     const mappedGenre = genre ? genreMap[genre] : undefined;
     const s = search?.trim() ? search.trim() : null;
 
-    const MyGroupedCards = await this.userCardTransaction.getGroupedUserCardData({
+    const [MyGroupedCards, tatalCount] = await this.userCardTransaction.getGroupedUserCardData({
       userId,
       limit,
       offset,
@@ -202,8 +202,9 @@ class UserCardService {
       mappedGrade,
       mappedGenre,
     });
-    console.log(MyGroupedCards);
-    return MyGroupedCards;
+    // console.log(MyGroupedCards);
+
+    return { MyGroupedCards, tatalCount, page, pageSize };
   };
 }
 
