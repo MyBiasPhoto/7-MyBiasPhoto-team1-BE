@@ -26,12 +26,15 @@ model User {
   pointLogs          PointLog[]
   cardCreationLimits CardCreationLimit[]
   RefreshToken       RefreshToken[]
-  pointCooldown     PointCooldown[]
+  pointCooldown      PointCooldown[]
+
+  @@unique([provider, providerId])
 }
 
 enum AuthProvider {
   LOCAL
   GOOGLE
+  KAKAO
 }
 
 model RefreshToken {
@@ -170,11 +173,12 @@ model PointLog {
 
 model PointCooldown {
   userId        Int
-  user      User     @relation(fields: [userId], references: [id])
+  user          User     @relation(fields: [userId], references: [id])
   reason        String
-  nextAllowedAt DateTime   
-  updatedAt     DateTime   @updatedAt
-  @@id([userId, reason]) 
+  nextAllowedAt DateTime
+  updatedAt     DateTime @updatedAt
+
+  @@id([userId, reason])
 }
 
 model CardCreationLimit {

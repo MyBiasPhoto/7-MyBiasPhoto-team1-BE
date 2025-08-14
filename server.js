@@ -16,6 +16,8 @@ import pointRouter from './src/modules/point/routes.js';
 import saleRouter from './src/modules/sale/routes.js';
 import userRouter from './src/modules/user/routes.js';
 import notificationRouter from './src/modules/notification/routes.js';
+import passport from 'passport';
+import './src/modules/auth/passport.js';
 // import { verifyAccessToken } from './src/common/middleware/verifyAccessToken.js';
 
 const app = express();
@@ -32,6 +34,7 @@ app.use(
 app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(passport.initialize());
 
 app.get('/', (req, res) => {
   res.send('서버 실행 중');
