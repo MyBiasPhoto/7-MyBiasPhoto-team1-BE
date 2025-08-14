@@ -1,4 +1,5 @@
 import { pickPoints } from '../../common/utils/pickPoints.js';
+import { EPOCH } from '../../common/constants/date.js';
 class PointService {
   constructor(pointRepository, pointTransaction, cooldownRepository) {
     this.pointRepository = pointRepository;
@@ -28,8 +29,9 @@ class PointService {
     const reason = 'RANDOM';
     const now = new Date();
 
-    await this.cooldownRepository.getCooldown({ userId, reason });
-    const next = row?.nextAllowedAt ?? new Date(0);
+    await this.cooldownRepository.ensureRow({ userId, reason });
+    const row = await this.cooldownRepository.getCooldown({ userId, reason });
+    const next = row?.nextAllowedAt ?? EPOCH;
     const remainingSeconds = Math.max(0, Math.ceil((next.getTime() - now.getTime()) / 1000));
 
     return {
