@@ -61,7 +61,7 @@ passport.use(
     {
       clientID: process.env.KAKAO_CLIENT_ID,
       clientSecret: process.env.KAKAO_CLIENT_SECRET,
-      callbackURL: process.env.KAKAO_CALLBACK_URL,
+      callbackURL: process.env.KAKAO_CALLBACK_URI,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
