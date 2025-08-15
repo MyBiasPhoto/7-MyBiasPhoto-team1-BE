@@ -123,7 +123,11 @@ class AuthController {
         throwApiError('AUTH_OAUTH_USER_MISSING', '인증 실패', 401);
       }
 
-      const preferredStrategy = (req.get('x-refresh-strategy') || '').toLowerCase();
+      const preferredStrategy = (
+        req.get('x-refresh-strategy') ||
+        req.query?.startegy ||
+        ''
+      ).toLowerCase();
       const ctx = { userAgent: req.get('user-agent'), ip: req.ip };
 
       const issued = await this.authService.issueTokensForUser(socialUser, {
@@ -146,7 +150,7 @@ class AuthController {
         });
       }
 
-      const redirectTo = process.env.OAUTH_SUCCESS_REDIRECT || 'http://localhost:3000/auth/success';
+      const redirectTo = process.env.OAUTH_SUCCESS_REDIRECT || 'http://localhost:3000/marketPlace';
       return res.redirect(302, redirectTo);
     } catch (err) {
       next(err);
