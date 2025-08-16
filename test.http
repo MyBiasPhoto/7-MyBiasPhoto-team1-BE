@@ -68,12 +68,12 @@ Content-Type: application/json
 
 ### MyGallery 목록 조회
 GET http://localhost:4000/users/me/userCard/gallery
-Cookie:   accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibmlja25hbWUiOiJ1c2VyMiIsInBvaW50cyI6MTE3MDAwLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzU1MDY2NTA5LCJleHAiOjE3NTUwNzAxMDl9.tWm8cSGluJWo9R1AjVBELTP3519rzYvdEajEnZzgPe0;
+Cookie:   accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibmlja25hbWUiOiJ1c2VyMiIsInBvaW50cyI6NjE2MzAwLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzU1MzY2ODA4LCJleHAiOjE3NTUzNzA0MDh9.RvKR-WmkyMkYn970OuUH3ftLCsKlM9q3bv7JIfBreEQ;
 Content-Type: application/json
 
 ### MyMarket 목록 조회
 GET http://localhost:4000/users/me/userCard/market
-Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywibmlja25hbWUiOiJ1c2VyMyIsImlhdCI6MTc1NDgxMjUyNywiZXhwIjoxNzU0ODE2MTI3fQ.X8mjhvbrru0PT0Fo0LJY_0hZaMmeq-V3kqilgk0-M2g;
+Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibmlja25hbWUiOiJ1c2VyMiIsInBvaW50cyI6NjE2MzAwLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzU1MzY2ODA4LCJleHAiOjE3NTUzNzA0MDh9.RvKR-WmkyMkYn970OuUH3ftLCsKlM9q3bv7JIfBreEQ;
 Content-Type: application/json
 
 ### 랜덤 포인트 지급
@@ -83,7 +83,7 @@ Content-Type: application/json
 
 ### MyGroupedCard 목록 조회 (판매 가능한 카드 List)
 GET http://localhost:4000/users/me/userCard/grouped
-Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibmlja25hbWUiOiJ1c2VyMiIsInBvaW50cyI6MTE3MDAwLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzU1MTU3NDM5LCJleHAiOjE3NTUxNjEwMzl9.qEhdRDzJe2oPADMwquW1g__K3zrdJ8bb3x9kKAaNmfQ;
+Cookie:   accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwibmlja25hbWUiOiJ1c2VyMiIsInBvaW50cyI6NjE2MzAwLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNzU1MzY2ODA4LCJleHAiOjE3NTUzNzA0MDh9.RvKR-WmkyMkYn970OuUH3ftLCsKlM9q3bv7JIfBreEQ;
 Content-Type: application/json
 
 ### 포토카드 판매하기

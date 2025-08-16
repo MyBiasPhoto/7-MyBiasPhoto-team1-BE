@@ -187,24 +187,50 @@ class UserCardService {
     if (!user) {
       throwApiError('USER_NOT_FOUND', '해당 유저를 찾을 수 없습니다.', 404);
     }
-
+    // console.log('user정보: ', user);
     const offset = (page - 1) * pageSize;
     const limit = pageSize;
     const mappedGrade = grade ? gradeMap[grade] : undefined;
     const mappedGenre = genre ? genreMap[genre] : undefined;
     const s = search?.trim() ? search.trim() : null;
 
-    const [MyGroupedCards, tatalCount] = await this.userCardTransaction.getGroupedUserCardData({
-      userId,
-      limit,
-      offset,
-      search: s,
-      mappedGrade,
-      mappedGenre,
-    });
-    // console.log(MyGroupedCards);
+    const [myGroupedCards, totalCount, gradeCounts] =
+      await this.userCardTransaction.getGroupedUserCardData({
+        userId,
+        limit,
+        offset,
+        search: s,
+        mappedGrade,
+        mappedGenre,
+        statuses: ['IDLE'],
+      });
 
-    return { MyGroupedCards, tatalCount, page, pageSize };
+    const formattedMyGroupedCards = myGroupedCards.map((pc) => ({
+      photoCardId: pc.photoCardId,
+      name: pc.name,
+      imageUrl: pc.imageUrl,
+      grade: gradeMapReverse[pc.grade] || pc.grade,
+      genre: genreMapReverse[pc.genre] || pc.genre,
+      count: pc.count,
+      ownerId: user.id,
+      ownerNickName: user.nickname,
+      updatedAt: pc.updatedAt,
+    }));
+
+    // console.log(MyGroupedCards);
+    const by = Object.fromEntries(gradeCounts.map(({ grade, count }) => [grade, count]));
+    const formattedGradeCounts = CARD_GRADE_VALUES.map((g) => ({
+      grade: gradeMapReverse[g] ?? g,
+      count: by[g] ?? 0,
+    }));
+
+    return {
+      myGroupedCards: formattedMyGroupedCards,
+      totalCount,
+      gradeCounts: formattedGradeCounts,
+      page,
+      pageSize,
+    };
   };
 }
 
