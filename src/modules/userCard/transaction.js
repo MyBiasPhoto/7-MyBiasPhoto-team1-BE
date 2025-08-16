@@ -29,7 +29,15 @@ class UserCardTransaction {
     });
   };
 
-  getGroupedUserCardData = async ({ userId, limit, offset, search, mappedGrade, mappedGenre }) => {
+  getGroupedUserCardData = async ({
+    userId,
+    limit,
+    offset,
+    search,
+    mappedGrade,
+    mappedGenre,
+    statuses,
+  }) => {
     return prisma.$transaction(async (tx) => {
       const MyGroupedCardsPromise = this.userCardRepository.getGroupedByPhoto(
         {
@@ -53,12 +61,18 @@ class UserCardTransaction {
         tx
       );
 
-      const [MyGroupedCards, totalCounts] = await Promise.all([
+      const gradeCountsPromises = this.userCardRepository.getGradeCounts(
+        { ownerId: userId, statuses },
+        tx
+      );
+
+      const [MyGroupedCards, totalCounts, gradeCounts] = await Promise.all([
         MyGroupedCardsPromise,
         totalCountsPromise,
+        gradeCountsPromises,
       ]);
 
-      return [MyGroupedCards, totalCounts];
+      return [MyGroupedCards, totalCounts, gradeCounts];
     });
   };
 }
