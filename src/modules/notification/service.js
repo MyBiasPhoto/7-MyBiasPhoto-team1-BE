@@ -124,7 +124,6 @@ class NotificationService {
     }
   }
 
-
   //다건알림을 한번에 퍼블리시
   // db에서 id들로 조회 - 각 유저 연결로 브로드캐스트
   // 외부 도메인(구매/교환)에서 알림 생성 후 호출할 메서드
@@ -147,6 +146,7 @@ class NotificationService {
       content: notification.content,
       read: notification.read,
       createdAt: notification.createdAt,
+      link: notification.link ?? null,
       // 필요한 경우 메타 필드 추가 가능
     };
 

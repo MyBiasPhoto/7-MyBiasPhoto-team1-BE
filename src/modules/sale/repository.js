@@ -205,6 +205,7 @@ class SaleRepository {
         userId: sellerId,
         type: NotificationType.CARD_PURCHASED,
         content: `saleId ${saleId} - ${buyerNickname} 님에게 ${quantity}장 판매되었습니다. +${amount}P`,
+        link: `/marketPlace/${saleId}/edit`,
       },
     });
   };
@@ -216,6 +217,7 @@ class SaleRepository {
         userId: sellerId,
         type: NotificationType.CARD_SOLD_OUT,
         content: `saleId ${saleId} - 등록하신 카드가 모두 판매되었습니다.`,
+        link: `/marketPlace/${saleId}/edit`,
       },
     });
   };

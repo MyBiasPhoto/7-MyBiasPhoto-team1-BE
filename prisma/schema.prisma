@@ -160,6 +160,7 @@ model Notification {
   type      NotificationType
   createdAt DateTime         @default(now())
   read      Boolean          @default(false)
+  link      String?
 }
 
 model PointLog {
