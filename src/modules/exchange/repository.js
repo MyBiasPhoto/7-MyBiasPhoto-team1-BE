@@ -180,7 +180,7 @@ class ExchangeRepository {
   //알림 생성
   // 교환 제안 도착 알림(대상: 판매자/수신자)
   createProposalReceivedNotification = async (
-    { targetUserId, saleId, proposerNickname },
+    { targetUserId, saleId, proposerNickname, link },
     client = prisma
   ) => {
     return client.notification.create({
@@ -188,13 +188,14 @@ class ExchangeRepository {
         userId: targetUserId,
         type: NotificationType.EXCHANGE_PROPOSAL_RECEIVED,
         content: `saleId ${saleId} - ${proposerNickname} 님이 교환을 제안했습니다.`,
+        link: link ?? `/marketPlace/${saleId}/edit`,
       },
     });
   };
 
   // 교환 제안 결정 알림(대상: 제안자 [+선택: 판매자])
   createProposalDecidedNotification = async (
-    { targetUserId, saleId, decided }, // 'ACCEPTED' | 'REJECTED'
+    { targetUserId, saleId, decided, link }, // 'ACCEPTED' | 'REJECTED'
     client = prisma
   ) => {
     const decidedMessage =
@@ -204,6 +205,7 @@ class ExchangeRepository {
         userId: targetUserId,
         type: NotificationType.EXCHANGE_PROPOSAL_DECIDED,
         content: `${decidedMessage} (saleId ${saleId})`,
+        link, //호출부에서 정확한 링크 전달
       },
     });
   };
@@ -215,6 +217,7 @@ class ExchangeRepository {
         userId: sellerUserId,
         type: NotificationType.CARD_SOLD_OUT,
         content: `saleId ${saleId} - 등록하신 카드가 모두 판매(교환)되었습니다.`,
+        link: `/marketPlace/${saleId}/edit`,
       },
     });
   };

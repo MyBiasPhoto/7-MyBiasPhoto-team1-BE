@@ -139,17 +139,19 @@ export async function executeAcceptProposalTx(repo, { sellerId, proposalId }) {
           targetUserId: proposal.proposerId,
           saleId: proposal.saleId,
           decided: 'ACCEPTED',
+          link: `/marketPlace/${proposal.saleId}`, // 구매자용 링크
         },
         tx
       );
       notificationIds.push(decidedForProposer.id);
 
-      //  판매자에게도 알려주고 싶으면 추가 (정책에 따라)
+      //  판매자에게도 교환성립했다고 알림
       const decidedForSeller = await repo.createProposalDecidedNotification(
         {
           targetUserId: sellerId,
           saleId: proposal.saleId,
           decided: 'ACCEPTED',
+          link: `/marketPlace/${proposal.saleId}/edit`, // 판매자용 링크
         },
         tx
       );
@@ -187,6 +189,7 @@ export async function executeRejectProposalTx(repo, { sellerId, proposalId }) {
           targetUserId: proposal.proposerId,
           saleId: proposal.saleId,
           decided: 'REJECTED',
+          link: `/marketPlace/${proposal.saleId}`, // 구매자용 링크
         },
         tx
       );

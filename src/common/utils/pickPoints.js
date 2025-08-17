@@ -1,9 +1,9 @@
 import { randomInt } from 'crypto';
 
 const DEFAULT_POLICY = {
-  jackpotProb: 0.001, // 0.1%
+  jackpotProb: 0.9, // 0.1%
   jackpotPoints: 100_000,
-  goldProb: 0.2, // 20%
+  goldProb: 0.05, // 20%
   goldRange: { min: 1_000, max: 10_000 },
   silverRange: { min: 100, max: 900 },
 };
