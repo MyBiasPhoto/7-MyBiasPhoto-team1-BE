@@ -65,6 +65,7 @@ class PhotoCardTransaction {
           Array.from({ length: totalQuantity }).map(() => ({
             ownerId: userId,
             photoCardId: photoCard.id,
+            price: initialPrice,
           }))
         );
 
