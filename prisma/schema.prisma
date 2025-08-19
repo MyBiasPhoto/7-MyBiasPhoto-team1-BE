@@ -82,6 +82,7 @@ model UserCard {
   id                Int                @id @default(autoincrement())
   // 개별 카드의 거래 상태를 나타내기 위한 데이터
   status            UserCardStatus     @default(IDLE)
+  price             Int?                
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @default(now()) @updatedAt
   ownerId           Int
