@@ -3,7 +3,15 @@
 import { prisma } from '../../common/utils/prisma.js';
 import { throwApiError } from '../../common/utils/throwApiErrors.js';
 
-export const executeBuySaleTx = async ({ userId, sale, buyer, quantity, totalPrice, repo }) => {
+export const executeBuySaleTx = async ({
+  userId,
+  sale,
+  buyer,
+  quantity,
+
+  totalPrice,
+  repo,
+}) => {
   // NOTE: repo는 SaleRepository 인스턴스 (service -> repository.executeBuySaleTx -> 여기로 전달)
   return await prisma.$transaction(
     async (tx) => {
@@ -27,7 +35,7 @@ export const executeBuySaleTx = async ({ userId, sale, buyer, quantity, totalPri
       // 2. 카드 소유권 이전 + purchase생성
       for (const uc of userCards) {
         const { count: moved } = await repo.transferUserCardIfOnSale(
-          { userCardId: uc.id, sellerId, buyerId: userId },
+          { userCardId: uc.id, sellerId, price: sale.price, buyerId: userId },
           tx
         );
         if (moved !== 1) {

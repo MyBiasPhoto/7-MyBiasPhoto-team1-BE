@@ -138,10 +138,10 @@ class SaleRepository {
   };
 
   //userCardStatus On_SALE일때만 구매자에게 소유권 이전 //updateMany return값 count:1 - 성공 0: 실패
-  transferUserCardIfOnSale = async ({ userCardId, sellerId, buyerId }, client = prisma) => {
+  transferUserCardIfOnSale = async ({ userCardId, sellerId, price, buyerId }, client = prisma) => {
     return client.userCard.updateMany({
       where: { id: userCardId, ownerId: sellerId, status: UserCardStatus.ON_SALE },
-      data: { ownerId: buyerId, status: UserCardStatus.IDLE },
+      data: { ownerId: buyerId, price, status: UserCardStatus.IDLE },
     });
   };
 
