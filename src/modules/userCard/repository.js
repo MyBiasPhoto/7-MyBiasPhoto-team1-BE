@@ -44,6 +44,7 @@ class UserCardRepository {
   WITH base AS (
     SELECT
       uc."photoCardId",
+      uc.price,
       uc."updatedAt",
       pc.name,
       pc."imageUrl",
@@ -66,7 +67,8 @@ class UserCardRepository {
     MIN(b.grade)       AS "grade",
     MIN(b.genre)       AS "genre",
     COUNT(*)::int      AS "count",
-    MAX(b."updatedAt") AS "updatedAt"
+    MAX(b."updatedAt") AS "updatedAt",
+    MAX(b.price)       AS "maxPrice"
   FROM base b
   GROUP BY b."photoCardId"
   ORDER BY "updatedAt" DESC, "count" DESC
