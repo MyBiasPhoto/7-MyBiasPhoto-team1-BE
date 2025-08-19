@@ -78,6 +78,7 @@ class UserCardService {
       name: uc.photoCard.name,
       description: uc.photoCard.description,
       imageUrl: uc.photoCard.imageUrl,
+      price: uc.price,
       grade: gradeMapReverse[uc.photoCard.grade] || uc.photoCard.grade,
       genre: genreMapReverse[uc.photoCard.genre] || uc.photoCard.genre,
       ownerId: uc.ownerId,
@@ -155,6 +156,7 @@ class UserCardService {
       name: uc.photoCard.name,
       description: uc.photoCard.description,
       imageUrl: uc.photoCard.imageUrl,
+      price: uc.price,
       grade: gradeMapReverse[uc.photoCard.grade] || uc.photoCard.grade,
       genre: genreMapReverse[uc.photoCard.genre] || uc.photoCard.genre,
       status: uc.status,
@@ -213,11 +215,12 @@ class UserCardService {
       genre: genreMapReverse[pc.genre] || pc.genre,
       count: pc.count,
       ownerId: user.id,
+      price: pc.maxPrice,
       ownerNickName: user.nickname,
       updatedAt: pc.updatedAt,
     }));
 
-    // console.log(MyGroupedCards);
+    console.log(myGroupedCards);
     const by = Object.fromEntries(gradeCounts.map(({ grade, count }) => [grade, count]));
     const formattedGradeCounts = CARD_GRADE_VALUES.map((g) => ({
       grade: gradeMapReverse[g] ?? g,
