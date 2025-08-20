@@ -56,6 +56,24 @@ class SaleTransaction {
       return sale;
     });
   };
+
+  cancelSaleTx = async ({ sale, id, userId, deletedAt }) => {
+    return prisma.$transaction(async (tx) => {
+      const rows = await this.userCardRepository.updateCardStatus(
+        {
+          ownerId: userId,
+          photoCardId: sale.photoCardId,
+          fromStatus: 'ON_SALE',
+          toStatus: 'IDLE',
+          take: sale.quantity,
+        },
+        tx
+      );
+
+      const deletedSale = await this.saleRepository.patchSaleListById(Number(id), deletedAt);
+      return { deletedCount: rows.length, deletedSale };
+    });
+  };
 }
 
 export default SaleTransaction;

@@ -42,9 +42,9 @@ saleRouter.post(
   verifyAccessToken,
   saleController.createSale
 );
-saleRouter.patch('/:id/delete', saleController.patchSaleListById);
+saleRouter.patch('/:id/delete', verifyAccessToken, saleController.patchSaleListById);
 saleRouter.get('/:id', saleController.getSaleCardById);
-saleRouter.patch(`/:id`, saleController.patchSaleCardById); //라우터 중복
+saleRouter.patch(`/:id`, verifyAccessToken, saleController.patchSaleCardById); //라우터 중복
 saleRouter.post(
   '/:id/buy',
   validate(buySaleSchema, 'body'),
