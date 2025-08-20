@@ -134,9 +134,26 @@ class SaleService {
     return card;
   };
 
-  patchSaleListById = async (id, deletedAt) => {
-    const card = await this.saleRepository.patchSaleListById(Number(id), deletedAt);
-    return card;
+  patchSaleListById = async ({ id, userId, deletedAt }) => {
+    const sale = await this.saleRepository.getSaleById(Number(id));
+    if (!sale) {
+      throwApiError('SALE_NOT_FOUND', '해당 판매를 찾을 수 없습니다.', 404);
+    }
+    if (sale.sellerId !== userId) {
+      throwApiError('FORBIDDEN_SALE_CANCEL', '판매자 본인만 판매를 취소할 수 있습니다.', 403);
+    }
+    if (sale.deletedAt) {
+      throwApiError('SALE_ALREADY_CANCELLED', '이미 취소된 판매입니다.', 409);
+    }
+
+    const deletedSale = await this.saleTransaction.cancelSaleTx({
+      sale,
+      id,
+      userId,
+      deletedAt,
+    });
+
+    return deletedSale;
   };
 
   /**

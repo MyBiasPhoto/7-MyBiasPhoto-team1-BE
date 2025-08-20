@@ -54,9 +54,10 @@ class SaleController {
   patchSaleListById = async (req, res, next) => {
     try {
       const { id } = req.params;
+      const { id: userId } = req.user;
       const deletedAt = req.body;
 
-      const saleList = await this.saleService.patchSaleListById(id, deletedAt);
+      const saleList = await this.saleService.patchSaleListById({ id, userId, deletedAt });
 
       return res.status(200).json(saleList);
     } catch (error) {
