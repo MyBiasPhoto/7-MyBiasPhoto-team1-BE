@@ -29,7 +29,7 @@ app.use(
   cors({
     // origin: 'http://localhost:3000',
     origin: process.env.NEXT_URL || 'http://localhost:3000',
-    credentials: ture,
+    credentials: true,
   })
 );
 app.use(cookieParser());
