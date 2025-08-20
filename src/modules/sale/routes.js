@@ -11,17 +11,19 @@ import { getSaleListSchema } from './schema/getSaleListSchema.js';
 import { buySaleSchema } from './schema/buySaleSchema.js';
 import { verifyAccessToken } from '../../common/middleware/verifyAccessToken.js';
 import { createSaleBodySchema, createSaleParamSchema } from './schema/createSaleSchema.js';
-import NotificationService from '../notification/service.js';
+// import NotificationService from '../notification/service.js';
+import notificationService from '../notification/index.js';
 import UserRepository from '../user/repository.js';
 
 const saleRouter = Router();
 
-const notificationService = new NotificationService();
+// const notificationService = new NotificationService();
 const saleRepository = new SaleRepository();
 const userCardRepository = new UserCardRepository();
 const photoCardRepository = new PhotoCardRepository();
 const userRepository = new UserRepository();
 const saleTransaction = new SaleTransaction(saleRepository, userCardRepository);
+
 const saleService = new SaleService(
   saleRepository,
   notificationService,
