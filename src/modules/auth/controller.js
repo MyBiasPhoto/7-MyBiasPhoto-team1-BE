@@ -5,7 +5,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const cookieBase = {
   httpOnly: true,
-  sameSite: isProd ? 'none' : 'lax', // 운영: none, 개발: lax
+  sameSite: isProd ? 'none' : 'none', // 운영: none, 개발: lax
   secure: isProd, // 운영: true, 개발: false
 };
 class AuthController {
