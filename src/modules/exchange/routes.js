@@ -7,17 +7,22 @@ import { validate } from '../../common/middleware/validate.js';
 import { verifyAccessToken } from '../../common/middleware/verifyAccessToken.js';
 import { exchangeProposalSchema } from './schema/exchangeProposalSchema.js';
 import { getExchangeProposalsSchema } from './schema/getExchangeProposalSchema.js';
-import NotificationRepository from '../notification/repository.js';
-import NotificationService from '../notification/service.js';
+// import NotificationRepository from '../notification/repository.js';
+// import NotificationService from '../notification/service.js';
+import notificationService from '../notification/index.js';
+
 
 const exchangeRouter = Router();
 
 const repo = new ExchangeRepository();
 
 //알림 의존성 주입
-const notificationRepository = new NotificationRepository();
-const notificationService = new NotificationService(notificationRepository);
+// const notificationRepository = new NotificationRepository();
+// const notificationService = new NotificationService(notificationRepository);
 
+// const service = new ExchangeService(repo, notificationService);
+
+//알림 서비스 싱글톤을 주입
 const service = new ExchangeService(repo, notificationService);
 const controller = new ExchangeController(service);
 

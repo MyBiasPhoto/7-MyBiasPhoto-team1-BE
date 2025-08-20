@@ -3,6 +3,10 @@ class ExchangeService {
   constructor(exchangeRepository, notificationService) {
     this.exchangeRepository = exchangeRepository;
     this.notificationService = notificationService;
+    //주입 누락시 에러
+    if (!this.notificationService?.publishMany) {
+      throw new Error('NotificationService instance must be injected into ExchangeService');
+    }
   }
   // 교환 제시 (구매자)
   async proposeExchange(userId, saleId, payload) {
