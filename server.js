@@ -27,8 +27,9 @@ const __dirname = path.resolve();
 // 개발 편의상 모든 Origin 허용 (배포 시 origin 설정 필요)
 app.use(
   cors({
-    origin: 'http://localhost:3000',
-    credentials: true,
+    // origin: 'http://localhost:3000',
+    origin: process.env.NEXT_URL || 'http://localhost:3000',
+    credentials: ture,
   })
 );
 app.use(cookieParser());
