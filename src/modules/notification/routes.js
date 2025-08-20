@@ -2,8 +2,9 @@
 
 import { Router } from 'express';
 import NotificationController from './controller.js';
-import NotificationService from './service.js';
-import NotificationRepository from './repository.js';
+// import NotificationService from './service.js';
+import notificationService from './index.js';
+// import NotificationRepository from './repository.js';
 
 import { validate } from '../../common/middleware/validate.js';
 import { verifyAccessToken } from '../../common/middleware/verifyAccessToken.js';
@@ -18,8 +19,8 @@ import {
 
 const notificationRouter = Router();
 
-const notificationRepository = new NotificationRepository();
-const notificationService = new NotificationService(notificationRepository);
+// const notificationRepository = new NotificationRepository();
+// const notificationService = new NotificationService(notificationRepository);
 const notificationController = new NotificationController(notificationService);
 
 // 목록 조회 (기본 10개)

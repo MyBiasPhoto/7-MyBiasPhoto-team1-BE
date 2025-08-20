@@ -19,6 +19,10 @@ class SaleService {
     this.saleRepository = saleRepository;
     this.notificationService = notificationService; // SSE 퍼블리셔 주입
     this.photoCardRepository = photoCardRepository;
+    if (!this.notificationService) {
+      // 새로 만들지 말고, 주입 누락을 바로 알리자 (SSE 인스턴스 공유 필수)
+      throw new Error('NotificationService instance must be injected into SaleService');
+    }
     this.userRepository = userRepository;
     this.userCardRepository = userCardRepository;
     this.saleTransaction = saleTransaction;

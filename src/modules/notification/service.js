@@ -129,6 +129,9 @@ class NotificationService {
   // 외부 도메인(구매/교환)에서 알림 생성 후 호출할 메서드
   async publishMany(notificationIds) {
     if (!Array.isArray(notificationIds) || notificationIds.length === 0) return;
+    if (!this.notificationRepository?.findManyByIds) {
+      throw new Error('NotificationRepository not injected (findManyByIds missing)');
+    }
 
     const rows = await this.notificationRepository.findManyByIds(notificationIds);
 

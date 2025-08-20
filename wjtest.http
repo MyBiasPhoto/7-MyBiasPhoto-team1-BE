@@ -57,8 +57,8 @@ Content-Type: application/json
 }
 
 ###알림 목록 가져오기
-GET http://localhost:4000/notifications?limit=10
-Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsIm5pY2tuYW1lIjoidXNlcjE1IiwicG9pbnRzIjo5MTg1NDUsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NTUwNDkxNjksImV4cCI6MTc1NTA1Mjc2OX0.cLP_SBgYbb4nJgM-3wJeh8UQFx_P5lh8jKCLS93V300
+GET http://localhost:4000/notifications?limit=5
+Cookie:    accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjUsIm5pY2tuYW1lIjoi7Jqp7JWU7KCE7IKs7J6l7JuQ7JiBIiwicG9pbnRzIjo3NjkwMzAsInR5cGUiOiJhY2Nlc3MiLCJpYXQiOjE3NTU2NTI5ODQsImV4cCI6MTc1NTY1NjU4NH0.jMqBh75begz8OGHf2XnioGUmuGxO78hLq4Cf5z-aBoA
 
 ###미확인알림 수 카운트
 GET http://localhost:4000/notifications/unread-count
