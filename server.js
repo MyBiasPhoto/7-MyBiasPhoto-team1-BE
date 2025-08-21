@@ -18,6 +18,7 @@ import userRouter from './src/modules/user/routes.js';
 import notificationRouter from './src/modules/notification/routes.js';
 import passport from 'passport';
 import './src/modules/auth/passport.js';
+import { swaggerUi, specs } from './swagger.js';
 // import { verifyAccessToken } from './src/common/middleware/verifyAccessToken.js';
 
 const app = express();
@@ -56,6 +57,8 @@ app.use('/points', pointRouter);
 app.use('/notifications', notificationRouter);
 
 app.use(errorHandler);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 const PORT = process.env.PORT || 3000;
 

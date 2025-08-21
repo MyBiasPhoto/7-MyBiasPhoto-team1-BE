@@ -29,6 +29,8 @@
     "passport-kakao": "^1.0.1",
     "prisma": "^5.22.0",
     "superstruct": "^1.0.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "zod": "^3.25.75"
   },
   "devDependencies": {
