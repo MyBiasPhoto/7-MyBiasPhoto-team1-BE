@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const getMyGalleryListSchema = z.object({
   page: z.coerce.number().int().positive().default(1),
-  pageSize: z.coerce.number().int().positive().default(9),
+  pageSize: z.coerce.number().int().positive().default(8),
   search: z.string().default(''),
   grade: z.enum(['COMMON', 'RARE', 'SUPER RARE', 'LEGENDARY']).optional(),
   genre: z

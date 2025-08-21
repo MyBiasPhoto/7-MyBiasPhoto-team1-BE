@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const getMyGroupedCards = z.object({
   page: z.coerce.number().int().positive().default(1),
-  pageSize: z.coerce.number().int().positive().default(10),
+  pageSize: z.coerce.number().int().positive().default(5),
   search: z.string().default(''),
   grade: z.enum(['COMMON', 'RARE', 'SUPER RARE', 'LEGENDARY']).optional(),
   genre: z
