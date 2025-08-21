@@ -28,6 +28,7 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-kakao": "^1.0.1",
     "prisma": "^5.22.0",
+    "prisma-erd-generator": "^2.0.4",
     "superstruct": "^1.0.3",
     "zod": "^3.25.75"
   },
