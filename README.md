@@ -53,7 +53,9 @@ https://www.notion.so/23fbb64da38080e78b66c50a46302974
 
 ### 김태홍
 
-- 자신이 개발한 기능에 대한 사진이나 gif 파일 첨부
+- Access & Refresh Token 기반 인증 구현
+- Refresh Token 전략 구현
+- Google & Kakao OAuth 구현
 
 ### 정남영
 
@@ -77,31 +79,6 @@ https://www.notion.so/23fbb64da38080e78b66c50a46302974
 │   │   ├── photoCard.js
 │   │   └── user.js
 │   ├── migrations
-│   │   ├── 20250731012431_init
-│   │   │   └── migration.sql
-│   │   ├── 20250802100325_add_photo_card_id_to_sale
-│   │   │   └── migration.sql
-│   │   ├── 20250802154757_update_schema
-│   │   │   └── migration.sql
-│   │   ├── 20250804133940_update_sale
-│   │   │   └── migration.sql
-│   │   ├── 20250805090742_add_updated_at_to_user_card
-│   │   │   └── migration.sql
-│   │   ├── 20250808053656_add_deleted_at_to_sale
-│   │   │   └── migration.sql
-│   │   ├── 20250809074836_add_refresh_token_model
-│   │   │   └── migration.sql
-│   │   ├── 20250812012312_add_point_cooldown
-│   │   │   └── migration.sql
-│   │   ├── 20250812052722_adproposal_status
-│   │   │   └── migration.sql
-│   │   ├── 20250814060558_add_kakao_and_provider_idx
-│   │   │   └── migration.sql
-│   │   ├── 20250817095809_add_link_to_notification
-│   │   │   └── migration.sql
-│   │   ├── 20250819035915_add_price_to_user_card
-│   │   │   └── migration.sql
-│   │   └── migration_lock.toml
 │   ├── schema.prisma
 │   ├── seed.js
 │   └── seeds
@@ -204,15 +181,14 @@ https://www.notion.so/23fbb64da38080e78b66c50a46302974
 │           └── transaction.js
 ├── test.http
 ├── uploads
-│   └── 1754982290651_btn_visibility_on_24px.png
 └── wjtest.http
 ```
 ---
 
 ## 구현 홈페이지
 
-https://7-my-bias-photo-team1-fe-theta.vercel.app/
-
+https://7-my-bias-photo-team1-fe-theta.vercel.app
+https://7-mybiasphoto-team1-be-production.up.railway.app
 ---
 
 ## 프로젝트 회고록
