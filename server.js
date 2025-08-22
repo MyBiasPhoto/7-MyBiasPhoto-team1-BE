@@ -50,6 +50,7 @@ app.use('/api/sales', exchangeRouter); //KJS
 app.use('/users', userRouter);
 
 app.use('/api/photoCard', photoCardRouter);
+app.use('/api/photoCard/upload', uploadRouter);
 
 app.use('/points', pointRouter);
 
