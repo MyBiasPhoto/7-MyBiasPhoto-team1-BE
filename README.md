@@ -187,8 +187,8 @@ https://www.notion.so/23fbb64da38080e78b66c50a46302974
 
 ## 구현 홈페이지
 
-[프론트 배포 사이트](https://7-my-bias-photo-team1-fe-theta.vercel.app)
-[백엔드 배포 사이트](https://7-mybiasphoto-team1-be-production.up.railway.app)
+- [프론트 배포 사이트](https://7-my-bias-photo-team1-fe-theta.vercel.app)
+- [백엔드 배포 사이트](https://7-mybiasphoto-team1-be-production.up.railway.app)
 
 ---
 
