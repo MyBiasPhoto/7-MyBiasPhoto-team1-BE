@@ -45,7 +45,8 @@ https://www.notion.so/23fbb64da38080e78b66c50a46302974
 
 ### 김성근
 
-- 자신이 개발한 기능에 대한 사진이나 gif 파일 첨부
+- AWS S3 Presigned URL 발급 API 구현
+- AI 포토카드 생성을 위한 Hugging Face API 연동
 
 ### 김제성
 
