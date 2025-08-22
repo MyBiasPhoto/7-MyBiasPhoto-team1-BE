@@ -1,9 +1,7 @@
 import { prisma } from '../../common/utils/prisma.js';
 
-//월별 생성 제한 (환경변수 안 쓰고 고정값으로)
 const MONTHLY_LIMIT = 35;
 
-//현재 연/월 계산
 function nowMY() {
   const d = new Date();
   return { month: d.getMonth() + 1, year: d.getFullYear() };

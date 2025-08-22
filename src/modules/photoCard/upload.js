@@ -46,7 +46,7 @@ const s3 = new S3Client({
   },
 });
 
-const MAX_UPLOAD_MB = Number(process.env.S3_MAX_UPLOAD_MB || 10); //파일 크기 제한(MB)
+const MAX_UPLOAD_MB = Number(process.env.S3_MAX_UPLOAD_MB || 10);
 const CACHE_SECONDS = Number(process.env.S3_CACHE_SECONDS || 60 * 60 * 24 * 365);
 const EXPIRES = Number(process.env.S3_PRESIGN_EXPIRES) || 60;
 
@@ -176,7 +176,7 @@ router.get('/s3-url', async (req, res) => {
 
     const uploadUrl = await getSignedUrl(s3, cmd, { expiresIn: EXPIRES });
 
-    return res.json({ uploadUrl, key, publicUrl, expires: EXPIRES });
+    return res.json({ uploadUrl, key, publicUrl, alreadyExists: false });
   } catch (err) {
     console.error('[presign ERROR]', err);
     return res.status(500).json({
@@ -195,76 +195,3 @@ router.get('/s3-url', async (req, res) => {
 });
 
 export default router;
-
-/** AWS S3 시작하는 방법 (참고용)
-* 1. AWS S3 버킷 만들기
-*    - AWS 리전 - 아시아 태평양(서울) ap-norteast-2
-*    - 모든 퍼블릭 액세스 차단 끄기 (직접 공개 url 보기 위해서)
-*    
-* 2. CORS 설정 (S3콘솔 -> 권한 -> 맨 아래 CORS규칙)
-*             아래는 예시(현재 S3 CORS임)
-[
-    {
-        "AllowedHeaders": [
-            "*"
-        ],
-        "AllowedMethods": [
-            "GET",
-            "PUT",
-            "POST"
-        ],
-        "AllowedOrigins": [
-            "*"
-        ],
-        "ExposeHeaders": [
-            "ETag"
-        ]
-    }
-]
-* 3. 버킷 정책 설정 (CORS에서 위로 올리면 있음)
-*                  아래는 예시(현재 버킷 정책임)
-*
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "AllowPublicRead",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::mybiasphoto-upload/*"
-        }
-    ]
-}
-* 3. IAM 사용자 생성 및 키 생성 (.env에 들어가는 키)
-*    - aws 검색창에 IAM 검색하고 들어가서 사용자 생성한 후 액세스 키 만들기
-*    - 시크릿키는 만들때만 보여주니 저장해놓고 .env에 복붙
-*
-* 4. .env 작성 및 프론트 config 수정
-
-  AWS_REGION=ap-northeast-2
-  S3_BUCKET=mybiasphoto-upload
-  AWS_ACCESS_KEY_ID=IAM 사용자 ID 키
-  AWS_SECRET_ACCESS_KEY=시크릿 키
-
-
-  프론트 next.config.mjs 에 domains 안에
-  "mybiasphoto-upload.s3.ap-northeast-2.amazonaws.com", 입력
-*
-* 5. 설치 npm install, npx prisma generate
-*
-
-npm install @aws-sdk/client-s3 @aws-sdk/s3-request-presigner
-
-
-package.json
-
-{
-  "scripts": {
-    "dev": "nodemon -r dotenv/config server.js"
-  }
-}
-
-* 6. 끝
-*
-*/
